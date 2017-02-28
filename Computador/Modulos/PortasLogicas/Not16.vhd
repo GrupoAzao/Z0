@@ -6,3 +6,5 @@ entity Not16 is
 			a:   in  STD_LOGIC_VECTOR(15 downto 0);
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
+
+Teste
