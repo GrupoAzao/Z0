@@ -1,13 +1,13 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity chip_not_16 is
+entity Not16 is
   port (
-    a: in STD_LOGIC_VECTOR(15 DOWNTO 0);
-    q: out STD_LOGIC_VECTOR(15 DOWNTO 0));
+    a: in STD_LOGIC_VECTOR(15 downto 0);
+    q: out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
 
-architecture arch_not_16 of chip_not_16 is
+architecture arch_not16 of Not16 is
 begin
   q(0) <= not a(0);
   q(1) <= not a(1);
