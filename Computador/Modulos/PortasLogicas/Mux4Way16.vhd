@@ -11,10 +11,10 @@ entity Mux4Way16 is
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
 architecture arch_mux4way16 of Mux4way16 is
-begin 
-	q <= a when (sel = '00') else
-		  b when (sel= '01') else
-		  c when (sel = '10') else
-		  d when (sel ='11') else a;
+begin
+	q <= a when (sel = "00") else
+		  b when (sel= "01") else
+		  c when (sel = "10") else
+		  d when (sel ="11") else a;
 end architecture;
 	
