@@ -28,5 +28,5 @@ begin
 	y5 <= f and sel0_linha and sel(1) and sel2_linha;
 	y6 <= g and sel0_linha and sel1_linha and sel(2);
 	y7 <= h and sel0_linha and sel1_linha and sel2_linha;
-	q <= y0 or y1 or y2 or y3;
+	q <= y0 or y1 or y2 or y3 or y4 or y5 or y6 or y7;
 end architecture;
