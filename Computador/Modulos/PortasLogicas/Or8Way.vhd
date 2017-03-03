@@ -13,3 +13,7 @@ entity Or8Way is
 			h:   in  STD_LOGIC;
 			q:   out STD_LOGIC);
 end entity;
+architecture arch_Or8Way of Or8Way is
+begin
+	q <= a or b or c or d or e or f or g or h;
+end architecture;
