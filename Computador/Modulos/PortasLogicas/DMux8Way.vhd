@@ -21,11 +21,11 @@ begin
 	sel1_linha <= not sel(1);
 	sel2_linha <= not sel(2);
 	q7 <= a and sel(0) and sel(1) and sel(2);
-	q6 <= a and sel(0) and sel(1) and sel2_linha;
+	q3 <= a and sel(0) and sel(1) and sel2_linha;
 	q5 <= a and sel(0) and sel1_linha and sel(2);
-	q4 <= a and sel(0) and sel1_linha and sel2_linha;
-	q3 <= a and sel0_linha and sel(1) and sel(2);	
-	q2 <= a and sel0_linha and sel(1) and sel2_linha;
-	q1 <= a and sel0_linha and sel1_linha and sel(2);
+	q1 <= a and sel(0) and sel1_linha and sel2_linha;
+	q6 <= a and sel0_linha and sel(1) and sel(2);	
+	q3 <= a and sel0_linha and sel(1) and sel2_linha;
+	q4 <= a and sel0_linha and sel1_linha and sel(2);
 	q0 <= a and sel0_linha and sel1_linha and sel2_linha;
 end architecture;
