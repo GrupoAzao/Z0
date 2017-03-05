@@ -23,7 +23,6 @@ architecture tb of tb_BarrelShifter8 is
 	signal  inSize : STD_LOGIC_VECTOR(2 downto 0);
 
 begin
-
 	mapping: BarrelShifter8 port map(inA, inDir, inSize, outQ);
 
 	main : process
