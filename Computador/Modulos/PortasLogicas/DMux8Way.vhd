@@ -14,18 +14,88 @@ entity DMux8Way is
 			q6:  out STD_LOGIC;
 			q7:  out STD_LOGIC);
 end entity;
-architecture DMux8Way_arch of DMux8Way is
-signal sel0_linha, sel1_linha, sel2_linha: STD_LOGIC;
+
+architecture behave of Dmux8Way is
 begin
-	sel0_linha <= not sel(0);
-	sel1_linha <= not sel(1);
-	sel2_linha <= not sel(2);
-	q7 <= a and sel(0) and sel(1) and sel(2);
-	q3 <= a and sel(0) and sel(1) and sel2_linha;
-	q5 <= a and sel(0) and sel1_linha and sel(2);
-	q1 <= a and sel(0) and sel1_linha and sel2_linha;
-	q6 <= a and sel0_linha and sel(1) and sel(2);	
-	q3 <= a and sel0_linha and sel(1) and sel2_linha;
-	q4 <= a and sel0_linha and sel1_linha and sel(2);
-	q0 <= a and sel0_linha and sel1_linha and sel2_linha;
+process (a, sel)
+begin
+if (sel = "000") then
+	q2 <= '0';  
+	q1 <= '0';
+	q0 <= a;
+	q3 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+elsif (sel = "001") then
+	q2 <= '0';  
+	q0 <= '0';
+	q1 <= a;
+	q3 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+elsif (sel = "010") then
+	q0 <= '0';  
+	q1 <= '0';
+	q2 <= a;
+	q3 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+
+elsif (sel = "011") then
+	q2 <= '0';  
+	q1 <= '0';
+	q3 <= a;
+	q0 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+
+ elsif (sel = "100") then
+	q2 <= '0';  
+	q1 <= '0';
+	q4 <= a;
+	q0 <= '0';
+	q3 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+
+elsif (sel = "101") then
+	q2 <= '0';  
+	q1 <= '0';
+	q5 <= a;
+	q0 <= '0';
+	q4 <= '0';  
+	q3 <= '0';
+	q6 <= '0';
+	q7 <= '0';
+
+elsif (sel = "110") then
+	q2 <= '0';  
+	q1 <= '0';
+	q6 <= a;
+	q0 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q3 <= '0';
+	q7 <= '0';
+
+else
+	q2 <= '0';  
+	q1 <= '0';
+	q7 <= a;
+	q0 <= '0';
+	q4 <= '0';  
+	q5 <= '0';
+	q6 <= '0';
+	q3 <= '0';
+end if;
+end process;
 end architecture;
