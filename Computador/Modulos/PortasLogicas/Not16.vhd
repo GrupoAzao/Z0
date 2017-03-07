@@ -25,4 +25,4 @@ begin
   q(13) <= not a(13);
   q(14) <= not a(14);
   q(15) <= not a(15);
-end architecture
+end arch_Not16;
