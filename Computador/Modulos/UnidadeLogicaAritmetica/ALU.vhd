@@ -60,7 +60,7 @@ end component;
 
 begin
 	
-	saida <= "00000000000000000";
+	saida <= "0000000000000000";
 	
 end architecture;
 	
