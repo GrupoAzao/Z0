@@ -73,9 +73,10 @@ begin
 	mux: Mux16 port map (w5,w6,f,w7);
 	s <= w7 when (no='0') else
 			(not w7);
-	with s select
-	zr <= '1' when ("0000000000000000");
-	ng <= '1' when (s(0) = '1');
+	zr <= '1' when (s = "0000000000000000") else
+	'0';
+	ng <= '1' when (s(0) = '1') else
+	'0';
 	saida <= s;
 			
 	
