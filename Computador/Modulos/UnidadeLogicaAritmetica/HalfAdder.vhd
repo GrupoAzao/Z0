@@ -9,3 +9,8 @@ entity HalfAdder is
 		soma,vaium: out STD_LOGIC   -- sum e carry
 	);
 end entity;
+architecture HalfAdder_arch of HalfAdder is 
+begin
+ 	soma <= a xor b;
+	vaium	 <= a and b;
+end architecture;	
