@@ -59,24 +59,8 @@ end component;
 
 
 begin
-	w1 <= x when (zx='0') else 
-			"0000000000000000";
-	w2 <= y when (zy='0') else 
-			"0000000000000000";
-	w3 <= w1 when( nx='0') else
-			not w1;
-	w4 <= w2 when( ny='0') else
-			not w2;
-	w5 <= w3 and w4;
-	add : Add16 port map (w3,w4,w6);
-	mux: Mux16 port map (w5,w6,f,w7);
-	s <= w7 when (no='0') else
-			not w7;
-	with s select
-	zr <= '1' when ("0000000000000000");
-	ng <= '1' when (s(0) = '1');
-	saida <= s;
-			
-	--comentario
+	
+	saida <= "00000000000000000";
+	
 end architecture;
 	
