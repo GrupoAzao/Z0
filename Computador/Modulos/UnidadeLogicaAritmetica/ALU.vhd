@@ -74,6 +74,6 @@ begin
 	ng <= '1' when (s(0) = '1');
 	saida <= s;
 			
-	
+	--comentario
 end architecture;
 	
