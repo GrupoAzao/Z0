@@ -75,7 +75,7 @@ begin
 			(not w7);
 	zr <= '1' when (s = "0000000000000000") else
 	'0';
-	ng <= '1' when (s(0) = '1') else
+	ng <= '1' when (s(15) = '1') else
 	'0';
 	saida <= s;
 			
