@@ -24,6 +24,7 @@
 *sopc_*
 *.sdc
 *.qws
+.DS_Store
 
 
 # ignorando pastas geradas pelo Quartus
