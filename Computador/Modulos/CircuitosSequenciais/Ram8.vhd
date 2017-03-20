@@ -18,6 +18,6 @@ end entity;
 architecture arch of Ram8 is
 signal a, b : STD_LOGIC_VECTOR(15 downto 0);
 begin
- 	u: Ram8 port map(clock, a, load, address, b);
+ 	u1: Ram8 port map(clock, a, load, address, b);
  	output <= b;
 end architecture;
