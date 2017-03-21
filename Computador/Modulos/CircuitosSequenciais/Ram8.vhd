@@ -15,7 +15,7 @@ entity Ram8 is
 	);
 end entity;
 
-ARCHITECTURE rtl OF ram_infer IS
+ARCHITECTURE rtl OF Ram8 IS
    TYPE mem IS ARRAY(0 TO 31) OF std_logic_vector(7 DOWNTO 0);
    SIGNAL ram_block : mem;
 BEGIN
