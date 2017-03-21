@@ -4,6 +4,7 @@
 
 Library ieee;
 use ieee.std_logic_1164.all;
+USE ieee.numeric_std.ALL;
 
 entity Ram8 is
 	port(
@@ -16,16 +17,16 @@ entity Ram8 is
 end entity;
 
 ARCHITECTURE rtl OF Ram8 IS
-   TYPE mem IS ARRAY(0 TO 31) OF std_logic_vector(7 DOWNTO 0);
+   TYPE mem IS ARRAY(0 TO 7) OF std_logic_vector(15 DOWNTO 0);
    SIGNAL ram_block : mem;
 BEGIN
    PROCESS (clock)
    BEGIN
       IF (clock'event AND clock = '1') THEN
          IF (load = '1') THEN
-            ram_block(address) <= input;
+            ram_block(to_integer(unsigned(address))) <= input;
          END IF;
-         output <= ram_block(address);
+         output <= ram_block(to_integer(unsigned(address)));
       END IF;
    END PROCESS;
 END rtl;
