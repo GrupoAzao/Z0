@@ -18,3 +18,15 @@ entity ShiftRegisterPISO16 is
 		output: out STD_LOGIC
 	);
 end entity;
+architecture ShiftRegisterPISO16_arch of ShiftRegisterPISO16 is
+component FlipFlopD
+	port(
+		clock:  in std_logic;
+		d:      in std_logic;
+		clear:  in std_logic;
+		preset: in std_logic;
+		q:     out std_logic
+	);
+end component;
+begin
+end architecture;
