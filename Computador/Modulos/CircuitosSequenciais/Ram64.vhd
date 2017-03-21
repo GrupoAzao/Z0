@@ -14,6 +14,7 @@ entity Ram64 is
 		output:  out STD_LOGIC_VECTOR(15 downto 0)
 	);
 end entity;
+
 architecture Ram64_arch of Ram64 is
 component Ram8
 port(
