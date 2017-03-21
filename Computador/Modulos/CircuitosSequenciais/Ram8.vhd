@@ -27,6 +27,6 @@ BEGIN
             ram_block(to_integer(unsigned(address))) <= input;
          END IF;
       END IF;
-      output <= ram_block(to_integer(unsigned(address)));
    END PROCESS;
+   output <= ram_block(to_integer(unsigned(address)));
 END rtl;
