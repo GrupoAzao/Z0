@@ -37,7 +37,7 @@ port (
 			sel: in  STD_LOGIC_VECTOR(2 downto 0);
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end component;
-signal w1,w2,w3,w4,w5,w6,w7,w8:  out STD_LOGIC_VECTOR(15 downto 0);
+signal w1,w2,w3,w4,w5,w6,w7,w8:   STD_LOGIC_VECTOR(15 downto 0);
 begin
 	e1: Ram64 port map (clock,input,load,address( 5 downto 0 ),w1);
 	e2: Ram64 port map (clock,input,load,address( 5 downto 0),w2);
