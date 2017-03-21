@@ -15,9 +15,17 @@ entity Ram8 is
 	);
 end entity;
 
-architecture arch of Ram8 is
-signal a, b : STD_LOGIC_VECTOR(15 downto 0);
-begin
- 	u1: Ram8 port map(clock, a, load, address, b);
- 	output <= b;
-end architecture;
+ARCHITECTURE rtl OF ram_infer IS
+   TYPE mem IS ARRAY(0 TO 31) OF std_logic_vector(7 DOWNTO 0);
+   SIGNAL ram_block : mem;
+BEGIN
+   PROCESS (clock)
+   BEGIN
+      IF (clock'event AND clock = '1') THEN
+         IF (load = '1') THEN
+            ram_block(address) <= input;
+         END IF;
+         output <= ram_block(address);
+      END IF;
+   END PROCESS;
+END rtl;
