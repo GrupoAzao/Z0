@@ -47,6 +47,6 @@ begin
 	e6: Ram512 port map (clock,input,load,address( 8 downto 0 ),w6);
 	e7: Ram512 port map (clock,input,load,address( 8 downto 0 ),w7);
 	e8: Ram512 port map (clock,input,load,address( 8 downto 0 ),w8);
-	e9: Mux8Way16 port map (w1,w2,w3,w4,w5,w6,w7,w8,address(12 downto 9),output);	
+	e9: Mux8Way16 port map (w1,w2,w3,w4,w5,w6,w7,w8,address(11 downto 9),output);	
 	
 end architecture;
