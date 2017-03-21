@@ -53,6 +53,24 @@ set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/ShiftRegisterSISO16.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/ShiftRegisterSIPO16.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/ShiftRegisterPISO16.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/ShiftRegisterPIPO16.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Register64.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Register32.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Register16.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Register8.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Ram512.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Ram64.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Ram8.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/Ram4K.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/FlipFlopD.vhd
+set_global_assignment -name VHDL_FILE Modulos/CircuitosSequenciais/BinaryDigit.vhd
 set_global_assignment -name VHDL_FILE Modulos/UnidadeLogicaAritmetica/Inc16.vhd
 set_global_assignment -name VHDL_FILE Modulos/UnidadeLogicaAritmetica/HalfAdder.vhd
 set_global_assignment -name VHDL_FILE Modulos/UnidadeLogicaAritmetica/FullAdder.vhd
@@ -75,7 +93,3 @@ set_global_assignment -name VHDL_FILE Modulos/PortasLogicas/BarrelShifter16.vhd
 set_global_assignment -name VHDL_FILE Modulos/PortasLogicas/BarrelShifter8.vhd
 set_global_assignment -name VHDL_FILE Modulos/PortasLogicas/And16.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
