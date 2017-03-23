@@ -1,17 +1,16 @@
  
+
+
 entity ShiftRegisterPIPO16 is
-
-
+	port(
+		clock:     in  STD_LOGIC;
+		input:     in  STD_LOGIC_VECTOR(15 downto 0);
+		direction: in  STD_LOGIC;
+		output:    out STD_LOGIC_VECTOR(15 downto 0)
+	);
+end entity;
  
- 		output:    out STD_LOGIC_VECTOR(15 downto 0) 
 
-
- 
- 	); 
-
-
- 
- end entity; 
 
 
  
