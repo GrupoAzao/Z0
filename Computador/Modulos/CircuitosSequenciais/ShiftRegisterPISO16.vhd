@@ -39,9 +39,9 @@ begin
 
 	u1: Mux2way port map ('0',input(0),shift,w1);
 	u2: BinaryDigit port map (clock,w1,shift,w2);
-	u3: Mux2way port map (w1,input(1),shift,w1);
-	u4: BinaryDigit port map (clock,w2,shift,w3);
-	u5: Mux2way port map (w3,input(2),shift,w5);
+	u3: Mux2way port map (w2,input(1),shift,w3);
+	u4: BinaryDigit port map (clock,w3,shift,w4);
+	u5: Mux2way port map (w4,input(2),shift,w5);
 	u6: BinaryDigit port map (clock,w5,shift,w6);
 	u7: Mux2way port map (w6,input(3),shift,w7);
 	u8: BinaryDigit port map (clock,w7,shift,w8);
