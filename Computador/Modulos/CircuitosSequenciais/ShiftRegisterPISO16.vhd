@@ -6,7 +6,7 @@ entity ShiftRegisterPISO16 is
            shift : in   STD_LOGIC;
            input :    in   STD_LOGIC_VECTOR (15 downto 0);
            output :    out  STD_LOGIC);
-end Piso;
+end ShifterRegisterPISO16;
 
 architecture Behavioral of ShiftRegisterPISO16 is
 
