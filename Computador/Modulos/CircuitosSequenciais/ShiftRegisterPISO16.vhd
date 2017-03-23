@@ -8,7 +8,7 @@ entity ShiftRegisterPISO16 is
            output :    out  STD_LOGIC);
 end Piso;
 
-architecture Behavioral of Piso is
+architecture Behavioral of ShiftRegisterPISO16 is
 
   signal sr: std_logic_vector(15 downto 0) := (others=>'0');
 
