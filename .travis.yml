@@ -26,9 +26,21 @@ matrix:
     - python setup.py install
     - cd ..
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+install:
+  - pip install opencv-python
+  - pip install imutils
+
 script:
-- python run.py -p3
+- python TestesHW/run.py -p3
+- python TestesSW/assembler.py
+- python TestesSW/emulate.py
+- python -m pytest -v TestesSW/teste.py 
 
 notifications:
   email: false
-  slack: elementosdesistemas:ofJV6uLFlgvMBAR0YDOgeGwl#github
+  slack: elementosdesistemas:ofJV6uLFlgvMBAR0YDOgeGwl#github_privado
