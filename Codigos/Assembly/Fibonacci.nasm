@@ -26,11 +26,31 @@ leaw $FIM, %A
 je ; se R[0] = 2 acaba
 nop
 
+
+
 LOOP:
+
 decw %D
+leaw $SCREEN, %A
+movw %D, (%A); guarda o numero q estamos em SCREEN
+
 leaw $0,%A
-subw (%A),%D,%A; faz a apontar pro proximo espaco na RAM
-;agr teria q somar os dois anteriores sem usar o D
+subw (%A),%D,%A; faz A apontar pro proximo espaco na RAM
+
+decw %A
+movw (%A),%D
+incw %A
+movw %D, (%A)
+
+decw %A
+decw %A
+movw (%A),%D
+incw %A
+incw %A
+addw (%A),%D,(%A)
+
+leaw $SCREEN, %A
+movw (%A), %D; guarda o numero q estamos em D
 
 leaw $LOOP, %A
 jne ; continua enquanto D =/= 0
