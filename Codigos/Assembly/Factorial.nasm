@@ -1,4 +1,8 @@
 leaw $0,%A
+movw (%A),%D
+leaw $4,%A
+movw %D,(%A)
+leaw $0,%A
 subw (%A),$1,%D
 leaw $2,%A
 movw %D,(%A)
@@ -32,4 +36,8 @@ jg
 leaw $0,%A
 movw (%A),%D
 leaw $1,%A
+movw %D,(%A)
+leaw $4,%A
+movw (%A),%D
+leaw $0,%A
 movw %D,(%A)
