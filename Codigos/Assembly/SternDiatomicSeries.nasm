@@ -4,6 +4,13 @@
 ; Os resultados são armazenados na RAM[1], RAM[2], etc....
 ; A série deve gerar: 1,1,2,1,3,2,3,1,4,3,5,2,5,3,4,1,5,4,7,3,8,5,7,2,7,5, etc...
 
+leaw $0,%A   ;vai conferir se existe valor na RAM[0]
+movw (%A), %D
+decw %D
+decw %D
+leaw $PULA, %A
+jle
+
 leaw $0,%A   ;vai ser a quantidade de elementos
 movw (%A), %D
 addw %D, (%A), (%A)
@@ -14,14 +21,11 @@ leaw $1,%A
 incw (%A)
 leaw $2,%A
 incw (%A)
-leaw $3,%A
-incw (%A)
-incw (%A)
 
-leaw $4, %A
+leaw $3, %A
 movw %A, %D
 leaw $1200, %A   ;i=contador onde vai ser o proximo numero
-movw %D, (%A)   ;inicia o contador com 4, ja que a lista esta no valor 3
+movw %D, (%A)   ;inicia o contador com 3, ja que a lista esta no valor 2
 
 
 LOOP:   ;vai definir se é par ou impar
