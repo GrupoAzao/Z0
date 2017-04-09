@@ -8,12 +8,7 @@ leaw $0,%A   ;vai conferir se existe valor na RAM[0]
 movw (%A), %D
 decw %D
 leaw $PULA, %A
-jle
-
-leaw $0,%A   ;vai ser a quantidade de elementos
-movw (%A), %D
-addw %D, (%A), (%A)
-incw (%A)
+jl
 
 ; iniciando os primeiros valores:1,1,2
 leaw $1,%A
@@ -22,6 +17,17 @@ leaw $2,%A
 incw (%A)
 leaw $3,%A
 incw (%A)
+incw (%A)
+
+leaw $0,%A   ;se valor RAM[0] for 1 vai pular porque os termos foram dados
+movw (%A), %D
+decw %D
+leaw $PULA, %A
+je
+
+leaw $0,%A   ;vai ser a quantidade de elementos
+movw (%A), %D
+addw %D, (%A), (%A)
 incw (%A)
 
 leaw $4, %A
