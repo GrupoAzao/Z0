@@ -21,11 +21,14 @@ leaw $1,%A
 incw (%A)
 leaw $2,%A
 incw (%A)
+leaw $3,%A
+incw (%A)
+incw (%A)
 
-leaw $3, %A
+leaw $4, %A
 movw %A, %D
 leaw $1200, %A   ;i=contador onde vai ser o proximo numero
-movw %D, (%A)   ;inicia o contador com 3, ja que a lista esta no valor 2
+movw %D, (%A)   ;inicia o contador com 4, ja que a lista esta no valor 3
 
 
 LOOP:   ;vai definir se é par ou impar
