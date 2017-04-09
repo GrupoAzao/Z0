@@ -7,7 +7,6 @@
 leaw $0,%A   ;vai conferir se existe valor na RAM[0]
 movw (%A), %D
 decw %D
-decw %D
 leaw $PULA, %A
 jle
 
