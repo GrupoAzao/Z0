@@ -45,6 +45,9 @@ leaw $4,%A
 movw (%A),%D
 leaw $0,%A
 movw %D,(%A)
+end:
+leaw $end,%A
+jmp
 zero:
 leaw $1,%A
 movw %A,(%A)
