@@ -1,8 +1,10 @@
-
+# Curso de Elementos de Sistemas
+# Desenvolvido por: Luciano Soares <lpsoares@insper.edu.br>
+# Data de criação: 30/03/2017
+	
 import subprocess
 import loadTestes
 import time
-
 
 def assembler():
 	
@@ -19,8 +21,9 @@ def assembler():
 
 		nome = i.split()
 		error = subprocess.call(['java', '-jar', 'TestesSW/Assembler/AssemblerZ0.jar',
-			"Codigos/Assembly/{0}.nasm".format(nome[0]),
-			"-o","TestesSW/machine_code/{0}.hack".format(nome[0])])
+			"Codigos/Assembly/{0}.nasm".format(nome[0]),"-s",
+			"-o","TestesSW/machine_code/{0}.hack".format(nome[0]),
+			"-f","TestesSW/machine_code/{0}.mif".format(nome[0])])
 		if(error!=0):
 			error_code += error
 		else:
