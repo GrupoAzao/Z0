@@ -1,5 +1,6 @@
 ; RightTriangle.nasm
 ; Desenha um triângulo retângulo na tela.
+
 ; Primeira linha
 movw $-1, %A
 movw %A, %D
