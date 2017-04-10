@@ -1,10 +1,11 @@
 # Arquivo que define as rotinas de testes
+# Criado por Luciano Soares <lpsoares@insper.edu.br>
 Div 8 524288
 Mod 8 524288
 Pow 5 8096
 Abs 6 1024
 Fibonacci 1 4096
-SternDiatomicSeries 1 32768
+SternDiatomicSeries 1 2097152
 Factorial 8 4096
 Fibonacci 1 4096
 KolakoskiSequence 1 4096

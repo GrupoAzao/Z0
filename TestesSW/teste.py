@@ -86,6 +86,6 @@ def test_Assembly(nomes_testes):
 		elif poligonos > 6:
 			tipo = "poligono com mais de 6 faces"
 		
-		assert (poligonos>3),"Erro: {0} Geometria Detectada={1}, geometria esperada ({2})".format(nomes_testes[0],tipo,linha[0])	
+		assert (poligonos>=3),"Erro: {0} Geometria Detectada={1}, geometria esperada ({2})".format(nomes_testes[0],tipo,linha[0])	
 
 
