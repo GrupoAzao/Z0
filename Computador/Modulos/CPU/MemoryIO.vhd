@@ -3,16 +3,17 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity MemoryIO is
+
    PORT(
         -- Sistema
         CLK : IN  STD_LOGIC;
         RST : IN  STD_LOGIC; 
 		  
 		  -- RAM 16K
-		ADDRESS		: IN STD_LOGIC_VECTOR (14 DOWNTO 0);
-		INPUT		: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
-		LOAD		: IN STD_LOGIC ;
-		OUTPUT		: OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
+		  ADDRESS		: IN STD_LOGIC_VECTOR (14 DOWNTO 0);
+		  INPUT			: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+		  LOAD			: IN STD_LOGIC ;
+		  OUTPUT			: OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
 		  
         -- LCD EXTERNAL I/OS
         LCD_CS_N     : OUT   STD_LOGIC;	
@@ -21,24 +22,26 @@ entity MemoryIO is
         LCD_RESET_N  : OUT   STD_LOGIC;	
         LCD_RS       : OUT   STD_LOGIC;	-- (DCx) 0 : reg, 1: command
         LCD_WR_N     : OUT   STD_LOGIC;	
+		  --LCD_ACK 		: OUT STD_LOGIC;
 
 		  -- Teclado
-		key_clk      : IN  STD_LOGIC;                     --clock signal from PS/2 keyboard
-		key_data     : IN  STD_LOGIC;                     --data signal from PS/2 keyboard
+		  key_clk      : IN  STD_LOGIC;                     --clock signal from PS/2 keyboard
+		  key_data     : IN  STD_LOGIC;                     --data signal from PS/2 keyboard
         key_code     : OUT STD_LOGIC_VECTOR(6 DOWNTO 0); --code received from PS/2
-		key_new      : OUT STD_LOGIC;                     --output flag indicating new ASCII value
+		  key_new      : OUT STD_LOGIC;                     --output flag indicating new ASCII value
 
 		  -- Signals to/from the SDRAM chip
-        DRAM_ADDR     : OUT   STD_LOGIC_VECTOR (12 downto 0);
-        DRAM_BA       : OUT   STD_LOGIC_VECTOR (1 downto 0);
-        DRAM_CAS_N    : OUT   STD_LOGIC;
+        DRAM_ADDR   : OUT   STD_LOGIC_VECTOR (12 downto 0);
+        DRAM_BA      : OUT   STD_LOGIC_VECTOR (1 downto 0);
+        DRAM_CAS_N   : OUT   STD_LOGIC;
         DRAM_CKE      : OUT   STD_LOGIC;
         DRAM_CLK      : OUT   STD_LOGIC;
-        DRAM_CS_N     : OUT   STD_LOGIC;
-        DRAM_DQ       : INOUT STD_LOGIC_VECTOR(15 downto 0);
+        DRAM_CS_N   : OUT   STD_LOGIC;
+        DRAM_DQ      : INOUT STD_LOGIC_VECTOR(15 downto 0);
         DRAM_DQM      : OUT   STD_LOGIC_VECTOR(1 downto 0);
-        DRAM_RAS_N    : OUT   STD_LOGIC;
-        DRAM_WE_N     : OUT   STD_LOGIC
+        DRAM_RAS_N   : OUT   STD_LOGIC;
+        DRAM_WE_N    : OUT   STD_LOGIC
+
 		  );
 end entity;
 
@@ -57,9 +60,10 @@ END component;
 component Screen is
    PORT(
 	     --Display
-		INPUT : IN STD_LOGIC_VECTOR(15 downto 0);
-		LOAD : IN  STD_LOGIC;
-		ADDRESS : IN STD_LOGIC_VECTOR(13 downto 0);
+		  INPUT : IN STD_LOGIC_VECTOR(15 downto 0);
+		  LOAD : IN  STD_LOGIC;
+		  ADDRESS : IN STD_LOGIC_VECTOR(13 downto 0);
+		  --OUTPUT : OUT STD_LOGIC_VECTOR(15 downto 0);
         -- Sistema
         CLK : IN  STD_LOGIC;
         RST : IN  STD_LOGIC;    
@@ -70,19 +74,47 @@ component Screen is
         LCD_RESET_N  : OUT   STD_LOGIC;	
         LCD_RS       : OUT   STD_LOGIC;	-- (DCx) 0 : reg, 1: command
         LCD_WR_N     : OUT   STD_LOGIC		
+		  --LCD_ON       : OUT   STD_LOGIC	
        );
 end component;
 
 component RAM16K IS
 	PORT
 	(
-		address	    : IN STD_LOGIC_VECTOR (13 DOWNTO 0);
+		address	: IN STD_LOGIC_VECTOR (13 DOWNTO 0);
 		clock		: IN STD_LOGIC  := '1';
 		data		: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		wren		: IN STD_LOGIC ;
-		q		    : OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
+		q		   : OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
 	);
 end component;
+
+--component interfaceSDRAM is
+--
+--    PORT(
+--        -- Sistema
+--        CLK_50  : IN  STD_LOGIC; -- 50 Mhz
+--		    RST			: in std_logic;
+--  
+--        -- I/Os digital
+--		    CPU_INPUT : in std_logic_vector(15 downto 0) := (others => '0');
+--        CPU_OUTPUT : out std_logic_vector(15 downto 0) := (others => '0');
+--        CPU_ADDRESS : in std_logic_vector(13 downto 0) := (others => '0');
+--		    CPU_LOAD  : IN  STD_LOGIC;
+--		  
+--        -- SDRAM
+--        DRAM_ADDR   : out   std_logic_vector(12 downto 0);
+--        DRAM_BA     : out   std_logic_vector(1  downto 0);
+--        DRAM_CAS_N  : out   std_logic;  
+--        DRAM_CKE    : out   std_logic;
+--        DRAM_CLK    : out   std_logic;
+--        DRAM_CS_N   : out   std_logic;
+--        DRAM_DQ     : inout std_logic_vector(15 downto 0);
+--        DRAM_DQM    : out   std_logic_vector(01 downto 0);
+--        DRAM_RAS_N  : out   std_logic;
+--        DRAM_WE_N   : out   std_logic
+--    );
+--end component;
 
 component PLL IS
 	PORT
@@ -96,12 +128,12 @@ component PLL IS
 END component;
 
 component Mux4Way16 is
-    Port ( sel : in  STD_LOGIC_VECTOR (1 downto 0); 
-        a   : in  STD_LOGIC_VECTOR (15 downto 0);   
-		b   : in  STD_LOGIC_VECTOR (15 downto 0);   
-		c   : in  STD_LOGIC_VECTOR (15 downto 0);   
-		d   : in  STD_LOGIC_VECTOR (15 downto 0);   
-        q   : out STD_LOGIC_VECTOR (15 downto 0));  
+    Port ( sel : in  STD_LOGIC_VECTOR (1 downto 0);     -- select input
+           a   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+			  b   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+			  c   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+			  d   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+           q   : out STD_LOGIC_VECTOR (15 downto 0));    -- output
 end component;
 
 SIGNAL LOAD_RAM          : STD_LOGIC := '0';
@@ -122,16 +154,18 @@ TECLADO: ps2_keyboard_to_ascii  port map (
     clk          	=> CLK, 
     ps2_clk      	=> key_clk,
     ps2_data     	=> key_data,
-	ascii_new 		=> s_key_new,
-    ascii_code 	    => s_key_code
+	 ascii_new 		=> s_key_new,
+    ascii_code 	=> s_key_code
 	 );
 
 DISPLAY: Screen  port map (
          INPUT       => INPUT,
 			LOAD        => LOAD_DISPLAY,
 			ADDRESS		=> ADDRESS(13 downto 0),
+			--OUTPUT		=> OUTPUT_DISPLAY,
 			CLK         => CLK, 
 			RST         => RST, 
+			--LCD_ACK 		=> LCD_ACK,
 			LCD_CS_N 	=> LCD_CS_N , 
 			LCD_D 		=> LCD_D, 
 			LCD_RD_N 	=> LCD_RD_N, 
@@ -139,6 +173,29 @@ DISPLAY: Screen  port map (
 			LCD_RS 		=> LCD_RS, 
 			LCD_WR_N 	=> LCD_WR_N
 			);	
+
+--RAM: interfaceSDRAM
+--   PORT MAP(
+--         CLK_50		=> CLK,
+--			RST			=> RST,
+--			CPU_INPUT   => INPUT,
+--			CPU_OUTPUT		=> OUTPUT_RAM,
+--
+--			CPU_ADDRESS		=> ADDRESS(13 downto 0),
+--			CPU_LOAD       => LOAD_RAM,
+--			
+--			DRAM_ADDR      => DRAM_ADDR,
+--   		DRAM_BA        => DRAM_BA,
+--   		DRAM_CAS_N     => DRAM_CAS_N,
+--   		DRAM_CKE       => DRAM_CKE,
+--   		DRAM_CLK       => DRAM_CLK,
+--   		DRAM_CS_N      => DRAM_CS_N,
+--   		DRAM_DQ        => DRAM_DQ,
+--   		DRAM_DQM       => DRAM_DQM,
+--   		DRAM_RAS_N     => DRAM_RAS_N,
+--   		DRAM_WE_N      => DRAM_WE_N
+--
+--	);
 	
 RAM: RAM16K
    PORT MAP(
@@ -149,6 +206,7 @@ RAM: RAM16K
 		q		   => OUTPUT_RAM
 	);
 
+	
 -- Controla LOAD das RAMs
 LOAD_DISPLAY <= LOAD and ADDRESS(14);
 LOAD_RAM <= LOAD and (not ADDRESS(14));
@@ -172,6 +230,7 @@ MUX_OUTPUT : Mux4Way16 port map (
 	d => KEY,
 	q => OUTPUT
 	);
+	 
 
 END logic;
 

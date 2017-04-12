@@ -1,23 +1,11 @@
 --------------------------------------------------------------------------------
---
 --   FileName:         ps2_keyboard_to_ascii.vhd
 --   Dependencies:     ps2_keyboard.vhd, debounce.vhd
---   Design Software:  Quartus II 32-bit Version 12.1 Build 177 SJ Full Version
---
---   HDL CODE IS PROVIDED "AS IS."  DIGI-KEY EXPRESSLY DISCLAIMS ANY
---   WARRANTY OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT
---   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
---   PARTICULAR PURPOSE, OR NON-INFRINGEMENT. IN NO EVENT SHALL DIGI-KEY
---   BE LIABLE FOR ANY INCIDENTAL, SPECIAL, INDIRECT OR CONSEQUENTIAL
---   DAMAGES, LOST PROFITS OR LOST DATA, HARM TO YOUR EQUIPMENT, COST OF
---   PROCUREMENT OF SUBSTITUTE GOODS, TECHNOLOGY OR SERVICES, ANY CLAIMS
---   BY THIRD PARTIES (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF),
---   ANY CLAIMS FOR INDEMNITY OR CONTRIBUTION, OR OTHER SIMILAR COSTS.
---
---   Version History
+--   
 --   Version 1.0 11/29/2013 Scott Larson
 --     Initial Public Release
---    
+--   Modificado 10/04/2017 Luciano Soares
+--     Adicionadas Teclas especiais 
 --------------------------------------------------------------------------------
 
 LIBRARY ieee;
@@ -164,6 +152,20 @@ BEGIN
             
               --translate characters that do not depend on shift, or caps lock
               CASE ps2_code IS
+				    WHEN x"05" => ascii <= x"01";  -- F1
+					 WHEN x"06" => ascii <= x"02";  -- F2
+					 WHEN x"04" => ascii <= x"03";  -- F3
+					 WHEN x"0C" => ascii <= x"04";  -- F4
+					 WHEN x"03" => ascii <= x"05";  -- F5
+					 WHEN x"0B" => ascii <= x"06";  -- F6
+					 WHEN x"83" => ascii <= x"07";  -- F7
+					 WHEN x"0A" => ascii <= x"08";  -- F8
+					 WHEN x"01" => ascii <= x"09";  -- F9
+					 WHEN x"09" => ascii <= x"0A";  -- F10
+					 WHEN x"78" => ascii <= x"0B";  -- F11
+					 WHEN x"07" => ascii <= x"0C";  -- F12
+					 
+					 
                 WHEN x"29" => ascii <= x"20"; --space
                 WHEN x"66" => ascii <= x"08"; --backspace (BS control code)
                 WHEN x"0D" => ascii <= x"09"; --tab (HT control code)
@@ -173,6 +175,22 @@ BEGIN
                   IF(e0_code = '1') THEN      --ps2 code for delete is a multi-key code
                     ascii <= x"7F";             --delete
                   END IF;
+					 WHEN x"6B" =>                   -- seta para esquerda
+                  IF(e0_code = '1') THEN        
+                    ascii <= x"41";           
+						END IF;
+				    WHEN x"72" =>                   -- seta para baixo
+                  IF(e0_code = '1') THEN        
+                    ascii <= x"53";           
+						END IF;
+				    WHEN x"74" =>                   -- seta para direita
+                  IF(e0_code = '1') THEN        
+                    ascii <= x"44";           
+						END IF;
+				    WHEN x"75" =>                   -- seta para cima
+                  IF(e0_code = '1') THEN        
+                    ascii <= x"57";            
+						END IF;
                 WHEN OTHERS => NULL;
               END CASE;
               
@@ -269,16 +287,36 @@ BEGIN
               ELSE                                     --key's primary character is desired
                 CASE ps2_code IS  
                   WHEN x"45" => ascii <= x"30"; --0
-                  WHEN x"16" => ascii <= x"31"; --1
+                  WHEN x"70" => ascii <= x"30"; --0
+						
+						WHEN x"16" => ascii <= x"31"; --1
+						WHEN x"69" => ascii <= x"31"; --1
+						
                   WHEN x"1E" => ascii <= x"32"; --2
+						WHEN x"72" => ascii <= x"32"; --2
+						
                   WHEN x"26" => ascii <= x"33"; --3
-                  WHEN x"25" => ascii <= x"34"; --4
-                  WHEN x"2E" => ascii <= x"35"; --5
-                  WHEN x"36" => ascii <= x"36"; --6
-                  WHEN x"3D" => ascii <= x"37"; --7
-                  WHEN x"3E" => ascii <= x"38"; --8
-                  WHEN x"46" => ascii <= x"39"; --9
-                  WHEN x"52" => ascii <= x"27"; --'
+                  WHEN x"7A" => ascii <= x"33"; --3
+                  
+						WHEN x"25" => ascii <= x"34"; --4
+                  WHEN x"6B" => ascii <= x"34"; --4
+                  
+						WHEN x"2E" => ascii <= x"35"; --5
+                  WHEN x"73" => ascii <= x"35"; --5
+                  
+						WHEN x"36" => ascii <= x"36"; --6
+                  WHEN x"74" => ascii <= x"36"; --6
+                  
+						WHEN x"3D" => ascii <= x"37"; --7
+                  WHEN x"6C" => ascii <= x"37"; --7
+                  
+						WHEN x"3E" => ascii <= x"38"; --8
+                  WHEN x"75" => ascii <= x"38"; --8
+                  
+						WHEN x"46" => ascii <= x"39"; --9
+                  WHEN x"7D" => ascii <= x"39"; --9
+                  
+						WHEN x"52" => ascii <= x"27"; --'
                   WHEN x"41" => ascii <= x"2C"; --,
                   WHEN x"4E" => ascii <= x"2D"; ---
                   WHEN x"49" => ascii <= x"2E"; --.
