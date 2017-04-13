@@ -1,0 +1,193 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Martim/Dropbox/Insper/TerceiroSemestre/elesist/projeto1/Z0
+Emux8way
+Z1 w1488296440
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way.vhd
+FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way.vhd
+l0
+L4
+VcMIZim^j_>0TGlG7NC03C3
+!s100 ^ag5`^MlkFaAfCaX]@3>L0
+Z4 OV;C;10.5b;63
+33
+Z5 !s110 1488498564
+!i10b 1
+Z6 !s108 1488498564.000000
+!s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way.vhd|
+!s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way.vhd|
+!i113 1
+Z7 o-quiet -2008 -work lib
+Z8 tExplicit 1 CvgOpt 0
+Emux8way16
+R1
+R2
+R3
+R0
+8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way16.vhd
+FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way16.vhd
+l0
+L4
+V7MWl=:zn]>Q>M5K]`_b<60
+!s100 @m115@68;o9gzO2VgfBG]0
+R4
+33
+R5
+!i10b 1
+R6
+!s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way16.vhd|
+!s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Mux8Way16.vhd|
+!i113 1
+R7
+R8
+Enand_vhdl
+R1
+R2
+R3
+R0
+Z9 8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\nand_vhdl.vhd
+Z10 FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\nand_vhdl.vhd
+l0
+L4
+VS:b0`RB7FkR`f?`LWaW751
+!s100 dE@NNAOkZ9gRVU=Lj_V6M3
+R4
+33
+Z11 !s110 1488498442
+!i10b 1
+Z12 !s108 1488498442.000000
+Z13 !s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\nand_vhdl.vhd|
+Z14 !s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\nand_vhdl.vhd|
+!i113 1
+R7
+R8
+Amain
+R2
+R3
+DEx4 work 9 nand_vhdl 0 22 S:b0`RB7FkR`f?`LWaW751
+l12
+L11
+V=]S_PV9OLUj_o?:VY]dn_3
+!s100 nA]]H69F<UY30l9d@F6f>0
+R4
+33
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 1
+R7
+R8
+Enor8way
+R1
+R2
+R3
+R0
+8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Nor8Way.vhd
+FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Nor8Way.vhd
+l0
+L4
+VI6@ZGJd>JSC7UGzNAn6GU2
+!s100 bzc2JH[>FOP2l:COLj<IY2
+R4
+33
+R5
+!i10b 1
+R6
+!s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Nor8Way.vhd|
+!s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Nor8Way.vhd|
+!i113 1
+R7
+R8
+Enot16
+Z15 w1488498537
+R2
+R3
+R0
+Z16 8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Not16.vhd
+Z17 FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Not16.vhd
+l0
+L4
+VcR3:=_c::36XfKM9bMR0]1
+!s100 Z4@@C]>ZNRPIH=UGFodFL0
+R4
+33
+R5
+!i10b 1
+R6
+Z18 !s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Not16.vhd|
+Z19 !s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Not16.vhd|
+!i113 1
+R7
+R8
+Aarch_not16
+R2
+R3
+DEx4 work 5 not16 0 22 cR3:=_c::36XfKM9bMR0]1
+l11
+L10
+VRhakmUCMG8HTmD`gi_DbY3
+!s100 H>dB:?3n_6KEf>bB_^LgO3
+R4
+33
+R5
+!i10b 1
+R6
+R18
+R19
+!i113 1
+R7
+R8
+Eor16
+R1
+R2
+R3
+R0
+8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or16.vhd
+FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or16.vhd
+l0
+L4
+VFm015BPNjKE2P[ZaFANAP1
+!s100 >QKR87GJWMdVLQz<g8^hf0
+R4
+33
+!s110 1488498443
+!i10b 1
+!s108 1488498443.000000
+!s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or16.vhd|
+!s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or16.vhd|
+!i113 1
+R7
+R8
+Eor8way
+R1
+R2
+R3
+R0
+8C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or8Way.vhd
+FC:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or8Way.vhd
+l0
+L4
+V6_>9FK_U9`n7]^73i4MMa1
+!s100 Ag3dFfPkCD2FhoYEajciW3
+R4
+33
+R11
+!i10b 1
+R12
+!s90 -quiet|-modelsimini|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\vunit_out\modelsim\modelsim.ini|-2008|-work|lib|C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or8Way.vhd|
+!s107 C:\Users\Martim\Dropbox\Insper\TerceiroSemestre\elesist\projeto1\Z0\Computador\Modulos\PortasLogicas\Or8Way.vhd|
+!i113 1
+R7
+R8
