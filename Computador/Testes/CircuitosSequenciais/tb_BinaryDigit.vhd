@@ -1,6 +1,7 @@
 -- Elementos de Sistemas
--- by Luciano Soares
+-- developed by Luciano Soares
 -- tb_BinaryDigit.vhd
+-- date: 4/4/2017
 
 Library ieee; 
 use ieee.std_logic_1164.all;
@@ -110,6 +111,37 @@ begin
 		inInput <= '1'; inLoad <= '0'; 
 		wait for 200 ps;
 		assert(outOutput = '0')  report "Falha em teste: 14" severity error;
+
+		-- Teste: 15    -- para testar se valor esta de fato ficando armazenado no flip-flop
+		inInput <= '1'; inLoad <= '1'; 
+		wait for 50 ps;
+		assert(outOutput = '0')  report "Falha em teste: 15" severity error;
+
+		-- Teste: 16    -- para testar se valor esta de fato ficando armazenado no flip-flop
+		inInput <= '1'; inLoad <= '1'; 
+		wait for 150 ps;
+		assert(outOutput = '1')  report "Falha em teste: 16" severity error;
+
+		-- Teste: 17    -- para testar se valor esta de fato ficando armazenado no flip-flop
+		inInput <= '1'; inLoad <= '0'; 
+		wait for 200 ps;
+		assert(outOutput = '1')  report "Falha em teste: 17" severity error;
+
+		-- Teste: 18    -- para testar se valor esta de fato ficando armazenado no flip-flop
+		inInput <= '0'; inLoad <= '1'; 
+		wait for 50 ps;
+		assert(outOutput = '1')  report "Falha em teste: 18" severity error;
+
+		-- Teste: 19    -- para testar se valor esta de fato ficando armazenado no flip-flop
+		inInput <= '0'; inLoad <= '1'; 
+		wait for 150 ps;
+		assert(outOutput = '0')  report "Falha em teste: 19" severity error;
+
+		-- Teste: 20
+		inInput <= '1'; inLoad <= '0'; 
+		wait for 200 ps;
+		assert(outOutput = '0')  report "Falha em teste: 20" severity error;
+
 
     test_runner_cleanup(runner); -- Simulation ends here
 

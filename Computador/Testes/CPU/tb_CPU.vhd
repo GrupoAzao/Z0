@@ -49,6 +49,10 @@ begin
   begin
     test_runner_setup(runner, runner_cfg);
 
+      -- inicializando --
+      inReset <= '1';
+      wait for 200 ps;
+
       -- Teste: 0 - leaw $12345,%A
       inInM <= "0000000000000000"; inInstruction <= "0011000000111001"; inReset <= '0';
       wait for 200 ps;
