@@ -38,9 +38,9 @@ begin
       last_output := "000000000000000";
 
     elsif load = '1' and increment = '1' then
-      -- incbyte := STD_LOGIC_VECTOR(unsigned(input(14 downto 0)) +1);
-      output <= input(14 downto 0);
-      last_output := input(14 downto 0);
+      incbyte := STD_LOGIC_VECTOR(unsigned(input(14 downto 0)));
+      output <= incbyte;
+      last_output := incbyte;
 
     elsif load = '1' then
       output <= input(14 downto 0);
