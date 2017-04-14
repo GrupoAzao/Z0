@@ -42,8 +42,8 @@ begin
     test_runner_setup(runner, runner_cfg);
 
       -- Teste: 0
-      inIncrement <= '0'; inLoad <= '0'; inReset <= '0'; inInput <= "0000000000000000";
-      wait for 200 ps;
+      inIncrement <= '0'; inLoad <= '0'; inReset <= '1'; inInput <= "0000000000000000";
+      wait for 400 ps;
       assert(outOutput = "000000000000000")  report "Falha em teste: 0" severity error;
 
       -- Teste: 1
