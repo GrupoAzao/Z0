@@ -26,13 +26,23 @@ PC_process : process(clock,increment,load,reset,input)
   variable last_output : STD_LOGIC_VECTOR(14 downto 0);
 begin
   if clock'event and clock ='1' then
-    if reset = '1' then
+
+    if increment = '0' and load = '0' and reset = '0' then
       output <= "000000000000000";
       last_output := "000000000000000";
+
+    elsif reset = '1' then
+      output <= "000000000000000";
+      last_output := "000000000000000";
+
+    elsif load = '1' and increment = '1' then
+      output <= STD_LOGIC_VECTOR(unsigned(input) +1);
+      last_output := STD_LOGIC_VECTOR(unsigned(input) +1);
 
     elsif load = '1' then
       output <= input(14 downto 0);
       last_output := input(14 downto 0);
+
 
     elsif increment = '1' then
       output <= STD_LOGIC_VECTOR(unsigned(last_output) + 1);
