@@ -80,6 +80,6 @@ begin
 	w20 <= w13;
 	outM <= w13;
 	e6: Register16 port map (clock,w13,w10,w17);
-	e7: PC port map (clock,'1',w12,reset,w15,pcout);
+	e7: PC port map (clock,'1',w12,'1',w15,pcout);
 	writeM <= w11;
 end architecture;
