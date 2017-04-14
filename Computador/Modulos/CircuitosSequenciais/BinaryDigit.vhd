@@ -31,5 +31,5 @@ signal w1,w2: STD_LOGIC;
 begin 
 	mux: Mux2Way port map(w1,input,load,w2);
 	clk_flip: FlipFlopD port map(clock,w2,'1','1',w1);
-	output<=w2;
+	output<=w1;
 end architecture;
