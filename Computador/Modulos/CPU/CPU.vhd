@@ -16,6 +16,7 @@ end entity;
 architecture CPU_arch of CPU is
 signal w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w18,w19 : STD_LOGIC;
 signal w13,w14,w15,w16,w17,w20 : STD_LOGIC_VECTOR(15 downto 0);
+signal sinal : STD_LOGIC_VECTOR(14 downto 0);
 component ControlUnit
   port(
 		instruction                 : in STD_LOGIC_VECTOR(15 downto 0);  -- instrução para executar
@@ -73,8 +74,10 @@ begin
 	e2 : Mux16 port map (w13,instruction,w1,w14);
 	e3 : Register16 port map (clock,w14,w9,w15);
 	e4 : Mux16 port map (w15,inM,w2,w16);
-	AddressM <= w15(14 downto 0);
+	sinal <= w15( 14 downto 0);
+	AddressM <= sinal;
 	e5 : ALU port map (w17,w16,w3,w4,w5,w6,w6,w8,w18,w19,w13);
+	w20 <= w13;
 	outM <= w20;
 	e6: Register16 port map (clock,w13,w10,w17);
 	e7: PC port map (clock,'1',w12,reset,w15,pcout);
