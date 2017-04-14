@@ -74,12 +74,10 @@ begin
 	e2 : Mux16 port map (w13,instruction,w1,w14);
 	e3 : Register16 port map (clock,w14,w9,w15);
 	e4 : Mux16 port map (w15,inM,w2,w16);
-	sinal <= w15( 14 downto 0);
-	addressM <= w15( 14 downto 0);
 	e5 : ALU port map (w17,w16,w3,w4,w5,w6,w6,w8,w18,w19,w13);
-	w20 <= w13;
-	outM <= w13;
 	e6: Register16 port map (clock,w13,w10,w17);
 	e7: PC port map (clock,'1',w12,'1',w15,pcout);
+	outM <= w13;
+	addressM <= w15( 14 downto 0);
 	writeM <= w11;
 end architecture;
