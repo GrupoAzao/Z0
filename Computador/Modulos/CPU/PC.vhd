@@ -1,62 +1,54 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+  entity PC is
+      port(
+         clock     : in  STD_LOGIC;
+ 		increment : in  STD_LOGIC;
+ 		load      : in  STD_LOGIC;
+ 		reset     : in  STD_LOGIC;
+         input     : in  STD_LOGIC_VECTOR(15 downto 0);
+          output    : out STD_LOGIC_VECTOR(14 downto 0)
+      );
+  end entity;
 
-entity PC is
-    port(
-		clock     : in  STD_LOGIC;
-		increment : in  STD_LOGIC;
-		load      : in  STD_LOGIC;
-		reset     : in  STD_LOGIC;
-		input     : in  STD_LOGIC_VECTOR(15 downto 0);
-		output    : out STD_LOGIC_VECTOR(14 downto 0));
-end entity;
+architecture PC_arch of PC is
+begin
 
-architecture ProgramCounter_arch of PC is
-
-signal w1,w2,w3,w4,w7: STD_LOGIC_VECTOR(15 downto 0);
-signal w5,w6: STD_LOGIC;
-
-component Add16
-	port(
-		a   :  in STD_LOGIC_VECTOR(15 downto 0); 
-		b   :  in STD_LOGIC_VECTOR(15 downto 0);
-		q   :  out STD_LOGIC_VECTOR(15 downto 0)); 
-end component;
-
-component Mux16
-	port( 
-		a:   in  STD_LOGIC_VECTOR(15 downto 0); 
-		b:   in  STD_LOGIC_VECTOR(15 downto 0);	
-		sel: in  STD_LOGIC;
-		q:   out STD_LOGIC_VECTOR(15 downto 0));
-end component;
-
-component Register16
-	port(
-		clock:   in STD_LOGIC;
-		input:   in STD_LOGIC_VECTOR(15 downto 0);
-		load:    in STD_LOGIC;
-		output:  out STD_LOGIC_VECTOR(15 downto 0));
-end component;
-
-
--- w1: saida do Mux16 para Reg16
--- w2: saida do Mux16 Reset, Input do Register16
--- w3: saida do Register16, Entrada Add
--- w4: saida do Add16
--- w5: inverso do Load
--- w6: Load
--- w7: Entrada Add = (15 bits + Incremento, 0 ou 1)
+PC_process : process(clock,increment,load,reset,input)
+  variable last_output : STD_LOGIC_VECTOR(14 downto 0);
+  variable incbyte : STD_LOGIC_VECTOR(14 downto 0);
 
 begin
-	s1: Mux16 port map (input,w4,w5,w1);		-- Mux Load
-	s2: Mux16 port map (w1,"0000000000000000",reset,w2); 	-- Mux Reset
-	s3: Register16 port map (clock,w2,w6,w3); 	-- Registrador
-	s4: Add16 port map (w3,w7,w4);	-- ADD: Output do Reg16 com W7
+  if clock'event and clock ='1' then
 
-	w7 <= "000000000000000"&increment;	-- 15 bits + Incremento (concatenation)
-	w5 <= not load;		-- Load negado
-	w6 <= load or reset or increment;
-	output <= w3(14 downto 0);		-- 15 bits
+    if increment = '0' and load = '0' and reset = '0' then
+      output <= "000000000000000";
+      last_output := "000000000000000";
 
-end architecture;
+    elsif reset = '1' then
+      output <= "000000000000000";
+      last_output := "000000000000000";
+
+    elsif load = '1' and increment = '1' then
+      incbyte := STD_LOGIC_VECTOR(unsigned(input(14 downto 0)));
+      output <= incbyte;
+      last_output := incbyte;
+
+    elsif load = '1' then
+      output <= input(14 downto 0);
+      last_output := input(14 downto 0);
+
+    elsif increment = '1' then
+      incbyte := STD_LOGIC_VECTOR(unsigned(last_output(14 downto 0)) + 1);
+      output <= incbyte;
+      last_output := incbyte;
+
+    else
+      output <= last_output;
+
+	end if;
+end if;
+
+end process PC_process;
+end PC_arch;
