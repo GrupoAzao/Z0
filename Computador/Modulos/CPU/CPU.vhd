@@ -78,7 +78,7 @@ begin
 	addressM <= w15( 14 downto 0);
 	e5 : ALU port map (w17,w16,w3,w4,w5,w6,w6,w8,w18,w19,w13);
 	w20 <= w13;
-	outM <= w20;
+	outM <= w13;
 	e6: Register16 port map (clock,w13,w10,w17);
 	e7: PC port map (clock,'1',w12,reset,w15,pcout);
 	writeM <= w11;
