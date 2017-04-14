@@ -25,6 +25,7 @@ begin
 PC_process : process(clock,increment,load,reset,input)
   variable last_output : STD_LOGIC_VECTOR(14 downto 0);
   variable incbyte : STD_LOGIC_VECTOR(14 downto 0);
+
 begin
   if clock'event and clock ='1' then
 
@@ -37,7 +38,7 @@ begin
       last_output := "000000000000000";
 
     elsif load = '1' and increment = '1' then
-      incbyte := STD_LOGIC_VECTOR(unsigned(input) +1);
+      incbyte := STD_LOGIC_VECTOR(unsigned(input(14 downto 0)) +1);
       output <= incbyte;
       last_output := incbyte;
 
@@ -46,7 +47,7 @@ begin
       last_output := input(14 downto 0);
 
     elsif increment = '1' then
-      incbyte := STD_LOGIC_VECTOR(unsigned(last_output) + 1);
+      incbyte := STD_LOGIC_VECTOR(unsigned(last_output(14 downto 0)) + 1);
       output <= incbyte;
       last_output := incbyte;
 
