@@ -75,7 +75,7 @@ begin
 	e3 : Register16 port map (clock,w14,w9,w15);
 	e4 : Mux16 port map (w15,inM,w2,w16);
 	sinal <= w15( 14 downto 0);
-	AddressM <= w15( 14 downto 0);
+	addressM <= w15( 14 downto 0);
 	e5 : ALU port map (w17,w16,w3,w4,w5,w6,w6,w8,w18,w19,w13);
 	w20 <= w13;
 	outM <= w20;
