@@ -1,0 +1,8 @@
+# Arquivo que define as rotinas de testes para o Assembler
+# Criado por Luciano Soares <lpsoares@insper.edu.br>
+# Data: 16/03/2017
+
+nop
+loop
+screen
+keyboard

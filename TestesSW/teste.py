@@ -1,5 +1,7 @@
 # Testador de emulação
-# Luciano Soares
+# Arquivo: testComp.nasm
+# Criado por: Luciano Soares <lpsoares@insper.edu.br>
+# Data: 16/03/2017
 
 import sys, getopt
 import unittest

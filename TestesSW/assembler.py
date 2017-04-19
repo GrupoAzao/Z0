@@ -8,9 +8,11 @@ import time
 
 def assembler():
 	
+	out_dir = "TestesSW/machine_code/"
+
 	start_time = time.time()
 
-	subprocess.call(["mkdir", "-p", "TestesSW/machine_code"])
+	subprocess.call(["mkdir", "-p", out_dir])
 
 	nomes_testes = loadTestes.testes("TestesSW/testes.txt")
 
@@ -22,8 +24,8 @@ def assembler():
 		nome = i.split()
 		error = subprocess.call(['java', '-jar', 'TestesSW/Assembler/AssemblerZ0.jar',
 			"Codigos/Assembly/{0}.nasm".format(nome[0]),"-s",
-			"-o","TestesSW/machine_code/{0}.hack".format(nome[0]),
-			"-f","TestesSW/machine_code/{0}.mif".format(nome[0])])
+			"-o",out_dir+"{0}.hack".format(nome[0]),
+			"-f",out_dir+"{0}.mif".format(nome[0])])
 		if(error!=0):
 			error_code += error
 		else:

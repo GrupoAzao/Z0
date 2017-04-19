@@ -1,7 +1,7 @@
 # Arquivo que define as rotinas de testes
 # Criado por Luciano Soares <lpsoares@insper.edu.br>
-Div 8 524288
-Mod 8 524288
+Div 8 2097152
+Mod 8 2097152
 Pow 5 8096
 Abs 6 1024
 Fibonacci 1 4096

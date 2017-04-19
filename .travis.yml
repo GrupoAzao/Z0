@@ -36,10 +36,7 @@ install:
   - pip install imutils
 
 script:
-- python TestesHW/run.py -p3
-- python TestesSW/assembler.py
-- python TestesSW/emulate.py
-- python -m pytest -v TestesSW/teste.py 
+- sh tests.sh 
 
 notifications:
   email: false
