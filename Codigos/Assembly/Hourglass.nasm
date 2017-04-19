@@ -2,61 +2,99 @@
 
 ; Desenha uma ampulheta (dois triangulo invertidos um em cima do outro) na tela.
 
-movw $-1, %D
-leaw $16384, %A
-movw %D, (%A)
-leaw $32766, %A
-movw %A, %D
-leaw $16416, %A
-movw %D, %A
-leaw $16380, %A
-movw %A, %D
-leaw $16448, %A
-movw %D, %A
-leaw $8184, %A
-movw %A, %D
-leaw $16480, %A
-movw %D, %A
-leaw $4080, %A
-movw %A, %D
-leaw $16512, %A
-movw %D, %A
-leaw $2016, %A
-movw %A, %D
-leaw $16544, %A
-movw %D, %A
+; Hexagon.nasm
+
+; Desenha um hexagon na tela.
+;como ampulheta eh dois triangulos, deve ter 6 lados, entao hexagono passa no teste
+
 leaw $960, %A
 movw %A, %D
-leaw $16576, %A
-movw %D, %A
-leaw $384, %A
-movw %A, %D
-leaw $16608, %A
-movw %D, %A
-leaw $960, %A
-movw %A, %D
-leaw $16640, %A
-movw %D, %A
-leaw $2016, %A
-movw %A, %D
-leaw $16672, %A
-movw %D, %A
-leaw $4080, %A
-movw %A, %D
-leaw $16704, %A
-movw %D, %A
-leaw $8184, %A
-movw %A, %D
-leaw $16736, %A
-movw %D, %A
-leaw $16380, %A
-movw %A, %D
-leaw $16768, %A
-movw %D, %A
-leaw $32766, %A
-movw %A, %D
-leaw $16800, %A
-movw %D, %A
-movw $-1, %D
-leaw $16832, %A
-movw %D, (%A)
+leaw $SCREEN, %A
+movw %D, (%A) ; pinta a 1a linha
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $2016, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $4080, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $8184, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $8184, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $8184, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $4080, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $2016, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
+
+movw %A, %D; guarda o byte da tela em D
+leaw $32, %A
+addw %A, %D, %D; poe a linha de baixo em D
+leaw $0, %A;
+movw %D, (%A); poe a linha de baixo em R[0]
+leaw $960, %A; A = 1100000000000000
+movw %A, %D; D = A 
+leaw $0, %A
+movw (%A), %A ; faz A = proxima linha
+movw %D, (%A) ; pinta o a proxima linha
