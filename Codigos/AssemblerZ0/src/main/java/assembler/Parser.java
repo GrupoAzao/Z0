@@ -54,6 +54,19 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
+    	Character first = command.charAt(0); // pega a primeira letra
+    	
+    	if(first == 'l'){ // se ela for 'l' a instrucao eh leaw
+    		return CommandType.A_COMMAND;
+    	}	
+    	
+    	Character last = command.charAt(command.length()-1);
+    			
+    	if(last == ':'){ 
+    		return CommandType.L_COMMAND;
+    	}
+    	
+    	return CommandType.C_COMMAND;
 
     }
 
@@ -74,6 +87,8 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public String label(String command) {
+    	
+    	return command.replace(":","");
 
     }
 
