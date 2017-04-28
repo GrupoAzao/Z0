@@ -77,7 +77,9 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-
+    	String[] mnemos = command.split("\\s");
+    	mnemos[1].replace("$", "");
+    	return mnemos[1];
     }
 
     /**
@@ -99,7 +101,12 @@ public class Parser {
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
     public String[] instruction(String command) {
-
+    	String[] mnemos = command.split("\\s");
+    	for(String m:mnemos){
+    		m.replace(",", "");
+    		m.replace(";", "");
+    	}
+    	return mnemos;
     }
 
 }
