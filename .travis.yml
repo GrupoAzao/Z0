@@ -36,7 +36,7 @@ install:
   - pip install imutils
 
 script:
-- sh tests.sh 
+- bash tests.sh 
 
 notifications:
   email: false

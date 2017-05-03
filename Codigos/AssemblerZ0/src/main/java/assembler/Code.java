@@ -2,9 +2,7 @@
  * Curso: Elementos de Sistemas
  * Arquivo: Code.java
  */
-
 package assembler;
-
 import java.util.Objects;
 /**
  * Traduz mnemônicos da linguagem assembly para códigos binários da arquitetura Z0.
@@ -31,8 +29,10 @@ public class Code {
         System.out.println("Instruction Type: "+mnemonic[0]);
         String instructionMnemonic = mnemonic[0];
         String firstMnemonic = mnemonic[1];
-        String secondMnemonic = mnemonic[2];
-
+        String secondMnemonic = "";
+        if (mnemonic.length == 3){
+            secondMnemonic = mnemonic[2];
+        }
 
         if (Objects.equals(instructionMnemonic, "jmp") || Objects.equals(instructionMnemonic, "je") ||
                 Objects.equals(instructionMnemonic, "jne") || Objects.equals(instructionMnemonic, "jg") ||
@@ -41,8 +41,14 @@ public class Code {
             return "0001100";
 
             // MOVW
-        } else if (Objects.equals(instructionMnemonic,"movw")){
-            if (Objects.equals(firstMnemonic, "%A")){
+        } else if (Objects.equals(instructionMnemonic,"movw")) {
+            if (Objects.equals(firstMnemonic, "$0")){
+                return "0101010";
+            } else if (Objects.equals(firstMnemonic, "$1")){
+                return "0111111";
+            } else if (Objects.equals(firstMnemonic, "$-1")){
+                return "0111010";
+            } else if (Objects.equals(firstMnemonic, "%A")){
                 return "0110000";
             } else if (Objects.equals(firstMnemonic,"%D")) {
                 return "0001100";
@@ -53,8 +59,41 @@ public class Code {
             }
 
             // ADDW
-        } else if (Objects.equals(instructionMnemonic, "addw")){
-            if (Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "%D") ||
+        } else if (Objects.equals(instructionMnemonic, "addw")) {
+            if (Objects.equals(firstMnemonic, "$0") && Objects.equals(secondMnemonic, "%A") ||
+                    Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "$0")){
+                return "0110000";
+            } else if (Objects.equals(firstMnemonic, "$0") && Objects.equals(secondMnemonic, "%D") ||
+                    Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "$0")){
+                return "0001100";
+            } else if (Objects.equals(firstMnemonic, "$0") && Objects.equals(secondMnemonic, "(%A)") ||
+                    Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "$0")) {
+                return "1110000";
+
+
+            } else if (Objects.equals(firstMnemonic, "$1") && Objects.equals(secondMnemonic, "%A") ||
+                    Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "$1")){
+                return "0110111";
+            } else if (Objects.equals(firstMnemonic, "$1") && Objects.equals(secondMnemonic, "%D") ||
+                    Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "$1")){
+                return "0011111";
+            } else if (Objects.equals(firstMnemonic, "$1") && Objects.equals(secondMnemonic, "(%A)") ||
+                    Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "$1")){
+                return "1110111";
+
+
+            } else if (Objects.equals(firstMnemonic, "$-1") && Objects.equals(secondMnemonic, "%A") ||
+                    Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "$-1")){
+                return "0110010";
+            } else if (Objects.equals(firstMnemonic, "$-1") && Objects.equals(secondMnemonic, "%D") ||
+                    Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "$-1")){
+                return "0001110";
+            } else if (Objects.equals(firstMnemonic, "$-1") && Objects.equals(secondMnemonic, "(%A)") ||
+                    Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "$-1")){
+                return "1110010";
+
+
+            } else if (Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "%D") ||
                     Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "%A")){
                 return "0000010";
             } else if (Objects.equals(firstMnemonic,"%D") && Objects.equals(secondMnemonic,"(%A)") ||
@@ -64,9 +103,16 @@ public class Code {
                 return null;
             }
 
-            // SUBW ! ARRUMAR
+            // SUBW
         } else if (Objects.equals(instructionMnemonic, "subw")){
-            if (Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "%A")){
+            if (Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "$1")){
+                return "0110010";
+            } else if (Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "$1")){
+                return "0001110";
+            } else if (Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "$1")){
+                return "1110010";
+
+            } else if (Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "%A")){
                 return "0010011";
             } else if (Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "%D")) {
                 return "0000111";
@@ -74,11 +120,23 @@ public class Code {
                 return "1010011";
             } else if (Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "%D")){
                 return "1000111";
+            } else {
+                return null;
             }
 
-            // RSUBW ! ARRUMAR
+            // RSUBW
         } else if (Objects.equals(instructionMnemonic, "rsubw")){
-            return "0010011";
+            if (Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "%A")){
+                return "0000111";
+            } else if (Objects.equals(firstMnemonic, "%A") && Objects.equals(secondMnemonic, "%D")) {
+                return "0010011";
+            } else if (Objects.equals(firstMnemonic, "%D") && Objects.equals(secondMnemonic, "(%A)")){
+                return "1000111";
+            } else if (Objects.equals(firstMnemonic, "(%A)") && Objects.equals(secondMnemonic, "%D")){
+                return "1010011";
+            } else {
+                return null;
+            }
 
             // INCW
         } else if (Objects.equals(instructionMnemonic, "incw")){
@@ -162,7 +220,8 @@ public class Code {
             return "0001100";
         } else {
             System.out.println("Instrução de cálculo inválida");
-        } return null;
+            return null;
+        }
     }
     // /**
     //  * Retorna o código binário do mnemônico para realizar uma operação de jump (salto).
@@ -171,7 +230,11 @@ public class Code {
     //  */
     public static String jump(String[] mnemonic) {
 
-        String jumpInstruction = mnemonic[0];
+        String jumpInstruction = "";
+        if (mnemonic.length == 1 && !Objects.equals(mnemonic[0], "nop")){
+            jumpInstruction = mnemonic[0];
+        }
+
         if (Objects.equals(jumpInstruction, "jmp")){
             return "111";
         } else if (Objects.equals(jumpInstruction, "je")){
