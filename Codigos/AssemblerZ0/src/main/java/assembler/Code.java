@@ -16,8 +16,154 @@ public class Code {
     //  * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
     //
 
-    public static String dest(String[] mnemonic) {
-      return null;
+    public static String dest(String[] mnemnonic) {
+        String instructionMnemonic = mnemonic[0];
+        String firstMnemonic = mnemonic[1];
+        String secondMnemonic = mnemonic[2];
+        String thirdMnemonic = mnemonic[3];
+
+        if (Objects.equals(instructionMnemonic, "jmp") || Objects.equals(instructionMnemonic, "je") ||
+                Objects.equals(instructionMnemonic, "jne") || Objects.equals(instructionMnemonic, "jg") ||
+                Objects.equals(instructionMnemonic, "jge") || Objects.equals(instructionMnemonic, "jl") ||
+                Objects.equals(instructionMnemonic, "jle")){
+            return "000";
+        }
+
+        // MOVW
+        else if (Objects.equals(instructionMnemonic,"movw")){
+            if(Objects.equals(secondMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(secondMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(secondMnemonic, "%D")){
+                return "010";
+            }
+
+        // ADDW
+        else if (Objects.equals(instructionMnemonic, "addw")){
+            if(Objects.equals(thirdMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(thirdMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(thirdMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // SUBW
+        else if (Objects.equals(instructionMnemonic, "subw")){
+            if(Objects.equals(thirdMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(thirdMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(thirdMnemonic, "%D")){
+                return "010";
+            }
+        } 
+
+        // RSUBW
+        else if (Objects.equals(instructionMnemonic, "rsubw")){
+            if(Objects.equals(thirdMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(thirdMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(thirdMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // INCW
+        else if (Objects.equals(instructionMnemonic, "incw")){
+            if(Objects.equals(firstMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(firstMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(firstMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // DECW
+        else if (Objects.equals(instructionMnemonic, "decw")){
+            if(Objects.equals(firstMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(firstMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(firstMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // NOTW
+        else if (Objects.equals(instructionMnemonic, "notw")){
+            if(Objects.equals(firstMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(firstMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(firstMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // NEGW
+        else if (Objects.equals(instructionMnemonic, "negw")){
+            if(Objects.equals(firstMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(firstMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(firstMnemonic, "%D")){
+                return "010";
+            }           
+        }
+
+        // ANDW
+        else if (Objects.equals(instructionMnemonic, "andw")){
+            if(Objects.equals(thirdMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(thirdMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(thirdMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // ORW
+        else if (Objects.equals(instructionMnemonic, "orw")){
+            if(Objects.equals(thirdMnemonic, "%A")){
+                return "100";
+            }
+            else if(Objects.equals(thirdMnemonic, "(%A)")){
+                return "001";
+            }
+            else if(Objects.equals(thirdMnemonic, "%D")){
+                return "010";
+            }
+        }
+
+        // NOP
+        else if (Objects.equals(instructionMnemonic, "nop")){
+            return "000"; 
+        }
+
+            
     }
 
     // /**
