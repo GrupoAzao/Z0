@@ -7,29 +7,23 @@
 
 package assembler;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
 
 import assembler.Parser;
 
-public class ParserTest extends TestCase  {
+public class ParserTest {
 
     Parser parser = null;
 
     /**
      * Create the test case
      *
-     * @param testName name of the test case
      */
-    public ParserTest( String testName ) {
-        super( testName );
+    public ParserTest() {
         try {
             parser = new Parser("src/test/resources/testEmpty.nasm");
         } catch(Exception e) {
@@ -38,31 +32,19 @@ public class ParserTest extends TestCase  {
     }
 
     /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite( ParserTest.class );
-    }
-
-    /**
-     * Teste para checar se parser foi instanciado
-     */
-    public void testParser_instanciado() {
-
-        try {
-            assertNotNull("Falha a criar o Parser",parser);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
      * Teste para a instrução commandType
      */
+    @Test
     public void testParser_commandType() {
 
+    	try {
+    		org.junit.Assume.assumeNotNull( parser.commandType("nop") );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
+    	
         try {
+        	
             assertTrue("leaw $0,%A",parser.commandType("leaw $0,%A")==Parser.CommandType.A_COMMAND);
             assertTrue("abc:",parser.commandType("abc:")==Parser.CommandType.L_COMMAND);
             assertTrue("movw %A,%D",parser.commandType("movw %A,%D")==Parser.CommandType.C_COMMAND);
@@ -73,7 +55,8 @@ public class ParserTest extends TestCase  {
             assertTrue("jmp",parser.commandType("jmp")==Parser.CommandType.C_COMMAND);
             assertTrue("nop",parser.commandType("nop")==Parser.CommandType.C_COMMAND);
             assertTrue("addw %D,%A,%D",parser.commandType("addw %D,%A,%D")==Parser.CommandType.C_COMMAND);
-        } catch(Exception e) {
+            
+	    } catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -81,11 +64,21 @@ public class ParserTest extends TestCase  {
     /**
      * Teste para a instrução label
      */
+    @Test
     public void testParser_label() {
+    	
+    	try {
+    		org.junit.Assume.assumeNotNull( parser.label("x:") );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
+    	
         try {
+
             assertTrue("abc:",parser.label("abc:").equals("abc"));
             assertTrue("TESTE:",parser.label("TESTE:").equals("TESTE"));
             assertTrue("Z0:",parser.label("Z0:").equals("Z0"));
+	    	
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -94,13 +87,21 @@ public class ParserTest extends TestCase  {
     /**
      * Teste para a instrução symbol
      */
+    @Test
     public void testParser_symbol() {
 
+    	try {
+    		org.junit.Assume.assumeNotNull( parser.symbol("leaw $0,%A") );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
         try {
-            assertTrue("leaw $0,%A",parser.symbol("leaw $0,%A").equals("0"));
-            assertTrue("leaw $i,%A",parser.symbol("leaw $i,%A").equals("i"));
-            assertTrue("leaw $LOOP,%A",parser.symbol("leaw $LOOP,%A").equals("LOOP"));
-            assertTrue("leaw $12345,%A",parser.symbol("leaw $12345,%A").equals("12345"));
+
+	            assertTrue("leaw $0,%A",parser.symbol("leaw $0,%A").equals("0"));
+	            assertTrue("leaw $i,%A",parser.symbol("leaw $i,%A").equals("i"));
+	            assertTrue("leaw $LOOP,%A",parser.symbol("leaw $LOOP,%A").equals("LOOP"));
+	            assertTrue("leaw $12345,%A",parser.symbol("leaw $12345,%A").equals("12345"));
+	        
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -109,9 +110,17 @@ public class ParserTest extends TestCase  {
     /**
      * Teste para a instrução instruction
      */
+    @Test
     public void testParser_instruction() {
 
+    	try {
+    		org.junit.Assume.assumeTrue( parser.instruction("nop") != null );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
+    	
         try {
+    	
             assertTrue("leaw $0,%A",Arrays.equals(parser.instruction("leaw $0,%A"),new String[] {"leaw","$0","%A"}));
             assertTrue("leaw $i,%A",Arrays.equals(parser.instruction("leaw $i,%A"),new String[] {"leaw","$i","%A"}));
             assertTrue("leaw $LOOP,%A",Arrays.equals(parser.instruction("leaw $LOOP,%A"),new String[] {"leaw","$LOOP","%A"}));
@@ -127,7 +136,7 @@ public class ParserTest extends TestCase  {
             assertTrue("notw %D",Arrays.equals(parser.instruction("notw %D"),new String[] {"notw","%D"}));
             assertTrue("negw %A",Arrays.equals(parser.instruction("negw %A"),new String[] {"negw","%A"}));
             assertTrue("negw %D",Arrays.equals(parser.instruction("negw %D"),new String[] {"negw","%D"}));
-
+          
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -137,10 +146,18 @@ public class ParserTest extends TestCase  {
     /**
      * Teste para a instrução instruction
      */
+    @Test
     public void testParser_advance() {
-
+    	
+    	try {
+    		Parser parser_testEmpty = new Parser("src/test/resources/testEmpty.nasm");
+    		org.junit.Assume.assumeNotNull( parser_testEmpty.advance() );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
+    	
         try {
-
+    	
             Parser parser_testLeaw = new Parser("src/test/resources/testLeaw.nasm");
             assertTrue("Parser advance()",parser_testLeaw.advance());
             assertTrue("Parser leaw $0,%A",parser_testLeaw.command().equals("leaw $0,%A"));
@@ -223,9 +240,5 @@ public class ParserTest extends TestCase  {
         }
 
     }  
-
-
-
-
 
 }

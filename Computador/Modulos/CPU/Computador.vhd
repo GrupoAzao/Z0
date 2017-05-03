@@ -30,7 +30,7 @@ entity Computador is
         LCD_RESET_N  : OUT   STD_LOGIC;	
         LCD_RS       : OUT   STD_LOGIC;	      -- (DCx) 0 : reg, 1: command
         LCD_WR_N     : OUT   STD_LOGIC;
-		  LCD_ON       : OUT   STD_LOGIC := '1';	-- liga e desliga o LCD
+		  LCD_ON       : OUT   STD_LOGIC;	-- liga e desliga o LCD
 		
 		  -- Teclado
 		  key_clk      : IN    STD_LOGIC;         -- clock signal from PS/2 keyboard
@@ -71,6 +71,7 @@ ARCHITECTURE logic OF Computador IS
 		PORT
 		(
 			address	 : IN STD_LOGIC_VECTOR (14 DOWNTO 0);
+			--address	 : IN STD_LOGIC_VECTOR (13 DOWNTO 0);
 			clock		 : IN STD_LOGIC  := '1';
 			q		    : OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
 		);
@@ -94,8 +95,9 @@ ARCHITECTURE logic OF Computador IS
 			  LCD_RD_N     : OUT   STD_LOGIC;	
 			  LCD_RESET_N  : OUT   STD_LOGIC;	
 			  LCD_RS       : OUT   STD_LOGIC;	-- (DCx) 0 : reg, 1: command
-			  LCD_WR_N     : OUT   STD_LOGIC;	
-			  --LCD_ACK 		: OUT STD_LOGIC;
+			  LCD_WR_N     : OUT   STD_LOGIC;
+			  LCD_ON       : OUT   STD_LOGIC; 
+			  LCD_ACK 		: OUT   STD_LOGIC;
 			
 			  -- Teclado
 			  key_clk      : IN  STD_LOGIC;                     --clock signal from PS/2 keyboard
@@ -132,17 +134,12 @@ ARCHITECTURE logic OF Computador IS
 	SIGNAL CLK_2KHZ      : STD_LOGIC;
 
 	SIGNAL RST_INTERNAL  : STD_LOGIC := '1';
-
+	
+	SIGNAL LCD_ACK          : STD_LOGIC;
+	
+	SIGNAL LOAD          : STD_LOGIC := '0';
 	SIGNAL INPUT         : STD_LOGIC_VECTOR(15 downto 0) := "1111111111111111";
 	SIGNAL ADDRESS       : STD_LOGIC_VECTOR(14 downto 0) := "100000000000000";
-
-	SIGNAL LOAD_CPU      : STD_LOGIC := '0';
-	SIGNAL INPUT_CPU     : STD_LOGIC_VECTOR(15 downto 0);
-	SIGNAL ADDRESS_CPU   : STD_LOGIC_VECTOR(14 downto 0);
-
-	SIGNAL LOAD_MEMORY   : STD_LOGIC := '0';
-	SIGNAL INPUT_MEMORY  : STD_LOGIC_VECTOR(15 downto 0);
-	SIGNAL ADDRESS_MEMORY: STD_LOGIC_VECTOR(14 downto 0);
 
 	SIGNAL OUTPUT_RAM    : STD_LOGIC_VECTOR(15 downto 0);
 	SIGNAL INSTRUCTION   : STD_LOGIC_VECTOR(15 downto 0);
@@ -151,6 +148,8 @@ ARCHITECTURE logic OF Computador IS
 	SIGNAL S_key_code    : STD_LOGIC_VECTOR(6 downto 0);
 	SIGNAL S_key_new     : STD_LOGIC;
 
+
+	
 BEGIN
 
 	MAIN_CPU : CPU PORT MAP (
@@ -158,13 +157,14 @@ BEGIN
 			inM =>         OUTPUT_RAM,
 			instruction => INSTRUCTION,
 			reset =>       RST_INTERNAL,
-			outM =>        INPUT_CPU,
-			writeM =>      LOAD_CPU,  
-			addressM =>    ADDRESS_CPU,
+			outM =>        INPUT,
+			writeM =>      LOAD,  
+			addressM =>    ADDRESS,
 			pcout =>       PC
 	  );
 
 	ROM : ROM32K PORT MAP (
+			--address	 => PC(13 downto 0),
 			address	 => PC(14 downto 0),
 			clock		 => CLK_2KHZ,
 			q		    => INSTRUCTION
@@ -173,9 +173,9 @@ BEGIN
 	MEMORY_MAPED : MemoryIO PORT MAP (
 			CLK         => CLK, 
 			RST         => RST,
-			ADDRESS		=> ADDRESS_MEMORY,
-			INPUT       => INPUT_MEMORY,
-			LOAD        => LOAD_MEMORY,
+			ADDRESS		=> ADDRESS,
+			INPUT       => INPUT,
+			LOAD        => LOAD,
 			OUTPUT		=> OUTPUT_RAM,
 			LCD_CS_N 	=> LCD_CS_N , 
 			LCD_D 		=> LCD_D, 
@@ -183,7 +183,8 @@ BEGIN
 			LCD_RESET_N => LCD_RESET_N, 
 			LCD_RS 		=> LCD_RS, 
 			LCD_WR_N 	=> LCD_WR_N,
-			--LCD_ACK 		=> LCD_ACK,
+			LCD_ON		=> LCD_ON,
+			LCD_ACK 		=> LCD_ACK,
 			key_clk     => key_clk,
 			key_data    => key_data,
 			key_code    => s_key_code,
@@ -214,40 +215,13 @@ BEGIN
 		 s_key_code&s_key_new       when "0000",
 		 PC(7 downto 0)             when "0001",
 		 INSTRUCTION(7 downto 0)    when "0010",
-		 ADDRESS_MEMORY(7 downto 0) when "0011",
-		 INPUT_MEMORY(7 downto 0)   when "0100",
+		 ADDRESS(7 downto 0) when "0011",
+		 INPUT(7 downto 0)   when "0100",
 		 OUTPUT_RAM(7 downto 0)     when "0101",
 		 "00000000"                 when others;
 
-	INPUT_MEMORY <= INPUT_CPU when RST_INTERNAL = '0' else INPUT;
-	LOAD_MEMORY <= LOAD_CPU or RST_INTERNAL;
-	ADDRESS_MEMORY <= ADDRESS_CPU when RST_INTERNAL = '0' else ADDRESS;
+	RST_INTERNAL <= not ( RST and LCD_ACK ); -- So libera a CPU depois do Display estar pronto
 
-	process (CLK_2KHZ, RST)
-	variable aguarda : integer := 0;
-	begin
-
-		-- Inicializacao	
-		if(rising_edge(CLK_2KHZ)) then
-			if(RST = '1') then
-				if(aguarda > 4800) then
-					RST_INTERNAL <= '0';
-					LCD_ON <= '1';
-				else
-					aguarda := aguarda + 1;
-					INPUT <= "0000000000000000";  -- apaga as linhas
-					ADDRESS <= std_logic_vector(to_unsigned( aguarda + 16384,15));  -- apaga as linhas
-				end if;
-			else
-				RST_INTERNAL <= '1';
-				aguarda := 0;
-				LCD_ON <= '0';
-				INPUT <= "0000000000000000";	   -- apaga a primeira linha
-				ADDRESS <= "100000000000000";	   -- apaga a primeira linha
-			end if;
-		end if;
-			
-	end process;
 
 end logic;
 

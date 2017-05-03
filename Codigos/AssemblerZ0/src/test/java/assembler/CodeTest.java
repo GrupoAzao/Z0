@@ -7,43 +7,42 @@
 
 package assembler;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 import assembler.Code;
 
-public class CodeTest extends TestCase  {
+public class CodeTest  {
 
     /**
      * Create the test case
-     *
-     * @param testName name of the test case
      */
-    public CodeTest( String testName ) {
-        super( testName );
-    }
+    public CodeTest() {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite( CodeTest.class );
     }
-
+	
     /**
      * Teste para conversão para binário
      */
+    @Test
     public void testCode_toBinary() {
 
+    	try {
+        	org.junit.Assume.assumeNotNull( Code.toBinary("0") );		// ignora test
+        } catch(Exception e) { 
+        	org.junit.Assume.assumeNoException(e);
+        }
+
         try {
-            assertTrue(Code.toBinary(    "0").equals("000000000000000"));
+
+	        assertTrue(Code.toBinary(    "0").equals("000000000000000"));
             assertTrue(Code.toBinary(    "1").equals("000000000000001"));
             assertTrue(Code.toBinary(   "10").equals("000000000001010"));
             assertTrue(Code.toBinary(  "100").equals("000000001100100"));
             assertTrue(Code.toBinary( "1000").equals("000001111101000"));
             assertTrue(Code.toBinary("21845").equals("101010101010101"));
             assertTrue(Code.toBinary("32767").equals("111111111111111"));
+                	
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -52,9 +51,15 @@ public class CodeTest extends TestCase  {
 	/**
      * Teste para geração de código para Destino
      */
-    public void testCode_Dest() {
+    @Test
+    public void testCode_Destine() {
+    	
+    	//try {
+    		org.junit.Assume.assumeNotNull( Code.dest(new String[] {"nop"}) );		// ignora test
+    	//} catch(Exception e) { }
 
 		try {
+
         	assertTrue("movw %A %D",Code.dest(new String[] {"movw","%A","%D"}).equals("010"));
         	assertTrue("addw %A %D",Code.dest(new String[] {"addw","%A","%D","%D"}).equals("010"));
         	assertTrue("movw %D %A",Code.dest(new String[] {"movw","%D","%A"}).equals("100"));
@@ -82,6 +87,7 @@ public class CodeTest extends TestCase  {
         	assertTrue("jge",Code.dest(new String[] {"jge"}).equals("000"));
         	assertTrue("jl",Code.dest(new String[] {"jl"}).equals("000"));
         	assertTrue("jle",Code.dest(new String[] {"jle"}).equals("000"));
+
 		} catch(Exception e) {
 		  	e.printStackTrace();
 		}
@@ -91,9 +97,16 @@ public class CodeTest extends TestCase  {
 	/**
      * Teste para geração de código para Calculo
      */
-    public void testCode_Comp() {
+    //@Ignore
+    @Test
+    public void testCode_Computation() {
 
+    	//try {
+    		org.junit.Assume.assumeNotNull( Code.comp(new String[] {"nop"}) );		// ignora test
+    	//} catch(Exception e) { }
+    
 		try {
+			
         	assertTrue("movw %A %D",Code.comp(new String[] {"movw","%A","%D"}).equals("0110000"));
         	assertTrue("addw %A %D %D",Code.comp(new String[] {"addw","%A","%D","%D"}).equals("0000010"));
         	assertTrue("movw %D %A",Code.comp(new String[] {"movw","%D","%A"}).equals("0001100"));
@@ -121,6 +134,7 @@ public class CodeTest extends TestCase  {
         	assertTrue("jge",Code.comp(new String[] {"jge"}).equals("0001100"));
         	assertTrue("jl",Code.comp(new String[] {"jl"}).equals("0001100"));
         	assertTrue("jle",Code.comp(new String[] {"jle"}).equals("0001100"));
+        	
 		} catch(Exception e) {
 		  	e.printStackTrace();
 		}
@@ -130,9 +144,13 @@ public class CodeTest extends TestCase  {
 	/**
      * Teste para geração de código para Calculo
      */
+    @Test
     public void testCode_Jump() {
 
+    	org.junit.Assume.assumeNotNull( Code.jump(new String[] {"nop"}) );		// ignora test
+
 		try {
+	
         	assertTrue("movw %A,%D",Code.jump(new String[] {"movw","%A","%D"}).equals("000"));
         	assertTrue("addw %A,%D,%D",Code.jump(new String[] {"addw","%A","%D","%D"}).equals("000"));
         	assertTrue("movw %D,%A",Code.jump(new String[] {"movw","%D","%A"}).equals("000"));
@@ -160,6 +178,7 @@ public class CodeTest extends TestCase  {
         	assertTrue("jge",Code.jump(new String[] {"jge"}).equals("011"));
         	assertTrue("jl",Code.jump(new String[] {"jl"}).equals("100"));
         	assertTrue("jle",Code.jump(new String[] {"jle"}).equals("110"));
+	    	
 		} catch(Exception e) {
 		  	e.printStackTrace();
 		}

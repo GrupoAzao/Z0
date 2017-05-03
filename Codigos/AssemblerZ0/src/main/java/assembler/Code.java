@@ -16,7 +16,8 @@ public class Code {
      * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
      */
     public static String dest(String[] mnemnonic) {
-
+    	//return null;
+    	return "xxx";
     }
 
     /**
@@ -25,7 +26,7 @@ public class Code {
      * @return Opcode (String de 7 bits) com código em linguagem de máquina para a instrução.
      */
     public static String comp(String[] mnemnonic) {
-
+    	return null;
     }
 
     /**
@@ -34,7 +35,7 @@ public class Code {
      * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
      */
     public static String jump(String[] mnemnonic) {
-
+    	return null;
     }
 
     /**
@@ -43,7 +44,7 @@ public class Code {
      * @return Valor em binário (String de 15 bits) representado com 0s e 1s.
      */
     public static String toBinary(String symbol) {
-
+    	return null;
     }
 
 }
