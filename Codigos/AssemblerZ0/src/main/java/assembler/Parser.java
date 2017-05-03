@@ -33,8 +33,8 @@ public class Parser {
      * entrada o método retorna "Falso", senão retorna "Verdadeiro".
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
-    public boolean advance() {
-
+    public Boolean advance() {
+    	return null;
     }
 
     /**
@@ -42,7 +42,7 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-
+    	return null;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
-
+    	return null;
     }
 
     /**
@@ -64,7 +64,7 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-
+    	return null;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public String label(String command) {
-
+    	return null;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Parser {
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
     public String[] instruction(String command) {
-
+    	return null;
     }
 
 }

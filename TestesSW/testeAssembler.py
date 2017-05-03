@@ -8,6 +8,7 @@ import unittest
 import pytest	
 import subprocess
 
+# Carregas os casos de uso para os testes
 def loadTestesAssembler(nome_arquivo):
 
 	nomes_testes = []
@@ -23,8 +24,53 @@ def loadTestesAssembler(nome_arquivo):
 
 	return nomes_testes
 
+# Verificar se testes unitários passaram
+def checkTestsAssembler(pasta):
+
+	hasErrors = False
+
+	nome_arquivo = pasta+"maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst"
+
+	testesJUnit = []
+
+	# rotina de leitura dos arquivos que fizeram testes
+	with open(nome_arquivo, 'r') as arquivo:
+		tmp = arquivo.read().splitlines()
+
+		for i in tmp:
+			if i.strip():
+				str = i.strip();
+				str = str.replace("/",".")
+				str = str.replace("class","txt")
+				testesJUnit.append(str)
+
+	
+	for i in testesJUnit:
+
+		# rotina de leitura do arquivo de teste
+		with open(pasta+"surefire-reports/"+i, 'r') as arquivo:
+			tmp = arquivo.read().splitlines()
+			partes = tmp[3].split()
+			for i in range(len(partes)):
+				if(partes[i]=='Failures:'):
+					if(partes[i+1]!='0,'):
+						hasErrors = True
+				if(partes[i]=='Errors:'):
+					if(partes[i+1]!='0,'):
+						hasErrors = True
+				if(partes[i]=='Skipped:'):
+					if(partes[i+1]!='0,'):
+						hasErrors = True
+
+	return hasErrors
+
+# Rotinas para carregar os testes
 nomes_testes = loadTestesAssembler("TestesSW/testesAssembler.txt")
 
+
+# Testes a serem realizados
+@pytest.mark.skipif(checkTestsAssembler("Codigos/AssemblerZ0/target/"),
+	reason="Testes unitários anteriores não passaram por completo, não executando teste de sistema.")
 @pytest.mark.parametrize(('nomes_testes'),nomes_testes)
 def test_Assembler(nomes_testes):
 
