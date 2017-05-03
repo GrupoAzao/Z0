@@ -17,7 +17,7 @@ public class Code {
     //
 
     public static String dest(String[] mnemonic) {
-
+      return null;
     }
 
     // /**
