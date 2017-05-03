@@ -33,13 +33,13 @@ public class SymbolTableTest {
     @Test
     public void testSymbolTable_initialization() {
 
-    	
+        
         assertNotNull("Falha a criar o SymbolTable",table);
 
         try {
-        	org.junit.Assume.assumeTrue( table.contains("X") != null );		// ignora test
+            org.junit.Assume.assumeNotNull( table.contains("X") );      // ignora test
         } catch(Exception e) { 
-        	org.junit.Assume.assumeNoException(e);
+            org.junit.Assume.assumeNoException(e);
         }
         
         try {
@@ -112,7 +112,7 @@ public class SymbolTableTest {
 
             assertTrue("Testando se Tabela de Símbolos CONTÉM THAT",table.contains("THAT"));
             assertTrue("Verificando se THAT vale 4 na Tabela de Símbolos",table.getAddress("THAT")==4);
-	    	
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -124,13 +124,13 @@ public class SymbolTableTest {
     @Test
     public void testSymbolTable_addEntry() {
 
-    	try {
-    		table.addEntry("X",0);
-    		org.junit.Assume.assumeTrue( table.contains("X") != null );		// ignora test
+        try {
+            table.addEntry("X",0);
+            org.junit.Assume.assumeNotNull( table.contains("X") );      // ignora test
         } catch(Exception e) { 
-        	org.junit.Assume.assumeNoException(e);
+            org.junit.Assume.assumeNoException(e);
         }
-    	
+        
         try {
 
             assertFalse("Testando se Tabela de Símbolos NÃO contém A",table.contains("A"));
@@ -157,7 +157,7 @@ public class SymbolTableTest {
             table.addEntry("LOOP",0);
             assertTrue("Testando se Tabela de Símbolos CONTÉM LOOP",table.contains("LOOP"));
             assertTrue("Verificando se LOOP vale 16 na Tabela de Símbolos",table.getAddress("LOOP")==0);
-	    	
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -170,15 +170,15 @@ public class SymbolTableTest {
     @Test
     public void testSymbolTable_repetitive() {
 
-    	try {
-    		table.addEntry("X",0);
-    		org.junit.Assume.assumeTrue( table.contains("X") != null );		// ignora test
-        } catch(Exception e) { 
-        	org.junit.Assume.assumeNoException(e);
-        }
-    	
         try {
-    	
+            table.addEntry("X",0);
+            org.junit.Assume.assumeNotNull( table.contains("X") );      // ignora test
+        } catch(Exception e) { 
+            org.junit.Assume.assumeNoException(e);
+        }
+        
+        try {
+        
             for (int i = 0; i < 16384; i++) {
                 table.addEntry("TESTE"+i,0);
             }

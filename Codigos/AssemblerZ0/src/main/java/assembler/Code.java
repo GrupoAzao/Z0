@@ -16,8 +16,7 @@ public class Code {
      * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
      */
     public static String dest(String[] mnemnonic) {
-    	//return null;
-    	return "xxx";
+    	return null;
     }
 
     /**
