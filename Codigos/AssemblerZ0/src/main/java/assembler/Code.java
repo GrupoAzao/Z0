@@ -405,7 +405,13 @@ public class Code {
     //  */
     public static String toBinary(String symbol) {
         Integer integer = Integer.parseInt(symbol);
-        return Integer.toBinaryString(integer);
+        StringBuilder binary = new StringBuilder(Integer.toBinaryString(integer));
+
+        while (binary.length() != 15){
+            binary.insert(0,"0");
+        }
+        System.out.println("Symbol:" + symbol + " binary: "+ binary);
+        return binary.toString();
     }
 
 }
