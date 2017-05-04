@@ -75,6 +75,7 @@ public class Parser {
      * @throws IOException 
      */
 
+
     public boolean advance() throws IOException {
     	sb.append(System.lineSeparator());
 		line = br.readLine();
@@ -106,7 +107,6 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
-
     	Character first = command.charAt(0); // pega a primeira letra
     	
     	if(first == 'l'){ // se ela for 'l' a instrucao eh leaw
@@ -131,6 +131,7 @@ public class Parser {
      * leaw $51,%A
      */
     public String symbol(String command) {
+
     	String[] mnemos = command.split("\\s");
     	String a1 = mnemos[1].replace("$", "");
     	a1 = a1.replace(",%A", "");
@@ -146,7 +147,7 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public String label(String command) {
-    	
+
     	return command.replace(":","");
 
     }

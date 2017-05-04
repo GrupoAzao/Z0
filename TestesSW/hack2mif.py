@@ -24,6 +24,17 @@ def traduz(nome_arquivo):
 			for idx, val in enumerate(hack):
 				if val.strip():
 					arquivoMif.write(" {0:5d} : {1}\n".format(idx,val))
+					if (hack[idx][0]=='1') and (hack[idx][13:16]!="000"):
+						if idx<len(hack)-1 :
+							if hack[idx+1].strip():
+								if (hack[idx+1][0]!='1') or (hack[idx+1][10:16]!="000000"):
+									print("WARNING: código não roda no Z0, jump sem NOP na seqüência, linha {0}.".format(idx))
+						else:
+							print("WARNING: última linha possui um jump sem um NOP após.")
+					if (hack[idx][0]=='1') and (hack[idx][3]=='1') and (hack[idx][12]=='1'):
+						print("WARNING: código não roda no Z0, lendo e gravando na RAM ao mesmo tempo, linha {0}.".format(idx))
+				else:
+					break
 					
 			arquivoMif.write("END;")
 
