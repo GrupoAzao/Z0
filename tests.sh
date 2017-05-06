@@ -43,9 +43,21 @@ mvn-color()
 }
 
 
+# Testes para VHDL
 python TestesHW/run.py -p3
-python TestesSW/assembler.py
-python TestesSW/emulate.py
-python -m pytest -v TestesSW/teste.py -rxs
+
+# Testes para codigos em Assembly
+python TestesSW/assembler.py -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
+python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3
+python -m pytest -v TestesSW/testeAssembly.py -rxs
+
+# Testes para AssemblerZ0
 mvn-color -f Codigos/AssemblerZ0 package
 python -m pytest -v TestesSW/testeAssembler.py -rxs
+
+# Testes para o VMTranslator
+mvn-color -f Codigos/VMTranslator package
+python TestesSW/vmtranslator.py -t TestesSW/testesVMTranslator.txt -in Codigos/VMTranslator/src/test/resources/ -out TestesSW/machine_code/ -p 3
+python TestesSW/assembler.py -t TestesSW/testesVMTranslator.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
+python TestesSW/emulate.py -t TestesSW/testesVMTranslator.txt -in TestesSW/testesVMTranslator/ -out TestesSW/machine_code/ -p 3
+python -m pytest -v TestesSW/testeVMTranslator.py -rxs

@@ -1,0 +1,14 @@
+# Arquivo que define as rotinas de testes
+# Criado por Luciano Soares <lpsoares@insper.edu.br>
+
+BasicLoop 0 1024 n
+BasicTest 0 1024 n
+FibonacciElement 0 16384 /
+FibonacciSeries 0 2048 n
+NestedCall 0 8192 /
+PointerTest 0 1024 n
+SimpleAdd 0 256 n
+SimpleFunction 0 512 / n
+StackTest 0 2048 n
+StaticsTest 0 4096 /
+StaticTest 0 512 n
