@@ -114,6 +114,9 @@ public class Parser {
      */
     public CommandType commandType(String command) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ea8f8054602ba4a93a9d9d77e33f541937bc7636
     	Character first = command.charAt(0); // pega a primeira letra
     	
     	if(first == 'l'){ // se ela for 'l' a instrucao eh leaw
@@ -128,9 +131,12 @@ public class Parser {
     	
     	return CommandType.C_COMMAND;
 
+<<<<<<< HEAD
 =======
     	return null;
 >>>>>>> 2d6d00463f1339176dd18f5dfefcc71a963dd956
+=======
+>>>>>>> ea8f8054602ba4a93a9d9d77e33f541937bc7636
     }
 
     /**
@@ -142,6 +148,7 @@ public class Parser {
      */
     public String symbol(String command) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     	String[] mnemos = command.split("\\s");
     	String a1 = mnemos[1].replace("$", "");
     	a1 = a1.replace(",%A", "");
@@ -150,6 +157,11 @@ public class Parser {
 =======
     	return null;
 >>>>>>> 2d6d00463f1339176dd18f5dfefcc71a963dd956
+=======
+    	String[] mnemos = command.split("\\s");
+    	mnemos[1].replace("$", "");
+    	return mnemos[1];
+>>>>>>> ea8f8054602ba4a93a9d9d77e33f541937bc7636
     }
 
     /**
@@ -160,6 +172,9 @@ public class Parser {
      */
     public String label(String command) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ea8f8054602ba4a93a9d9d77e33f541937bc7636
     	
     	return command.replace(":","");
 
@@ -176,6 +191,7 @@ public class Parser {
      */
     public String[] instruction(String command) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     	String[] mnemos = new String[3];
     	mnemos[0]= command.split("\\s")[0];
     	String temp =command.split("\\s")[1];
@@ -185,6 +201,14 @@ public class Parser {
 =======
     	return null;
 >>>>>>> 2d6d00463f1339176dd18f5dfefcc71a963dd956
+=======
+    	String[] mnemos = command.split("\\s");
+    	for(String m:mnemos){
+    		m.replace(",", "");
+    		m.replace(";", "");
+    	}
+    	return mnemos;
+>>>>>>> ea8f8054602ba4a93a9d9d77e33f541937bc7636
     }
 
 }
