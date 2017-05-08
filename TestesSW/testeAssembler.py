@@ -130,5 +130,8 @@ def test_Assembler(nomes_testes):
 	assert (dic_int["DATA_RADIX"]==dic_ext["DATA_RADIX"]),"DATA_RADIX diferente"
 
 	for n in range( int(dic_int["DEPTH"][:-1]) ): 
-		assert (dic_int[str(n)]==dic_ext[str(n)]),"instrução {0} diferente".format(n)
+		if dic_int[str(n)][13:16]=="111":  # caso um jump incondicional o calculo é irrelevante
+			assert (dic_int[str(n)][10:]==dic_ext[str(n)][10:]),"instrução {0} diferente".format(n)
+		else:
+			assert (dic_int[str(n)]==dic_ext[str(n)]),"instrução {0} diferente".format(n)
 

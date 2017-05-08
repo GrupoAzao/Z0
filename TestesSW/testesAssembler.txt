@@ -6,3 +6,4 @@ nop
 loop
 screen
 keyboard
+jmp
