@@ -18,9 +18,20 @@ public class Code {
 
     public static String dest(String[] mnemonic) {
         String instructionMnemonic = mnemonic[0];
-        String firstMnemonic = mnemonic[1];
-        String secondMnemonic = mnemonic[2];
-        String thirdMnemonic = mnemonic[3];
+        String firstMnemonic = "";
+        String secondMnemonic = "";
+        String thirdMnemonic = "";
+
+        if (mnemonic.length == 2){
+            firstMnemonic = mnemonic[1];
+        }
+        if (mnemonic.length == 3){
+            secondMnemonic =  mnemonic[2];
+        }
+
+        if (mnemonic.length == 4){
+            thirdMnemonic = mnemonic[3];
+        }
 
         if (Objects.equals(instructionMnemonic, "jmp") || Objects.equals(instructionMnemonic, "je") ||
                 Objects.equals(instructionMnemonic, "jne") || Objects.equals(instructionMnemonic, "jg") ||
@@ -51,7 +62,6 @@ public class Code {
             } else {
                 return null;
             }
-
 
             // SUBW
         } else if (Objects.equals(instructionMnemonic, "subw")) {
@@ -169,12 +179,21 @@ public class Code {
     //  * @return Opcode (String de 7 bits) com código em linguagem de máquina para a instrução.
     //  */
     public static String comp(String[] mnemonic) {
-        System.out.println("Instruction Type: "+mnemonic[0]);
+//        System.out.println("Instruction Type: "+mnemonic[0]);
         String instructionMnemonic = mnemonic[0];
-        String firstMnemonic = mnemonic[1];
+        String firstMnemonic = "";
         String secondMnemonic = "";
-        if (mnemonic.length == 3){
+        String thirdMnemonic = "";
+        String output = "";
+
+        if (mnemonic.length >= 2){
+            firstMnemonic = mnemonic[1];
+        }
+        if (mnemonic.length >= 3){
             secondMnemonic = mnemonic[2];
+        }
+        if (mnemonic.length >= 4){
+            thirdMnemonic = mnemonic[3];
         }
 
         if (Objects.equals(instructionMnemonic, "jmp") || Objects.equals(instructionMnemonic, "je") ||
@@ -184,14 +203,14 @@ public class Code {
             return "0001100";
 
             // MOVW
-        } else if (Objects.equals(instructionMnemonic,"movw")) {
+        } else if (instructionMnemonic.equals("movw")) {
             if (Objects.equals(firstMnemonic, "$0")){
                 return "0101010";
             } else if (Objects.equals(firstMnemonic, "$1")){
                 return "0111111";
             } else if (Objects.equals(firstMnemonic, "$-1")){
                 return "0111010";
-            } else if (Objects.equals(firstMnemonic, "%A")){
+            } else if (firstMnemonic.equals("%A")){
                 return "0110000";
             } else if (Objects.equals(firstMnemonic,"%D")) {
                 return "0001100";
@@ -393,8 +412,8 @@ public class Code {
         } else if (Objects.equals(jumpInstruction, "jle")){
             return "110";
         } else {
-            System.out.println("Instrução de jump inválida ou não é uma instrução de jump");
-            return null;
+            // System.out.println("Instrução de jump inválida ou não é uma instrução de jump");
+            return "000";
         }
     }
 
@@ -410,7 +429,7 @@ public class Code {
         while (binary.length() != 15){
             binary.insert(0,"0");
         }
-        System.out.println("Symbol:" + symbol + " binary: "+ binary);
+        // System.out.println("Symbol:" + symbol + " binary: "+ binary);
         return binary.toString();
     }
 
