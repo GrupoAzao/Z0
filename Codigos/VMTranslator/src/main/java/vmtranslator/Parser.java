@@ -62,7 +62,12 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public Boolean advance() {
-		line = bufferedReader.readLine();
+		try {
+			line = bufferedReader.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     	if (line != null){
     		return true;
