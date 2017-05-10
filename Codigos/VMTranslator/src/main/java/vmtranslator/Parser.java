@@ -5,12 +5,21 @@
 
 package vmtranslator;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem de máquina virtual a pilha,
  * analisa, e oferece acesso aos comandos.
  * Além disso, remove todos os espaços em branco e comentários.
  */
 public class Parser {
+	BufferedReader bufferedReader;
+   	String line;
+   	
+   			bufferedReader.readLine();
 
     /** Enumerator para os tipos de comandos de Linguagem de Máquina Virtua a Pilha. */
     public enum CommandType {
@@ -29,10 +38,24 @@ public class Parser {
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param file arquivo VM que será feito o parser.
      */
+   
     public Parser(String file) {
-
+    	String line = null;
+    	
+    	try {
+    		FileReader fileReader = new FileReader(file);
+    		
+    		bufferedReader =new BufferedReader(fileReader);
+    	
+    		//bufferedReader.close();
+    	}
+    	catch(FileNotFoundException ex){
+    		System.out.println("Unable to open file '" + file + "'"); 
+    	}
+        catch(IOException ex) {
+        	System.out.println("Error reading file '" + file + "'");  
+        }
     }
-
     /**
      * Carrega um comando e avança seu apontador interno para o próxima
      * linha do arquivo de entrada. Caso não haja mais linhas no arquivo de
@@ -40,9 +63,12 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public Boolean advance() {
-        
-        return null;
+		line = bufferedReader.readLine();
 
+    	if (line != null){
+    		return true;
+    	}
+    	return false;
     }
 
     /**
@@ -50,8 +76,7 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-
-        return null;
+        return line ;
 
     }
 
@@ -63,9 +88,36 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
-
-        return null;
-
+    	String comando;
+    	comando = line.split(" ")[0];
+    	if(comando == "push"){
+    		return CommandType.C_PUSH;
+    	}
+    	if (comando == "pop"){
+    		return CommandType.C_POP;
+    	}
+    	if (comando == "label"){
+    		return CommandType.C_LABEL;
+    	}
+    	if (comando == "goto"){
+    		return CommandType.C_GOTO;
+    	}
+    	if (comando == "if-goto"){
+    		return CommandType.C_IF;
+    	}
+    	if (comando == "function"){
+    		return CommandType.C_FUNCTION;
+    	}
+    	if (comando == "call"){
+    		return CommandType.C_CALL;
+    	}
+    	if (comando == "return"){
+    		return CommandType.C_RETURN;
+    	}
+    	else{
+    		return CommandType.C_ARITHMETIC;
+    	}
+        
     }
     
 
