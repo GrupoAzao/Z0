@@ -18,8 +18,7 @@ import java.io.IOException;
 public class Parser {
 	BufferedReader bufferedReader;
    	String line;
-   	
-   			bufferedReader.readLine();
+  
 
     /** Enumerator para os tipos de comandos de Linguagem de Máquina Virtua a Pilha. */
     public enum CommandType {
@@ -40,7 +39,7 @@ public class Parser {
      */
    
     public Parser(String file) {
-    	String line = null;
+    	//String line = null;
     	
     	try {
     		FileReader fileReader = new FileReader(file);
