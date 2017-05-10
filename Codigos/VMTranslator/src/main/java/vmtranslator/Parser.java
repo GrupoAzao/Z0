@@ -92,35 +92,36 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
+    	
     	String comando;
-    	comando = line.split(" ")[0];
-    	if(comando == "push"){
+    	comando = command.split(" ")[0];
+    	if(comando.equals("push")){
     		return CommandType.C_PUSH;
     	}
-    	if (comando == "pop"){
+    	if (comando.equals("pop")){
     		return CommandType.C_POP;
     	}
-    	if (comando == "label"){
+    	if (comando.equals("label")){
     		return CommandType.C_LABEL;
     	}
-    	if (comando == "goto"){
+    	if (comando.equals("goto")){
     		return CommandType.C_GOTO;
     	}
-    	if (comando == "if-goto"){
+    	if (comando.equals("if-goto")){
     		return CommandType.C_IF;
     	}
-    	if (comando == "function"){
+    	if (comando.equals("function")){
     		return CommandType.C_FUNCTION;
     	}
-    	if (comando == "call"){
+    	if (comando.equals("call")){
     		return CommandType.C_CALL;
     	}
-    	if (comando == "return"){
+    	else if (comando.equals("return")){
     		return CommandType.C_RETURN;
     	}
-    	else{
-    		return CommandType.C_ARITHMETIC;
-    	}
+    	
+    	return CommandType.C_ARITHMETIC;
+    	
         
     }
     
@@ -133,8 +134,16 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String arg1(String command) {
+    	
+    	String[] argumentos = command.split(" ");
+    	
+    	if (this.commandType(command) == CommandType.C_ARITHMETIC){
+    		return argumentos[0];
+    	}else{
+    		return argumentos[1];
+    	}
+    	
 
-        return null;
 
     }
 
@@ -145,8 +154,10 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public Integer arg2(String command) {
-
-        return null;
+    	
+    	String[] argumentos = command.split(" ");
+        
+    	return Integer.valueOf(argumentos[2]);
 
     }
 
