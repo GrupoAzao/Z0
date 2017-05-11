@@ -5,17 +5,25 @@
 
 package vmtranslator;
 
+import assembler.Parser;
+
 /** 
  * Traduz da linguagem vm para códigos assembly.
  */
 public class Code {
+	PrintWriter writer;
 
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param filename nome do arquivo VM que será feito o parser.
      */
     public Code(String filename) {
-
+    	try{
+    	   writer = new PrintWriter("output.txt", "UTF-8");
+    	   // writer.close();
+    	} catch (IOException e) {
+    	   System.out.println("deu erro na hora de abrir o arquivo escrever o c�digo assembly");
+    	}
     }
 
     /**
@@ -23,6 +31,29 @@ public class Code {
      * @param  command comando aritmético a ser analisado.
      */
     public void writeArithmetic(String command) {
+    	if (command == 'add' or command == 'sub'){
+    	writer.write('leaw $0,%A');
+    	writer.write('decw (%A)');
+    	writer.write('subw $1,(%A),%A');
+    	writer.write('movw (%A),%D');
+    	writer.write("leaw $0,%A");
+    	if(command == 'add'){
+    		writer.write('addw %D,(%A),%D');
+    	}else{
+    		writer.write('subw (%A),%D,%D');
+    	}	
+    	writer.write('movw %D,(%A)');
+    	}
+    	if (command == 'neg'){
+    		writer.write('leaw $0,%A');
+    		writer.write('movw (%A),%D');
+    		writer.write('decw %D');
+    		writer.write('movw %D,%A');
+    		writer.write('subw %D,(%A),%D');
+    		writer.write('subw %D,(%A),%D');
+    		writer.write('movew %D,(%A)');
+    	}
+    	
 
     }
 
@@ -42,6 +73,11 @@ public class Code {
      * O código deve ser colocado no início do arquivo de saída.
      */
     public void writeInit() {
+    	writer.write("leaw $256,%A");
+    	writer.write("movw %A,%D");
+    	writer.write("leaw $0,%A");
+    	writer.write("movw %D,(%A)");
+    	//Sys.init ???
 
     }
 
@@ -77,7 +113,21 @@ public class Code {
      * @param  numArgs número de argumentos a serem passados na função call.
      */
     public void writeCall(String functionName, Integer numArgs) {
-
+    	writePushPop(Parser.CommandType.C_PUSH, 'return',?);//push retorno
+    	writePushPop(Parser.CommandType.C_PUSH, 'local',?);//push LCL
+    	for(int i = 0;i<numargs;i++){
+    		writePushPop(Parser.CommandType.C_Push,'argument',i)
+    	}
+    	writePushPop(Parser.CommandType.C_PUSH, 'argument',?);//push ARG
+    	writePushPop(Parser.CommandType.C_PUSH, 'this',?);//push this
+    	writePushPop(Parser.CommandType.C_PUSH, 'that',?);//push that
+    	writer.write("leaw $0,%A");
+    	writer.write("movw (%A),%D");
+    	writer.write("subw $5,%D,%D");
+    	writer.write("subw $" +numArgs.toString()+",%D,%D");
+    	writer.write("leaw $argument,%A");
+    	writer.write("movw %D,(%A)");
+    	writeGoto(functionName);//goto f
     }
 
     /**
@@ -93,7 +143,11 @@ public class Code {
      * @param  numLocals número de argumentos a serem passados na função call.
      */
     public void writeFunction(String functionName, Integer numLocals) {
-
+    	writeLabel(functionName);
+    	for(int i=0;i<numLocals;i++){
+    		writePushPop(Parser.CommandType.C_PUSH,'local',i)
+    	}
+    	writePushPop(Parser.CommandType.C_PUSH,'local','0');
     }
 
     /**
