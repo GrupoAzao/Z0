@@ -40,7 +40,7 @@ public class Code {
      * @throws IOException
      */
     public void writeArithmetic(String command) throws IOException{
-        try {
+        // try {
             if(command.equals("add")){
                 
             }
@@ -76,11 +76,10 @@ public class Code {
             else if(command.equals("not")){
                 
             }
-        }
-
-        catch (IOException e) {
-            System.out.println("writeArithmetic error");
-        } 
+        // }
+        // catch (IOException e) {
+        //     System.out.println("writeArithmetic error");
+        // } 
     }
 
     /**
