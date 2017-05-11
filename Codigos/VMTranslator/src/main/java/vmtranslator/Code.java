@@ -21,13 +21,15 @@ public class Code {
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param filename nome do arquivo VM que será feito o parser.
+     * @throws IOException
      */
     public Code(String filename) throws IOException{
         vmfile(filename);
         
         try{
             writer = new BufferedWriter(new FileWriter("codeoutput.nasm"));
-        }catch (FileNotFoundException e){
+        }
+        catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }
     }
@@ -35,6 +37,7 @@ public class Code {
     /**
      * Grava no arquivo de saida as instruções em Assembly para executar o comando aritmético.
      * @param  command comando aritmético a ser analisado.
+     * @throws IOException
      */
     public void writeArithmetic(String command) throws IOException{
         try {
@@ -85,8 +88,9 @@ public class Code {
      * @param  command comando de push ou pop a ser analisado.
      * @param  segment segmento de memória a ser usado pelo comando.
      * @param  index índice do segkento de memória a ser usado pelo comando.
+     * @throws IOException
      */
-    public void writePushPop(Parser.CommandType command, String segment, Integer index) {
+    public void writePushPop(Parser.CommandType command, String segment, Integer index) throws IOException {
         try {
             if (segment.equals("local")){
                 segment = "1";
