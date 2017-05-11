@@ -2,20 +2,22 @@
  * Curso: Elementos de Sistemas
  * Arquivo: Code.java
  */
-writepushpop, writelabel, writegoto, writeif
+
 package vmtranslator;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 /** 
  * Traduz da linguagem vm para cÃ³digos assembly.
  */
 public class Code {
-
+		private BufferedWriter writer;
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisÃ¡-lo.
      * @param filename nome do arquivo VM que serÃ¡ feito o parser.
      */
     public Code(String filename) {
-
+    	writer = new BufferedWriter(new FileWriter(filename));
     }
 
     /**
@@ -82,14 +84,36 @@ public class Code {
     		segment = "4";
     	}
     	
-    	
     	if(command.equals(CommandType.C_PUSH)){
-    	
+    		writer.write("leaw $segment , %A"); //Carrega o segmento em A
+            writer.write("movw (%A) , %A");  
+            for (int i = 0; i<index; i++){ //Index é o lugar dentro do segmento que está o valor a ser PUSHADO
+                writer.write("incw %A"); //Incrementa index no valor apontado pelo segmento até o valor a ser PUSHADO
+            }
+            writer.write("movw (%A) , %D"); //Move o valor a ser PUSHADO para D
+            writer.write("leaw $0 , %A"); //Carrega zero em A para indicar o SP
+            writer.write("movw (%A) , %A"); 
+            writer.write("movw %D , (%A)"); //Move o valor para o topo da pilha (SP)
+            writer.write("incw %A"); //Aumenta uma unidade em A para setar o novo SP
+            writer.write("movw %A , %D"); 
+            writer.write("leaw $0 , %A"); 
+            writer.write("movw %D , (%A)"); //Move o novo SP para 0
     	}
     	
     	else if(command.equals(CommandType.C_POP)){
-    		
-    	}
+            writer.write("leaw $0, %A"); //Carrega zero em A para indicar o SP
+            writer.write("movw (%A) , %D"); 
+            writer.write("subw %D , $1 , %D"); //D é o SP - 1
+            writer.write("movw %D , (%A)"); //Move o novo SP para 0
+            writer.write("movw %D, %A"); //A é o SP onde está o valor a ser popado
+            writer.write("movw (%A) , %D"); //Move o valor a ser popado para D
+            writer.write("leaw $segment , %A"); //Carrega o segmento de destino em A
+            writer.write("movw (%A) , %A");
+            for (int i = 0; i<index; i++){ //Index é o lugar dentro do segmento que está o valor a ser POPADO
+                writer.write("incw %A"); //Incrementa index no valor apontado pelo segmento até o valor a ser POPADO
+            }
+            writer.write("movw %D , (%A)"); //Move o valor a ser popado para o local no segmento
+        }
     }
 
     /**
