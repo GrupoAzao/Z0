@@ -31,27 +31,33 @@ public class Code {
      * @param  command comando aritmético a ser analisado.
      */
     public void writeArithmetic(String command) {
-    	if (command == 'add' or command == 'sub'){
-    	writer.write('leaw $0,%A');
-    	writer.write('decw (%A)');
-    	writer.write('subw $1,(%A),%A');
-    	writer.write('movw (%A),%D');
-    	writer.write("leaw $0,%A");
-    	if(command == 'add'){
-    		writer.write('addw %D,(%A),%D');
-    	}else{
-    		writer.write('subw (%A),%D,%D');
-    	}	
-    	writer.write('movw %D,(%A)');
+    	if (command == 'add' or command == 'sub' or command == 'and' or command =='or'){
+	    	writer.write('leaw $0,%A');
+	    	writer.write('decw (%A)');
+	    	writer.write('subw $1,(%A),%A');
+	    	writer.write('movw (%A),%D');
+	    	writer.write("leaw $0,%A");
+	    	if(command == 'add'){
+	    		writer.write('addw %D,(%A),%D');
+	    	}else if(command == 'sub'){
+	    		writer.write('subw (%A),%D,%D');
+	    	}else if (command =='and'){
+	    		writer.write('andw %D,(%A),%D');
+	    	}else{
+	    		writer.write('orw %D,(%A),%D');
+	    	}
+	    	writer.write('movw %D,(%A)');
     	}
-    	if (command == 'neg'){
-    		writer.write('leaw $0,%A');
-    		writer.write('movw (%A),%D');
-    		writer.write('decw %D');
-    		writer.write('movw %D,%A');
-    		writer.write('subw %D,(%A),%D');
-    		writer.write('subw %D,(%A),%D');
-    		writer.write('movew %D,(%A)');
+    	else if (command == 'neg'){
+    		writer.write("leaw $SP, %A");
+    		writer.write("movw (%A), %A");
+    		writer.write("decw %A");
+    		writer.write("negw (%A)");
+    	}else if (command == 'not'){
+    		writer.write("leaw $SP, %A");
+    		writer.write("movw (%A), %A");
+    		writer.write("decw %A");
+    		writer.write("notw (%A)");
     	}
     	
 
