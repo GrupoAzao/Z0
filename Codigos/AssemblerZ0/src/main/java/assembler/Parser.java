@@ -41,7 +41,6 @@ public class Parser {
     		sb = new StringBuilder();
     	   	line = command();
     	    do {
-    	    	Counter +=1;
     	    	int coment =  line.indexOf(';');
     	    	if(coment > 0){
     	    		line = line.substring(0, coment-1);
@@ -79,6 +78,7 @@ public class Parser {
     public boolean advance() throws IOException {
     	sb.append(System.lineSeparator());
 		line = br.readLine();
+		Counter++;
 		if(line != null){
 			return true;
 		}else{
@@ -159,12 +159,27 @@ public class Parser {
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
     public String[] instruction(String command) {
-    	String[] mnemos = new String[3];
-    	mnemos[0]= command.split("\\s")[0];
-    	String temp =command.split("\\s")[1];
-    	mnemos[1]  = temp.split(",")[0];
-    	mnemos[2] = temp.split(",")[1];   	
+    	String[] quebra1 = command.split("\\s");
+    	if(quebra1.length == 1){
+    		return quebra1;
+    	}
+    	String[] quebra2 = quebra1[1].split(",");
+    	
+    	if(quebra2.length ==2 ){
+    		String[] mnemos = new String[3];
+        	mnemos[0]= quebra1[0];
+        	mnemos[1]  = quebra2[0];
+        	mnemos[2] = quebra2[1];   	
+        	return mnemos;
+    	}
+    	
+    	String[] mnemos = new String[4];
+    	mnemos[0]= quebra1[0];
+    	mnemos[1]  = quebra2[0];
+    	mnemos[2] = quebra2[1];
+    	mnemos[3] = quebra2[2];
     	return mnemos;
+    	
 
     }
 
