@@ -165,6 +165,13 @@ public class Parser {
     	}
     	String[] quebra2 = quebra1[1].split(",");
     	
+    	if(quebra2.length == 1){
+    		String[] mnemos = new String[2];
+        	mnemos[0]= quebra1[0];
+        	mnemos[1] = quebra1[1];   	
+        	return mnemos;
+    	}
+    	
     	if(quebra2.length ==2 ){
     		String[] mnemos = new String[3];
         	mnemos[0]= quebra1[0];
