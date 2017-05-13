@@ -6,7 +6,10 @@
 package vmtranslator;
 
 import java.io.PrintWriter;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import assembler.Parser;
 
 /** 
