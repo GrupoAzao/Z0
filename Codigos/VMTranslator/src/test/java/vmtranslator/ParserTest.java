@@ -36,13 +36,13 @@ public class ParserTest {
 	 */
 	@Test
 	public void testParser_commandType() {
-
+/*
 		try {
-			org.junit.Assume.assumeNotNull( parser.commandType("nop") );		// ignora test
+			org.junit.Assume.assumeNotNull( parser.commandType("push constant 0") );		// ignora test
 		} catch(Exception e) { 
 			org.junit.Assume.assumeNoException(e);
 		}
-		
+		*/
 		try {
 			
 			assertTrue("add",parser.commandType("add")==Parser.CommandType.C_ARITHMETIC);
