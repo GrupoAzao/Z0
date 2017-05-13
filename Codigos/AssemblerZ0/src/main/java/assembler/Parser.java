@@ -27,7 +27,7 @@ public class Parser {
         C_COMMAND,      // comandos de calculos
         L_COMMAND       // comandos de Label (símbolos)
     }
-
+    private SymbolTable symbolTable;
     /**
      * Abre o arquivo de entrada NASM e se prepara para analisá-lo.
      * @param file arquivo NASM que será feito o parser.
