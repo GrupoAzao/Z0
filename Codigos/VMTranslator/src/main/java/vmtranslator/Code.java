@@ -80,7 +80,7 @@ public class Code {
 		    	writer.write('leaw $true,%A');
 		    	if(command == 'gt'){
 		    		writer.write('jg');
-		    	}else if(command == 'lt'){
+		    	}else if (command == 'lt'){
 		    		writer.write('jl');
 		    	}else if (command == 'eq'){
 		    		writer.write('je');
