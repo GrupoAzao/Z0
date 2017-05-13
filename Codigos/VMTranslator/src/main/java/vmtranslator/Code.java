@@ -6,14 +6,17 @@
 package vmtranslator;
 
 import java.io.PrintWriter;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import assembler.Parser;
 
 /** 
  * Traduz da linguagem vm para cÃ³digos assembly.
  */
 public class Code {
-	protected PrintWriter writer;
+	private BufferedWriter writer;
 	public int globalCounter;
 
     /** 
@@ -23,9 +26,9 @@ public class Code {
     public Code(String filename) {
     	globalCounter = 0;
     	try{
-    	   writer = new PrintWriter(filename, "UTF-8");
+    		writer = new BufferedWriter(new FileWriter(filename));
     	   // writer.close();
-    	} catch (IOException e) {
+    	} catch (FileNotFoundException e) {
     	   System.out.println("deu erro na hora de abrir o arquivo escrever o código assembly");
     	}
     }
@@ -77,7 +80,7 @@ public class Code {
 		    	writer.write('leaw $true,%A');
 		    	if(command == 'gt'){
 		    		writer.write('jg');
-		    	}else if(command == 'lt'){
+		    	}else if (command == 'lt'){
 		    		writer.write('jl');
 		    	}else if (command == 'eq'){
 		    		writer.write('je');
@@ -360,6 +363,7 @@ public class Code {
      */
     public void vmfile(String file) {
     	//não entendi oq isso aqui faz, certeza que está errado.
+            
          try{
              writer = new BufferedWriter(new FileWriter("codeoutput.nasm"));
          }
