@@ -316,7 +316,7 @@ public class Code {
 	    	
 	    	writer.write('leaw $3,%A');
 	    	writer.write('movw %A,%D');
-	    	writer.write('leaw $R13,%A);
+	    	writer.write('leaw $R13,%A');
 	    	writer.write('subw (%A),%D,%D');
 	    	writer.write('leaw $ARG,%A');
 	    	writer.write("movw %D,(%A)");
