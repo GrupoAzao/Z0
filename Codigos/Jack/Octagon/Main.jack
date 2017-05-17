@@ -18,12 +18,12 @@ class Main {
     function void drawOctagon(int x, int y, int d) {
     	var int d2;
     	var int r2;
-    	var int x;
+    	var int l;
     	var int ap;
     	let d2 = Math.divide(d,2); 
     	let r2 = Math.sqrt(2);
-    	let x = Math.divide(d,r2);
-    	let ap = x + d2
+    	let l = Math.divide(d,r2);
+    	let ap = l + d2;
 
     	do Screen.drawLine(x-d2, y-ap, x+d2, y-ap);
     	do Screen.drawLine(x+d2, y-ap, x+ap, y-d2);
