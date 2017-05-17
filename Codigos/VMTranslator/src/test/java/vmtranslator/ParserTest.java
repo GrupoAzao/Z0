@@ -1,7 +1,7 @@
 /**
  * Curso: Elementos de Sistemas
  * Arquivo: ParserTest.java
- * Created by Luciano Soares <lpsoares@insper.edu.br> 
+ * Created by Luciano Soares <lpsoares@insper.edu.br>
  * Date: 2/05/2017
  */
 
@@ -38,13 +38,14 @@ public class ParserTest {
 	public void testParser_commandType() {
 /*
 		try {
-			org.junit.Assume.assumeNotNull( parser.commandType("push constant 0") );		// ignora test
-		} catch(Exception e) { 
+			org.junit.Assume.assumeNotNull( parser.commandType("push constant 0") ); // ignora test
+
+		} catch(Exception e) {
 			org.junit.Assume.assumeNoException(e);
 		}
 		*/
 		try {
-			
+
 			assertTrue("add",parser.commandType("add")==Parser.CommandType.C_ARITHMETIC);
 			assertTrue("push constant 0",parser.commandType("push constant 0")==Parser.CommandType.C_PUSH);
 			assertTrue("pop temp 0",parser.commandType("pop temp 0")==Parser.CommandType.C_POP);
@@ -54,7 +55,7 @@ public class ParserTest {
 			assertTrue("function Sys.init 0",parser.commandType("function Sys.init 0")==Parser.CommandType.C_FUNCTION);
 			assertTrue("return",parser.commandType("return")==Parser.CommandType.C_RETURN);
 			assertTrue("call Sys.init 0",parser.commandType("call Sys.init 0")==Parser.CommandType.C_CALL);
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -65,13 +66,13 @@ public class ParserTest {
 	 */
 	@Test
 	public void testParser_arg1() {
-		
+
 		try {
 			org.junit.Assume.assumeNotNull( parser.arg1("push constant 0") );		// ignora test
-		} catch(Exception e) { 
+		} catch(Exception e) {
 			org.junit.Assume.assumeNoException(e);
 		}
-		
+
 		try {
 
 			assertTrue("add",parser.arg1("add").equals("add"));
@@ -107,7 +108,7 @@ public class ParserTest {
 			e.printStackTrace();
 		}
 	}
-	 
+
 	/**
 	 * Teste para a instrução arg2
 	 */
@@ -116,7 +117,7 @@ public class ParserTest {
 
 		try {
 			org.junit.Assume.assumeNotNull( parser.arg2("push constant 0") );		// ignora test
-		} catch(Exception e) { 
+		} catch(Exception e) {
 			org.junit.Assume.assumeNoException(e);
 		}
 		try {
@@ -139,10 +140,10 @@ public class ParserTest {
 			assertTrue("call Sys.init 0",parser.arg2("call Sys.init 0") == 0 );
 			assertTrue("function Soma 2",parser.arg2("function Soma 2") == 2 );
 			assertTrue("call Soma 2",parser.arg2("call Soma 2") == 2 );
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}       
+	}
 
 }

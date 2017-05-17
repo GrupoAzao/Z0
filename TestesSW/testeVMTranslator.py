@@ -1,5 +1,5 @@
-# Testador de emulação
-# Arquivo: testComp.nasm
+# Testador da tradução de máquina virtual a pilha
+# Arquivo: testVMTranslator.py
 # Criado por: Luciano Soares <lpsoares@insper.edu.br>
 # Data: 4/05/2017
 
@@ -7,16 +7,19 @@ import sys, getopt
 import unittest
 import pytest
 import loadTestes
-import detectImage
+import checkUnitTests
 
 nomes_testes = loadTestes.testes("TestesSW/testesVMTranslator.txt")
 
+# Testes a serem realizados
+@pytest.mark.skipif(checkUnitTests.checkUnitTests("Codigos/VMTranslator/target/"),
+	reason="Testes unitários anteriores não passaram por completo, não executando teste de sistema.")
 @pytest.mark.parametrize(('nomes_testes'),nomes_testes)
 def test_Assembly(nomes_testes):
 
 	nomes_testes = nomes_testes.split()
 
-	resultado = "TestesSW/machine_code/{0}_out.mif".format(nomes_testes[0])
+	resultado = "TestesSW/vm_code/{0}_out.mif".format(nomes_testes[0])
 	teste = "TestesSW/testesVMTranslator/{0}_tst.mif".format(nomes_testes[0])
 	debug = False
 

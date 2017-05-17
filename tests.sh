@@ -31,8 +31,9 @@ export RESET_FORMATTING=`tput sgr0`
 mvn-color()
 {
   # Filter mvn output using sed
-  mvn $@ | sed -e "s/\(\[INFO\]\ \-.*\)/${TEXT_BLUE}${BOLD}\1/g" \
-               -e "s/\(\[INFO\]\ \[.*\)/${RESET_FORMATTING}${BOLD}\1${RESET_FORMATTING}/g" \
+  mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B $@ | sed \
+  			   -e "s/\(\[INFO\]\ \-.*\)/${TEXT_BLUE}${BOLD}\1/g" \
+               -e "s/\(\[INFO\]\ \[ .*\)/${RESET_FORMATTING}${BOLD}\1${RESET_FORMATTING}/g" \
                -e "s/\(\[INFO\]\ BUILD SUCCESSFUL\)/${BOLD}${TEXT_GREEN}\1${RESET_FORMATTING}/g" \
                -e "s/\(\[WARNING\].*\)/${BOLD}${TEXT_YELLOW}\1${RESET_FORMATTING}/g" \
                -e "s/\(\[ERROR\].*\)/${BOLD}${TEXT_RED}\1${RESET_FORMATTING}/g" \
@@ -42,22 +43,111 @@ mvn-color()
   echo -ne ${RESET_FORMATTING}
 }
 
+let "n_error=0"
+
 
 # Testes para VHDL
-python TestesHW/run.py -p3
+if [ -z "$1" ] || [ $1 == "vhdl" ]; then
+	echo -e "\n\n"
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                \t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para VHDL\t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                \t\t\t"${RESET_FORMATTING}
+	echo -e "\n"
+	python TestesHW/run.py -p3
+	let "n_error+=$?"
+fi
+
 
 # Testes para codigos em Assembly
-python TestesSW/assembler.py -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
-python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3
-python -m pytest -v TestesSW/testeAssembly.py -rxs
+if [ -z "$1" ] || [ $1 == "assembly" ] ; then
+	echo -e "\n\n"
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                               \t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para codigos em Assembly\t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                               \t\t\t"${RESET_FORMATTING}
+	echo -e "\n"
+	python TestesSW/assembler.py -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3 -r 512,256
+	let "n_error+=$?"
+	python -m pytest -v TestesSW/testeAssembly.py -rxs
+	let "n_error+=$?"
+fi
 
 # Testes para AssemblerZ0
-mvn-color -f Codigos/AssemblerZ0 package
-python -m pytest -v TestesSW/testeAssembler.py -rxs
+if [ -z "$1" ] || [ $1 == "assembler" ] ; then
+	echo -e "\n\n"
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                       \t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para AssemblerZ0\t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                       \t\t\t"${RESET_FORMATTING}
+	echo -e "\n"
+	mvn-color -f Codigos/AssemblerZ0 package
+	let "n_error+=$?"
+	python -m pytest -v TestesSW/testeAssembler.py -rxs
+	### O CERTO SERIA COLOCAR NO EMULADOR ###
+	let "n_error+=$?"
+fi
+
+# Testes para codigos VM
+### NÃO FEITO E NEM NO CURSO, FAZER ###
+
 
 # Testes para o VMTranslator
-mvn-color -f Codigos/VMTranslator package
-python TestesSW/vmtranslator.py -t TestesSW/testesVMTranslator.txt -in Codigos/VMTranslator/src/test/resources/ -out TestesSW/machine_code/ -p 3
-python TestesSW/assembler.py -t TestesSW/testesVMTranslator.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
-python TestesSW/emulate.py -t TestesSW/testesVMTranslator.txt -in TestesSW/testesVMTranslator/ -out TestesSW/machine_code/ -p 3
-python -m pytest -v TestesSW/testeVMTranslator.py -rxs
+if [ -z "$1" ] || [ $1 == "vmtranslator" ] ; then
+	echo -e "\n\n"
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                          \t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para o VMTranslator\t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                          \t\t\t"${RESET_FORMATTING}
+	echo -e "\n"
+	mvn-color -f Codigos/VMTranslator package
+	let "n_error+=$?"
+	python TestesSW/vmtranslator.py -j Codigos/VMTranslator/target/VMTranslator-1.0.jar -t TestesSW/testesVMTranslator.txt -in Codigos/VMTranslator/src/test/resources/ -out TestesSW/vm_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/assembler.py -t TestesSW/testesVMTranslator.txt -in TestesSW/vm_code/ -out TestesSW/vm_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/emulate.py -t TestesSW/testesVMTranslator.txt -in TestesSW/testesVMTranslator/ -out TestesSW/vm_code/ -p 3
+	let "n_error+=$?"
+	python -m pytest -v TestesSW/testeVMTranslator.py -rxs
+	let "n_error+=$?"
+fi
+
+# Testes para codigos em Jack
+if [ -z "$1" ] || [ $1 == "jack" ] ; then
+	echo -e "\n\n"
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                           \t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para codigos em Jack\t\t\t"${RESET_FORMATTING}
+	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                           \t\t\t"${RESET_FORMATTING}
+	echo -e "\n"
+	python TestesSW/compiler.py -t TestesSW/testesJack.txt -in Codigos/Jack/ -out TestesSW/jack_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/vmtranslator.py -j TestesSW/VMTranslator/VMTranslator.jar -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/assembler.py -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3 -b 32
+	let "n_error+=$?"
+	python TestesSW/emulate.py -t TestesSW/testesJack.txt -out TestesSW/jack_code/ -p 3 -b 32 -r 512,256
+	let "n_error+=$?"
+	python -m pytest -v TestesSW/testeJack.py -rxs
+	let "n_error+=$?"
+fi
+
+# Testes para o Compiler
+#if [ -z "$1" ] || [ $1 == "compiler" ] ; then
+	#echo -e "\n\n"
+	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                      \t\t\t"${RESET_FORMATTING}
+	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para o Compiler\t\t\t"${RESET_FORMATTING}
+	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                      \t\t\t"${RESET_FORMATTING}
+	#echo -e "\n"
+	# mvn-color -f Codigos/Compiler package
+	#let "n_error+=$?"
+	#python TestesSW/testeCompiler.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
+	#let "n_error+=$?"
+	#python TestesSW/vmtranslator.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
+	#let "n_error+=$?"
+	#python TestesSW/assembler.py -t TestesSW/testesCompiler.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
+	#let "n_error+=$?"
+	#python TestesSW/emulate.py -t TestesSW/testesCompiler.txt -in TestesSW/testesCompiler/ -out TestesSW/machine_code/ -p 3
+	#let "n_error+=$?"
+	#python -m pytest -v TestesSW/testeVMTranslator.py -rxs
+	#let "n_error+=$?"
+#fi
+
+exit $n_error

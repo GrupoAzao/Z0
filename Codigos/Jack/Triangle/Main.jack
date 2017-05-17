@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Triangle/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawTriangle(160, 120, 30);
+        
+        return;
+    }
+    
+    /** Desenha uma triangulo na tela. */
+    function void drawTriangle(int x, int y, int d) {
+        return;
+    }
+
+}

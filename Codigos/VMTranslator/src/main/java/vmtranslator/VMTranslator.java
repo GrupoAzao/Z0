@@ -6,18 +6,25 @@
 package vmtranslator;
 
 import java.io.File;
-
+/**
+ * Classe principal que orquestra a tradução do arquivo em linguagem de máquina virtual à pilha.
+ * Opções:
+ *   <arquivo vm>         primeiro parâmetro é o nome do arquivo vm a ser aberto
+ *   -o <arquivo nasm>    parâmetro indica onde será salvo o arquivo gerado .nasm
+ *   -n                   parâmetro indica não colocar rotina de bootstrap (conveniente para testar)
+ */
+class VMTranslator {
 import vmtranslator.Parser.CommandType;
 
 /**
 * Classe principal que orquestra a tradução do arquivo em linguagem de máquina virtual à pilha.
 * Opções:
-*   <arquivo vm>         primeiro parametro é o nome do arquivo vm a ser aberto 
+*   <arquivo vm>         primeiro parametro é o nome do arquivo vm a ser aberto
 *   -o <arquivo nasm>    parametro indica onde será salvo o arquivo gerado .nasm
 *   -n                   parametro indica não colocar rotina de bootstrap (conveniente para testar)
 */
 class VMTranslator {
-  
+
   public static void main(String[] args) {
     Parser parser = null;
     Code code = null;
@@ -28,7 +35,7 @@ class VMTranslator {
         code = new Code(argument);
       }else if (args[i].startsWith("/")){
         File file = new File(args[i]);
-        
+
         boolean exists =      file.exists();      // Check if the file exists
         boolean isDirectory = file.isDirectory(); // Check if it's a directory
         boolean isFile =      file.isFile();      // Check if it's a regular file
@@ -42,7 +49,7 @@ class VMTranslator {
                 if (child.toString().endsWith(".vm")){
                   parser = new Parser(child.toString());
                   if (code != null){
-                    processFile(parser,code);  
+                    processFile(parser,code);
                   }else{
                     achararg:
                     for (int a = 0;i<args.length;a++){
@@ -51,7 +58,7 @@ class VMTranslator {
                         a++;
                         code = new Code(argument);
                         break achararg;
-                      } 
+                      }
                     }
                     processFile(parser,code);
                   }
@@ -63,7 +70,7 @@ class VMTranslator {
       }else {
         parser = new Parser(args[i]);
         if (code != null){
-          processFile(parser,code);  
+          processFile(parser,code);
         }else{
           achararg:
           for (int a = 0;i<args.length;a++){
@@ -72,14 +79,14 @@ class VMTranslator {
               a++;
               code = new Code(argument);
               break achararg;
-            } 
+            }
           }
           processFile(parser,code);
         }
       }
     }
   }
-  
+
   public static void processFile(Parser parser,Code code){
     while (parser.advance()){
       String command = parser.command();

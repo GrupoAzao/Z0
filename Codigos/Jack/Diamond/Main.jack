@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Diamond/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawDiamond(160, 120, 40);
+        
+        return;
+    }
+    
+    /** Desenha um Losango na tela. */
+    function void drawDiamond(int x, int y, int d) {
+        return;
+    }
+
+}

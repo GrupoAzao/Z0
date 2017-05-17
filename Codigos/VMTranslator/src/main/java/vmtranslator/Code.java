@@ -21,7 +21,7 @@ public class Code {
 
 	/**
 	 * Abre o arquivo de entrada VM e se prepara para analis√°-lo.
-	 * 
+	 *
 	 * @param filename
 	 *            nome do arquivo VM que ser√° feito o parser.
 	 */
@@ -31,17 +31,24 @@ public class Code {
 			writer = new BufferedWriter(new FileWriter(filename));
 			// writer.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("deu erro na hora de abrir o arquivo escrever o cÛdigo assembly");
+			System.out.println("deu erro na hora de abrir o arquivo escrever o cÔøΩdigo assembly");
 		}
 	}
+    /**
+     * Abre o arquivo de entrada VM e se prepara para analis√°-lo.
+     * @param filename nome do arquivo NASM que receber√° o c√≥digo traduzido.
+     */
+    public Code(String filename) {
+
+    }
 
 	/**
      * Grava no arquivo de saida as instru√ß√µes em Assembly para executar o comando aritm√©tico.
      * @param  command comando aritm√©tico a ser analisado.
      */
     public void writeArithmetic(String command) {
-    	
-	    try {	
+
+	    try {
 	    	if (command == 'add' or command == 'sub' or command == 'and' or command =='or'){
 		    	writer.write('leaw $SP,%A');
 		    	writer.write('decw (%A)');
@@ -112,7 +119,7 @@ public class Code {
 	/**
 	 * Grava no arquivo de saida as instru√ß√µes em Assembly para executar o
 	 * comando de Push ou Pop.
-	 * 
+	 *
 	 * @param command
 	 *            comando de push ou pop a ser analisado.
 	 * @param segment
@@ -142,11 +149,11 @@ public class Code {
 				writer.write("leaw $" + segment + ", %A"); // Carrega o segmento
 															// em A
 				writer.write("movw (%A) , %A");
-				for (int i = 0; i < index; i++) { // Index È o lugar dentro do
-													// segmento que est· o valor
+				for (int i = 0; i < index; i++) { // Index ÔøΩ o lugar dentro do
+													// segmento que estÔøΩ o valor
 													// a ser PUSHADO
 					writer.write("incw %A"); // Incrementa index no valor
-												// apontado pelo segmento atÈ o
+												// apontado pelo segmento atÔøΩ o
 												// valor a ser PUSHADO
 				}
 				writer.write("movw (%A) , %D"); // Move o valor a ser PUSHADO
@@ -167,20 +174,20 @@ public class Code {
 				writer.write("leaw $0 , %A"); // Carrega zero em A para indicar
 												// o SP
 				writer.write("movw (%A) , %D");
-				writer.write("subw %D , $1 , %D"); // D È o SP - 1
+				writer.write("subw %D , $1 , %D"); // D ÔøΩ o SP - 1
 				writer.write("movw %D , (%A)"); // Move o novo SP para 0
-				writer.write("movw %D, %A"); // A È o SP onde est· o valor a ser
+				writer.write("movw %D, %A"); // A ÔøΩ o SP onde estÔøΩ o valor a ser
 												// popado
 				writer.write("movw (%A) , %D"); // Move o valor a ser popado
 												// para D
 				writer.write("leaw $" + segment + ", %A"); // Carrega o segmento
 															// de destino em A
 				writer.write("movw (%A) , %A");
-				for (int i = 0; i < index; i++) { // Index È o lugar dentro do
-													// segmento que est· o valor
+				for (int i = 0; i < index; i++) { // Index ÔøΩ o lugar dentro do
+													// segmento que estÔøΩ o valor
 													// a ser POPADO
 					writer.write("incw %A"); // Incrementa index no valor
-												// apontado pelo segmento atÈ o
+												// apontado pelo segmento atÔøΩ o
 												// valor a ser POPADO
 				}
 				writer.write("movw %D , (%A)"); // Move o valor a ser popado
@@ -214,7 +221,7 @@ public class Code {
 	/**
 	 * Grava no arquivo de saida as instru√ß√µes em Assembly para gerar o labels
 	 * (marcadores de jump).
-	 * 
+	 *
 	 * @param label
 	 *            define nome do label (marcador) a ser escrito.
 	 */
@@ -231,14 +238,14 @@ public class Code {
 	 * Grava no arquivo de saida as instru√ß√µes em Assembly para gerar as
 	 * instru√ß√µes de goto (jumps). Realiza um jump incondicional para o label
 	 * informado.
-	 * 
+	 *
 	 * @param label
 	 *            define jump a ser realizado para um label (marcador).
 	 */
 	public void writeGoto(String label) {
 		try {
 			writer.write("leaw $" + label + ", %A");
-			writer.write("jmp"); // Faz um jump para o endereÁo armazenado em A
+			writer.write("jmp"); // Faz um jump para o endereÔøΩo armazenado em A
 			writer.write("nop");
 		} catch (IOException e) {
 			System.out.println("writeGoto error");
@@ -250,7 +257,7 @@ public class Code {
 	 * Grava no arquivo de saida as instru√ß√µes em Assembly para gerar as
 	 * instru√ß√µes de goto condicional (jumps condicionais). Realiza um jump
 	 * condicional para o label informado.
-	 * 
+	 *
 	 * @param label
 	 *            define jump a ser realizado para um label (marcador).
 	 */
@@ -258,20 +265,20 @@ public class Code {
 
 		try {
 			writer.write("leaw $" + label + ", %A");
-			writer.write("jne"); // Faz um jump para o endereÁo armazenado em A
+			writer.write("jne"); // Faz um jump para o endereÔøΩo armazenado em A
 			writer.write("nop");
 		} catch (IOException e) {
 			System.out.println("writeIf error");
 		}
 	}
-	
+
 	public void Push(string pushValue){
 		writer.write("leaw $"+ pushValue+", %A");
 		writer.write(" movw (%A),%D");
 		writer.write("leaw $SP,%A");
 		writer.write("movw %D,(%A)");
 		writer.write("incw (%A)");
-	}	
+	}
 
 	/**
      * Grava no arquivo de saida as instru√ß√µes em Assembly para uma chamada de fun√ß√£o (Call).
@@ -332,44 +339,44 @@ public class Code {
 	    	writer.write("addw %D,$1,%D");
 	    	writer.write("leaw $SP,%A");
 	    	writer.write("movw %D,(%A)");
-	    	
+
 	    	writer.write('leaw $1,%A');
 	    	writer.write('movw %A,%D');
 	    	writer.write('leaw $R13,%A);
 	    	writer.write('subw (%A),%D,%D');
 	    	writer.write('leaw $THAT,%A');
 	    	writer.write("movw %D,(%A)");
-	    	
+
 	    	writer.write('leaw $2,%A');
 	    	writer.write('movw %A,%D');
 	    	writer.write('leaw $R13,%A);
 	    	writer.write('subw (%A),%D,%D');
 	    	writer.write('leaw $THIS,%A');
 	    	writer.write("movw %D,(%A)");
-	    	
+
 	    	writer.write('leaw $3,%A');
 	    	writer.write('movw %A,%D');
 	    	writer.write('leaw $R13,%A');
 	    	writer.write('subw (%A),%D,%D');
 	    	writer.write('leaw $ARG,%A');
 	    	writer.write("movw %D,(%A)");
-	    	
+
 	    	writer.write('leaw $4,%A');
 	    	writer.write('movw %A,%D');
 	    	writer.write('leaw $R13,%A);
 	    	writer.write('subw (%A),%D,%D');
 	    	writer.write('leaw $LCL,%A');
 	    	writer.write("movw %D,(%A)");
-	    	
+
 	    	 writer.write("leaw $R15, %A");
-	         writer.write("jmp"); //Faz um jump para o endereÁo armazenado em A
+	         writer.write("jmp"); //Faz um jump para o endereÔøΩo armazenado em A
 	         writer.write("nop");
     	}
     	 catch (IOException e) {
              System.out.println("writeReturn error");
          }
-	    	
-    	
+
+
     }
 
 	/**
@@ -392,12 +399,12 @@ public class Code {
 	/**
 	 * Armazena o nome do arquivo vm de origem. Usado para definir os dados
 	 * est√°ticos do c√≥digo (por arquivo).
-	 * 
+	 *
 	 * @param filename
 	 *            nome do arquivo sendo tratado.
 	 */
 	public void vmfile(String file) {
-		// n„o entendi oq isso aqui faz, certeza que est· errado.
+		// nÔøΩo entendi oq isso aqui faz, certeza que estÔøΩ errado.
 
 		try {
 			writer = new BufferedWriter(new FileWriter("codeoutput.nasm"));

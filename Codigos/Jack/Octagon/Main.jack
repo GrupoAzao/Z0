@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Octagon/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawOctagon(160, 120, 20);
+        
+        return;
+    }
+    
+    /** Desenha um Octagono na tela. */
+    function void drawOctagon(int x, int y, int d) {
+        return;
+    }
+
+}

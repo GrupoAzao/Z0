@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Pentagon/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawPentagon(160, 120, 30);
+        
+        return;
+    }
+    
+    /** Desenha um Pentagono na tela. */
+    function void drawPentagon(int x, int y, int d) {
+        return;
+    }
+
+}

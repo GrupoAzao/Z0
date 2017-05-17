@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Parallelogram/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawParallelogram(160, 120, 20, 30);
+        
+        return;
+    }
+    
+    /** Desenha um Paralelogramo na tela. */
+    function void drawParallelogram(int x, int y, int d, int l) {
+        return;
+    }
+
+}

@@ -8,6 +8,8 @@ leaw $KBD,%A
 movw (%A),%D
 leaw $LOOP,%A
 je
+nop
 END:
 leaw $END,%A
 jmp
+nop

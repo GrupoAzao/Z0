@@ -1,0 +1,22 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Hexagon/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawHexagon(160, 120, 20);
+        
+        return;
+    }
+    
+    /** Desenha um Hexagono na tela. */
+    function void drawHexagon(int x, int y, int d) {
+        return;
+    }
+
+}

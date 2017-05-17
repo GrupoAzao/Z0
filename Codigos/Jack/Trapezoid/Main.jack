@@ -1,0 +1,23 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ * Arquivo : Trapezoid/Main.jack
+ * Desenvolvido por:
+ */
+
+class Main {
+
+    function void main() {
+    
+        // Exemplo de chamada para subrotina
+        do Main.drawTrapezoid(160, 120, 30, 20, 30);
+        
+        return;
+    }
+    
+    /** Desenha uma Trapezoide na tela. */
+    function void drawTrapezoid(int x, int y, int d, int D, int l) {
+        return;
+    }
+
+}
+
