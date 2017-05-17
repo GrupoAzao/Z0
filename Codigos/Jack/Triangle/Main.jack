@@ -16,6 +16,25 @@ class Main {
     
     /** Desenha uma triangulo na tela. */
     function void drawTriangle(int x, int y, int d) {
+
+    	var int metade;
+    	var int raiz;
+    	var int divi;
+    	var int mult;
+    	
+
+
+    	let metade = Math.divide(d,2);
+    	let raiz = Math.sqrt(3)+1;
+    	let divi = Math.divide(raiz,2);
+    	let mult = Math.multiply(d,divi);
+
+
+
+    	do Screen.drawLine(x,y,x+d,y);
+    	do Screen.drawLine(x,y,x+metade,y-mult);
+    	do Screen.drawLine(x+d,y,x+metade,y-mult);
+
         return;
     }
 
