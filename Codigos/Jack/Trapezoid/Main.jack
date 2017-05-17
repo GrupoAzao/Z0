@@ -16,6 +16,10 @@ class Main {
     
     /** Desenha uma Trapezoide na tela. */
     function void drawTrapezoid(int x, int y, int d, int D, int l) {
+    	do Screen.drawLine(x, y, x+d, y); //Linha inferior
+    	do Screen.drawLine(x, y, x, y+l); //Linha lateral esquerda
+    	do Screen.drawLine(x, y+l, x+D, y+l); //Linha superior
+    	do Screen.drawLine(x+D, y+l, x+d, y); //Linha superior
         return;
     }
 
