@@ -1,7 +1,7 @@
 /**
  * Main class para desenhar figuras geometricas na tela.
  * Arquivo : Diamond/Main.jack
- * Desenvolvido por:
+ * Desenvolvido por: Martim José <martimfj@al.insper.edu.br>
  */
 
 class Main {
@@ -16,6 +16,17 @@ class Main {
     
     /** Desenha um Losango na tela. */
     function void drawDiamond(int x, int y, int d) {
+    	var int e;
+    	var int r;
+        let e = Math.divide(d,2);
+        let r = Math.sqrt(2);
+        let d = Math.multiply(e,r);
+
+    	do Screen.drawLine(x, y-d, x+d, y); //Linha inferior direita
+    	do Screen.drawLine(x+d, y, x, y+d); //Linha superior direita
+    	do Screen.drawLine(x, y+d, x-d, y); //Linha superior esquerda
+    	do Screen.drawLine(x-d, y, x, y-d); //Linha inferior esquerda
+    	
         return;
     }
 
