@@ -9,13 +9,18 @@ class Main {
     function void main() {
     
         // Exemplo de chamada para subrotina
-        do Main.drawStar(160, 120, 30);
+        do Main.drawStar(0,0);
         
         return;
     }
     
     /** Desenha uma estrela na tela. */
-    function void drawStar(int x, int y, int d) {
+    function void drawStar(int x, int y) {
+        do Screen.drawLine(100,0,180,18);
+        do Screen.drawLine(180,18,150,50);
+        do Screen.drawLine(150,50,50,50);
+        do Screen.drawLine(50,50,50,18);
+        do Screen.drawLine(50,18,100,0);
         return;
     }
 
