@@ -56,7 +56,6 @@ def vmtranslator(jar,testes,in_dir,out_dir,processos):
 		
 		saida = out_dir+"{0}.nasm".format(nome[0])
 
-		#rotina = ['java', '-jar', 'Codigos/VMTranslator/target/VMTranslator-1.0.jar',
 		rotina = ['java', '-jar', jar, entrada,"-o",saida]
 		
 		# remove rotina de bootstrap do vmtranslator

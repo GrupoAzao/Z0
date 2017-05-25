@@ -11,7 +11,7 @@ import time
 import argparse
 import platform
 
-def compiler(testes,in_dir,out_dir,processos):
+def compiler(jar,testes,in_dir,out_dir,processos):
 	
 	start_time = time.time()
 
@@ -20,14 +20,12 @@ def compiler(testes,in_dir,out_dir,processos):
 	shell=False
 
 	if platform.system()=="Windows":
-		jar = '"%CLASSPATH%;TestesSW\Compiler;TestesSW\Compiler\Hack.jar;TestesSW\Compiler\Compilers.jar"'
 		testes = testes.replace('/','\\')
 		in_dir = in_dir.replace('/','\\')
 		out_dir = out_dir.replace('/','\\')
 		shell=True
 	else:
 		rotina_mkdir.append("-p") # para criar os subdiretórios no mkdir no UNIX
-		jar = '${CLASSPATH}:TestesSW/Compiler:TestesSW/Compiler/Hack.jar:TestesSW/Compiler/Compilers.jar'
 
 	rotina_mkdir.append(out_dir)
 
@@ -42,8 +40,27 @@ def compiler(testes,in_dir,out_dir,processos):
 
 		nome = i.split()
 		
-		rotina = ['java', '-classpath', jar,'Hack.Compiler.JackCompiler',
-			in_dir+"{0}".format(nome[0])]
+		directory = False
+
+		for f in range(3,len(nome)):
+			if(nome[f]=="/"):
+				directory = True
+
+		if directory:
+			entrada = in_dir+"{0}".format(nome[0])
+		else:
+			entrada = in_dir+"{0}.jack".format(nome[0])
+		
+		saida = out_dir+"{0}".format(nome[0])
+
+		rotina = ['java', '-jar', jar, entrada,"-o",saida]
+
+		if platform.system()=="Windows":
+			subprocess.call(["mkdir", out_dir+nome[0]], shell=True)
+			subprocess.call(["copy","/Y","TestesSW\\OS\\*.vm",out_dir+nome[0]],shell=True)
+		else:
+			subprocess.call(["mkdir", "-p", out_dir+nome[0]])
+			subprocess.call(["cp {0} {1}".format("TestesSW/OS/*.vm",out_dir+nome[0]	)],shell=True)
 
 		error = subprocess.call(rotina,shell=shell)
 		if(error!=0):
@@ -51,14 +68,6 @@ def compiler(testes,in_dir,out_dir,processos):
 		else:
 			done += 1
 	
-		if platform.system()=="Windows":
-			subprocess.call(["mkdir", out_dir+nome[0]], shell=True)
-			subprocess.call(["move","/Y",in_dir+nome[0]+"\\*.vm",out_dir+nome[0]],shell=True)
-			subprocess.call(["copy","/Y","TestesSW\\OS\\*.vm",out_dir+nome[0]],shell=True)
-		else:
-			subprocess.call(["mkdir", "-p", out_dir+nome[0]])
-			subprocess.call(["mv {0} {1}".format(in_dir+nome[0]+"/*.vm",out_dir+nome[0]	)],shell=True)
-			subprocess.call(["cp {0} {1}".format("TestesSW/OS/*.vm",out_dir+nome[0]	)],shell=True)
 
 	elapsed_time = time.time() - start_time
 	print('\033[92m'+"Compiled {0} file(s) in {1:.2f} seconds".format(done,elapsed_time)+'\033[0m') 
@@ -70,10 +79,11 @@ def compiler(testes,in_dir,out_dir,processos):
 	
 if __name__ == "__main__":
 	ap = argparse.ArgumentParser()
+	ap.add_argument("-j", "--jar", required=True,help="arquivo jar para executar")
 	ap.add_argument("-t", "--tests", required=True,help="arquivo com lista de testes")
 	ap.add_argument("-in", "--in_dir", required=True,help="caminho para codigos")
 	ap.add_argument("-out", "--out_dir", required=True,help="caminho para salvar resultado de testes")
 	ap.add_argument("-p", "--processos", required=True,help="numero de threads a se paralelizar")
 	args = vars(ap.parse_args())
-	compiler(testes=args["tests"],in_dir=args["in_dir"],out_dir=args["out_dir"],processos=int(args["processos"]))
+	compiler(jar=args["jar"],testes=args["tests"],in_dir=args["in_dir"],out_dir=args["out_dir"],processos=int(args["processos"]))
 	

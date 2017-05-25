@@ -81,9 +81,9 @@ if "%compiler%"=="T" (
 	echo "Testes para o Compiler"
 	echo.
 	mvn-color -f Codigos/Compiler package
-	rem python TestesSW/testeCompiler.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
-	rem python TestesSW/vmtranslator.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
-	rem python TestesSW/assembler.py -t TestesSW/testesCompiler.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
-	rem python TestesSW/emulate.py -t TestesSW/testesCompiler.txt -in TestesSW/testesCompiler/ -out TestesSW/machine_code/ -p 3
-	rem python -m pytest -v TestesSW/testeVMTranslator.py -rxs
+	python TestesSW/compiler.py -j Codigos/Compiler/target/JackCompiler-1.0.jar -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/compiled_code/ -p 3
+	python TestesSW/vmtranslator.py -j TestesSW/VMTranslator/VMTranslator.jar -t TestesSW/testesCompiler.txt -in TestesSW/compiled_code/ -out TestesSW/compiled_code/ -p 3
+	python TestesSW/assembler.py -j TestesSW/Assembler/AssemblerZ0.jar -t TestesSW/testesCompiler.txt -in TestesSW/compiled_code/ -out TestesSW/compiled_code/ -p 3 -b 32
+	python TestesSW/emulate.py -t TestesSW/testesCompiler.txt -in TestesSW/testesCompiler/ -out TestesSW/compiled_code/ -p 3 -b 32 -r 512,256
+	python -m pytest -v TestesSW/testeCompiler.py -rxs
 )

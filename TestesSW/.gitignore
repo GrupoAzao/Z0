@@ -1,1 +1,5 @@
 machine_code/
+jack_code/
+vm_code/
+compiled_code/
+__pycache__

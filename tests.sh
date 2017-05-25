@@ -117,7 +117,7 @@ if [ -z "$1" ] || [ $1 == "jack" ] ; then
 	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para codigos em Jack\t\t\t"${RESET_FORMATTING}
 	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                           \t\t\t"${RESET_FORMATTING}
 	echo -e "\n"
-	python TestesSW/compiler.py -t TestesSW/testesJack.txt -in Codigos/Jack/ -out TestesSW/jack_code/ -p 3
+	python TestesSW/compiler.py -j TestesSW/Compiler/JackCompiler.jar -t TestesSW/testesJack.txt -in Codigos/Jack/ -out TestesSW/jack_code/ -p 3
 	let "n_error+=$?"
 	python TestesSW/vmtranslator.py -j TestesSW/VMTranslator/VMTranslator.jar -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3
 	let "n_error+=$?"
@@ -138,16 +138,16 @@ if [ -z "$1" ] || [ $1 == "compiler" ] ; then
 	#echo -e "\n"
 	mvn-color -f Codigos/Compiler package
 	let "n_error+=$?"
-	#python TestesSW/testeCompiler.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
-	#let "n_error+=$?"
-	#python TestesSW/vmtranslator.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
-	#let "n_error+=$?"
-	#python TestesSW/assembler.py -t TestesSW/testesCompiler.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
-	#let "n_error+=$?"
-	#python TestesSW/emulate.py -t TestesSW/testesCompiler.txt -in TestesSW/testesCompiler/ -out TestesSW/machine_code/ -p 3
-	#let "n_error+=$?"
-	#python -m pytest -v TestesSW/testeVMTranslator.py -rxs
-	#let "n_error+=$?"
+	python TestesSW/compiler.py -j Codigos/Compiler/target/JackCompiler-1.0.jar -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/compiled_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/vmtranslator.py -j TestesSW/VMTranslator/VMTranslator.jar -t TestesSW/testesCompiler.txt -in TestesSW/compiled_code/ -out TestesSW/compiled_code/ -p 3
+	let "n_error+=$?"
+	python TestesSW/assembler.py -j TestesSW/Assembler/AssemblerZ0.jar -t TestesSW/testesCompiler.txt -in TestesSW/compiled_code/ -out TestesSW/compiled_code/ -p 3 -b 32
+	let "n_error+=$?"	
+	python TestesSW/emulate.py -t TestesSW/testesCompiler.txt -in TestesSW/testesCompiler/ -out TestesSW/compiled_code/ -p 3 -b 32 -r 512,256
+	let "n_error+=$?"
+	python -m pytest -v TestesSW/testeCompiler.py -rxs
+	let "n_error+=$?"
 fi
 
 exit $n_error
