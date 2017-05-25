@@ -11,9 +11,12 @@ import unittest
 import pytest
 import loadTestes
 import diffImage
+import checkUnitTests
 
 nomes_testes = loadTestes.testes("TestesSW/testesCompiler.txt")
 
+@pytest.mark.skipif(checkUnitTests.checkUnitTests("Codigos/Compiler/target/"),
+	reason="Testes unitários anteriores não passaram por completo, não executando teste de sistema.")
 @pytest.mark.parametrize(('nomes_testes'),nomes_testes)
 def test_Compiler(nomes_testes):
 
