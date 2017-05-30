@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Testador do Assembler
 # Arquivo: testAssembler.py
 # Criado por: Luciano Soares <lpsoares@insper.edu.br>
@@ -9,6 +12,7 @@ import pytest
 import subprocess
 import loadTestes
 import checkUnitTests
+import platform
 
 # Rotinas para carregar os testes
 nomes_testes = loadTestes.testes("TestesSW/testesAssembler.txt")
@@ -21,7 +25,19 @@ def test_Assembler(nomes_testes):
 
 	out_dir = "TestesSW/machine_code/"
 
-	subprocess.call(["mkdir", "-p", out_dir])
+	rotina_mkdir = ["mkdir"]
+	shell=False
+
+	if platform.system()=="Windows":
+		out_dir = out_dir.replace('/','\\')
+		shell=True
+	else:
+		rotina_mkdir.append("-p") # para criar os subdiretórios no mkdir no UNIX
+
+	rotina_mkdir.append(out_dir)
+
+	subprocess.call(rotina_mkdir, shell=shell) # cria subdiretório para resultados
+
 
 	# Assembler interno (desenvolvido por professor)
 	error = subprocess.call(['java', '-jar', 'TestesSW/Assembler/AssemblerZ0.jar',

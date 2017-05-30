@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Testador de emulação
 # Arquivo: testComp.nasm
 # Criado por: Luciano Soares <lpsoares@insper.edu.br>

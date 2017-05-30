@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Curso de Elementos de Sistemas
 # Desenvolvido por: Luciano Soares <lpsoares@insper.edu.br>
 # Data de criação: 30/03/2017
@@ -7,6 +10,12 @@ import loadTestes
 import time
 import os
 import argparse
+import platform
+
+#http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+def cmd_exists(cmd):
+    return subprocess.call("type " + cmd, shell=True, 
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 def emulate(testes,in_dir,out_dir,bits,processos,resolution):
 	
@@ -14,6 +23,11 @@ def emulate(testes,in_dir,out_dir,bits,processos,resolution):
 	max_processes = processos
 
 	start_time = time.time()
+
+	if platform.system()=="Windows":
+		shell = True
+	else:
+		shell = False
 
 	nomes_testes = loadTestes.testes(testes)
 
@@ -116,11 +130,13 @@ def emulate(testes,in_dir,out_dir,bits,processos,resolution):
 			n_error+=1
 
 	# exibe as imagens no terminal
-	for i in nomes_testes:
-		nome = i.split()
-		if int(nome[1]) < 0:
-			subprocess.call(['echo',"\n{0}.pbm".format(nome[0],i)])
-			subprocess.call(['img2txt',out_dir+"{0}.pbm".format(nome[0],i)])
+	if cmd_exists('img2txt2'):
+		for i in nomes_testes:
+			nome = i.split()
+			if int(nome[1]) < 0:
+				subprocess.call(['echo'], shell=shell)
+				subprocess.call(['echo',"{0}.pbm".format(nome[0],i)], shell=shell)
+				subprocess.call(['img2txt',out_dir+"{0}.pbm".format(nome[0],i)], shell=shell)
 
 	elapsed_time = time.time() - start_time
 	print('\033[92m'+"Emulated {0} process(es) in {1:.2f} seconds".format(n_done,elapsed_time)+'\033[0m') 

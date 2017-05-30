@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Testador de emulação
 # Arquivo: testJack.nasm
 # Criado por: Luciano Soares <lpsoares@insper.edu.br>
