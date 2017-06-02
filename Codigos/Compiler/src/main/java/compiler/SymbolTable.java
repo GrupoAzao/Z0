@@ -25,9 +25,14 @@ public class SymbolTable {
 	/**
     * Cria uma tabela de símbolos vazia.
     */
-	Hashtable<String, Symbol> tabela;
+	private Hashtable<String, Symbol> tabela;
+	
     public SymbolTable() {
     	tabela = new Hashtable<String, Symbol>();
+    	contador_static = 0;
+    	contador_field = 0;
+    	contador_arg = 0;
+    	contador_var = 0;
     }
 
     /**
@@ -36,7 +41,11 @@ public class SymbolTable {
      * contexto, por exemplo quando se muda para uma nova subrotina.
      */
     public void startSubroutine() {
-    	tabela = new Hashtable<String,Symbol>();    
+    	tabela = new Hashtable<String,Symbol>(); 
+    	contador_static = 0;
+    	contador_field = 0;
+    	contador_arg = 0;
+    	contador_var = 0;
     }
 
     /**
@@ -51,37 +60,32 @@ public class SymbolTable {
      * @return valor inteiro do índice para segmento de memória criado para a variável.
      */   
     public Integer define(String name, String type, Symbol.Kind kind) {
-    	contador_static = 0;
-    	contador_field = 0;
-    	contador_arg = 0;
-    	contador_var = 0;
-
     	if(kind.equals(Kind.STATIC)){
     		Symbol data = new Symbol(type, kind, contador_static);
     		tabela.put(name, data);
     		contador_static++;
-    		return contador_static; 
+    		return contador_static-1; 
     	}
     	
-    	else if(kind.equals(Kind.FIELD)){
-    		Symbol data = new Symbol(type, kind, contador_static);
+    	if(kind.equals(Kind.FIELD)){
+    		Symbol data = new Symbol(type, kind, contador_field);
     		tabela.put(name, data);
     		contador_field++;
-    		return contador_field; 
+    		return contador_field-1; 
     	}
     	
-    	else if(kind.equals(Kind.ARG)){
-    		Symbol data = new Symbol(type, kind, contador_static);
+    	if(kind.equals(Kind.ARG)){
+    		Symbol data = new Symbol(type, kind, contador_arg);
     		tabela.put(name, data);
     		contador_arg++;
-    		return contador_arg; 
+    		return contador_arg-1; 
     	}
     	
-    	else if(kind.equals(Kind.VAR)){
-    		Symbol data = new Symbol(type, kind, contador_static);
+    	if(kind.equals(Kind.VAR)){
+    		Symbol data = new Symbol(type, kind, contador_var);
     		tabela.put(name, data);
     		contador_var++;
-    		return contador_var; 
+    		return contador_var-1; 
     	}
     	
         return null;
@@ -94,7 +98,20 @@ public class SymbolTable {
      * @return quantidade de variáveis definidas para uma determinada forma de posicionamento (kind).
      */
     public Integer varCount(Symbol.Kind kind) {
-        return null;
+    	String tipo = "contador_" + kind.toString().toLowerCase();
+		if (tipo.equals("contador_arg")){
+			return contador_arg;
+		}
+        if (tipo.equals("contador_static")){
+        	return contador_static;
+        }
+        if (tipo.equals("contador_field")){
+         	return contador_field;
+        }
+        if (tipo.equals("contador_var")){
+         	return contador_var;
+        }
+	    return null;
     }
 
     /**

@@ -27,7 +27,7 @@ public class SymbolTableTest {
     }
 
     /**
-     * Teste verificar s√≠mbolos s√£o criados na ordem cera e o startSubroutine est√° funcionando.
+     * Teste verificar sÌmbolos s„o criados na ordem cera e o startSubroutine est· funcionando.
      */
     @Test
     public void testSymbolTable_define_startSubroutine() {
@@ -151,7 +151,7 @@ public class SymbolTableTest {
     }
 
     /**
-     * Teste verificar os tipos das vari√°veis armazenadas na tabela.
+     * Teste verificar os tipos das vari·veis armazenadas na tabela.
      */
     @Test
     public void testSymbolTable_typeOf() {
@@ -200,7 +200,7 @@ public class SymbolTableTest {
 
 
     /**
-     * Teste verificar os tipo de posicionamento das vari√°veis armazenadas na tabela.
+     * Teste verificar os tipo de posicionamento das vari·veis armazenadas na tabela.
      */
     @Test
     public void testSymbolTable_kindOf() {
@@ -249,7 +249,7 @@ public class SymbolTableTest {
 
 
     /**
-     * Teste verificar o indice das vari√°veis armazenadas na tabela.
+     * Teste verificar o indice das vari·veis armazenadas na tabela.
      */
     @Test
     public void testSymbolTable_indexOf() {
@@ -299,7 +299,7 @@ public class SymbolTableTest {
 
 
     /**
-     * Teste para adicionar e checar se s√≠mbolos j√° inserido
+     * Teste para adicionar e checar se sÌmbolos j· inserido
      */
     @Test
     public void testSymbolTable_notInsert() {
@@ -340,7 +340,7 @@ public class SymbolTableTest {
     }
 
     /**
-     * Teste para adicionar e checar v√°rios s√≠mbolos inseridos
+     * Teste para adicionar e checar v·rios sÌmbolos inseridos
      */
     @Test
     public void testSymbolTable_repetitive() {
@@ -363,7 +363,7 @@ public class SymbolTableTest {
             }
 
             for (int i = 0; i < 16384; i++) {
-                assertTrue("Testando intensamente Tabela de S√≠mbolos",table.indexOf("TESTE"+i)==i);
+                assertTrue("Testando intensamente Tabela de SÌmbolos",table.indexOf("TESTE"+i)==i);
             }
 
         } catch(Exception e) {
