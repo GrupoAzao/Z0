@@ -5,14 +5,16 @@
 
 package compiler;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Encapsula o código para gravar as instruções em Liguagem de Máquina Virtual à Pilha.
  * Responsável por abrir o arquivo para gravar instruções, possui funcionalidades para gravar as instruções.
  */
 public class VMWriter {
-
+    private File file;
+    private Writer writer;
     /** Enumerator para os tipos de segmentos de memória do Z0. */
     public enum Segment {
         CONST,
@@ -42,7 +44,19 @@ public class VMWriter {
      * Grava instruções no formato de máquina virtual a pilha.
      * @param objeto File para o arquivo onde serão salvas as instruções em VM.
      */
-    public VMWriter(File file) {
+    public VMWriter(File file) throws FileNotFoundException, UnsupportedEncodingException {
+        this.file = file;
+        this.writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.file,true), StandardCharsets.UTF_8));
+    }
+
+    private void write(String output) {
+        try {
+            this.writer.write(output);
+            this.writer.write(System.getProperty("line.separator"));
+        }
+        catch (IOException ex) {
+            System.out.print("Error when writing to file");
+        }
 
     }
 
@@ -54,7 +68,33 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writePush(Segment segment, Integer index) {
-        return null;
+        String segmentString = "";
+        if (segment == Segment.CONST){
+            segmentString = "constant";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.ARG){
+            segmentString = "argument";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.LOCAL){
+            segmentString = "local";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.STATIC){
+            segmentString = "static";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.THIS){
+            segmentString = "this";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.THAT){
+            segmentString = "that";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.POINTER){
+            segmentString = "pointer";
+            write("push " + segmentString + " " + index.toString());
+        } else if (segment == Segment.TEMP) {
+            segmentString = "temp";
+            write("push " + segmentString + " " + index.toString());
+        }
+        return "push "+ segmentString + " " + index.toString();
     }
 
     /** 
@@ -64,25 +104,55 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writePop(Segment segment, Integer index) {
-        return null;
+        String segmentString = "";
+        if (segment == Segment.CONST){
+            segmentString = "constant";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.ARG){
+            segmentString = "argument";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.LOCAL){
+            segmentString = "local";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.STATIC){
+            segmentString = "static";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.THIS){
+            segmentString = "this";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.THAT){
+            segmentString = "that";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.POINTER){
+            segmentString = "pointer";
+            write("pop " + segmentString + " " + index.toString());
+        } else if (segment == Segment.TEMP) {
+            segmentString = "temp";
+            write("pop " + segmentString + " " + index.toString());
+        }
+        return "pop "+ segmentString + " " + index.toString();
     }
 
     /** 
      * Grava um comand aritmético no arquivo de instruções VM.
-     * @param coomand código da instrução a ser salva em linguagem de VM.
+     * @param command código da instrução a ser salva em linguagem de VM.
      * @return retorna a String do respectivo comando
      */
     public String writeArithmetic(Command command) {
-        return null;
+        String output = command.toString().toLowerCase();
+        write(output);
+        return output;
     }
 
     /** 
-     * Grava um marcador (Lable) no arquivo de instruções VM.
+     * Grava um marcador (Label) no arquivo de instruções VM.
      * @param label nome de marcador a ser usado na linha do arquivo.
      * @return retorna a String do respectivo comando
      */
     public String writeLabel(String label) {
-        return null;
+        String output = "label" + " " + label;
+        write(output);
+        return output;
     }
 
     /** 
@@ -91,7 +161,9 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeGoto(String label) {
-        return null;
+        String output = "goto" + " " + label;
+        write(output);
+        return output;
     }
 
     /** 
@@ -100,7 +172,9 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeIf(String label) {
-        return null;
+        String output = "if-goto" + " " + label;
+        write(output);
+        return output;
     }
 
     /** 
@@ -110,7 +184,9 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeCall(String name, Integer nArgs) {
-        return null;
+        String output = "call" + " " + name + " " + nArgs;
+        write(output);
+        return output;
     }
 
     /** 
@@ -120,7 +196,9 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeFunction(String name, Integer nLocals) {
-        return null;
+        String output = "function" + " " + name + " " + nLocals;
+        write(output);
+        return output;
     }
 
     /** 
@@ -128,7 +206,9 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeReturn() {
-        return null;
+        String output = "return";
+        write(output);
+        return output;
     }
 
     /** 
@@ -139,7 +219,20 @@ public class VMWriter {
      * @return retorna o numero de caracteres que foram detectados na String.
      */
     public Integer writeString(String text) {
-        return null;
+
+        writePush(Segment.CONST,text.length());
+        writeCall("String.new",1);
+
+        Character[] characters = new Character[text.length()];
+        for (int i = 0;i < text.length(); i++){
+            characters[i] = text.charAt(i);
+            int ascii = (int) characters[i];
+            writePush(Segment.CONST,ascii);
+            writeCall("String.appendChar",2);
+        }
+        
+//        System.out.println(text.length());
+        return text.length();
     }
 
     /** 
@@ -147,7 +240,11 @@ public class VMWriter {
      * O arquivo deve ser fechado ao final da gravação, senão dados podem não ser gravados de fato.
      */
     public void close() {
-    
+        try {
+            this.writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
