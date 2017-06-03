@@ -1,7 +1,7 @@
 /**
  * Curso: Elementos de Sistemas
  * Arquivo: JackCompiler.java
- * Created by Luciano Soares <lpsoares@insper.edu.br> 
+ * Created by Luciano Soares <lpsoares@insper.edu.br>
  * Date: 4/05/2017
  */
 
@@ -12,31 +12,31 @@ import java.nio.file.*;
 import java.util.ArrayList;
 
 /**
- * Classe principal (main) que orquestra a tradução do arquivo em linguagem de máquina virtual à pilha.
- * Essa classe é responsável por ler os parametros da execução do programa pela linha de código, ou
- * seja, se o programa for invocado com parâmetros esses deverão ser carregados.
- * Opções:
- *   <arquivo/diretório jack>    primeiro parametro é o nome do arquivo jack a ser aberto 
- *   -o <diretório jack>   parametro (opcional) que indica onde será salvo os arquivos gerados .vm
- *   -x                          gera arquivos de saída da análise sintática em XML
+ * Classe principal (main) que orquestra a traduï¿½ï¿½o do arquivo em linguagem de mï¿½quina virtual ï¿½ pilha.
+ * Essa classe ï¿½ responsï¿½vel por ler os parametros da execuï¿½ï¿½o do programa pela linha de cï¿½digo, ou
+ * seja, se o programa for invocado com parï¿½metros esses deverï¿½o ser carregados.
+ * Opï¿½ï¿½es:
+ *   <arquivo/diretï¿½rio jack>    primeiro parametro ï¿½ o nome do arquivo jack a ser aberto
+ *   -o <diretï¿½rio jack>   parametro (opcional) que indica onde serï¿½ salvo os arquivos gerados .vm
+ *   -x                          gera arquivos de saï¿½da da anï¿½lise sintï¿½tica em XML
  */
 class JackCompiler {
 
 	/**
-	 * Método estático que é carregado na execução do programa.
-	 * Os parâmetros de linha de comando dever ser tratados nessa rotina.
+	 * Mï¿½todo estï¿½tico que ï¿½ carregado na execuï¿½ï¿½o do programa.
+	 * Os parï¿½metros de linha de comando dever ser tratados nessa rotina.
 	 */ 
 	public static void main(String[] args) {
 
 		if (args.length < 1)  // checa se arquivo foi passado
-			Error.error("informe o nome do arquivo jack");
+			Error.error("nome do arquivo nÃ£o encontrado");
 
 		String inputFilename = null;    // Usado para armazenar argumento com nome do arquivo de entrada (.jack).
-		String outputFilename = null;   // Usado para armazenar argumento com nome do arquivo de saída (.vm).
+		String outputFilename = null;   // Usado para armazenar argumento com nome do arquivo de saï¿½da (.vm).
 
-		String outputFilenameX = null;  // Define nome do arquivo para salvar árvore sintática em XML.
+		String outputFilenameX = null;  // Define nome do arquivo para salvar ï¿½rvore sintï¿½tica em XML.
 		String outputFilenameT = null;  // Define nome do arquivo para salvar parsing simples em XML.
-		String outputFilenameV = null;  // Define nome do arquivo para salvar código gerado em linguagem VM.
+		String outputFilenameV = null;  // Define nome do arquivo para salvar cï¿½digo gerado em linguagem VM.
 
 		//boolean debug = false;
 
@@ -46,17 +46,13 @@ class JackCompiler {
 			switch (args[i].charAt(0)) {
 			case '-':
 				if (args[i].charAt(1) == 'h') {
-					System.out.println("Opções");
-					System.out.println("<arquivo/diretório> : programa em linguagem de alto nível (jack) a ser carregado");
-					System.out.println("-o <diretório> : nome do arquivo para salvar no formato VM");
-					System.out.println("-x : gera arquivos de saída da análise sintática em XML");
 				} else if (args[i].charAt(1) == 'o') {
-					outputFilename = args[i+1]; // nome genérico do arquivo de saída
+					outputFilename = args[i+1]; // nome genï¿½rico do arquivo de saï¿½da
 					i++;
 				} else if (args[i].charAt(1) == 'x') {
-					createXML = true; // gera arquivos XML de saída
+					createXML = true; // gera arquivos XML de saï¿½da
 				} else {
-					Error.error("Argumento não reconhecido: "+args[i]);
+					Error.error("Argumento nï¿½o reconhecido: "+args[i]);
 				}
 				break;
 			default:
@@ -71,15 +67,15 @@ class JackCompiler {
 
 			ArrayList<String> files = new ArrayList<String>();
 
-			// Cria um arquivo de saída dependendo se diretório.
-			if(Files.isDirectory(path)) {  // caso diretório
+			// Cria um arquivo de saï¿½da dependendo se diretï¿½rio.
+			if(Files.isDirectory(path)) {  // caso diretï¿½rio
 
-				// descobre o indice do último nome de diretório
-				int indexName = path.getNameCount()-1; 
+				// descobre o indice do ï¿½ltimo nome de diretï¿½rio
+				int indexName = path.getNameCount()-1;
 				if(path.getName(indexName).toString().equals(".")) {
 					indexName--;
 				}
-				
+
 				DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);
 				for (Path p : directoryStream) {
 
@@ -92,7 +88,7 @@ class JackCompiler {
 						files.add(p.toString());
 					}
 				}
-			} else {   // Não é diretório, então é um arquivo    
+			} else {   // Nï¿½o ï¿½ diretï¿½rio, entï¿½o ï¿½ um arquivo
 				files.add(inputFilename);
 			}
 
@@ -108,20 +104,18 @@ class JackCompiler {
 					outputFilenameT = outputFilename+file.substring(file.lastIndexOf('/')).replace(".jack","T.xml");
 				}
 
-				System.out.println(outputFilenameV);
-
 				CompilationEngine codeVM = new CompilationEngine(file,outputFilenameV);
-				codeVM.compileClass();  // todo arquivo deve começar com uma declaração de classe.
+				codeVM.compileClass();  // todo arquivo deve comeï¿½ar com uma declaraï¿½ï¿½o de classe.
 				codeVM.close();
 
 				if(createXML) {
 					CompilationEngine codeXML = new CompilationEngine(file,outputFilenameX,outputFilenameT);
-					codeXML.compileClass();  // todo arquivo deve começar com uma declaração de classe.
+					codeXML.compileClass();  // todo arquivo deve comeï¿½ar com uma declaraï¿½ï¿½o de classe.
 					codeXML.close();
-				}            
-				
+				}
+
 			}
-			
+
 		} catch (IOException e) {
 			Error.error("uma excessao de i/o foi lancada");
 			System.exit(1);
