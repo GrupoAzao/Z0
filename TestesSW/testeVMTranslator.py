@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Testador da tradução de máquina virtual a pilha
 # Arquivo: testVMTranslator.py
 # Criado por: Luciano Soares <lpsoares@insper.edu.br>

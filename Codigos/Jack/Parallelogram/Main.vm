@@ -1,0 +1,71 @@
+function Main.main 0
+push constant 160
+push constant 120
+push constant 20
+push constant 30
+call Main.drawParallelogram 4
+pop temp 0
+push constant 0
+return
+function Main.drawParallelogram 2
+push constant 20
+pop local 0
+push argument 3
+push argument 3
+call Math.multiply 2
+push local 0
+sub
+push local 0
+call Math.multiply 2
+call Math.sqrt 1
+pop local 1
+push argument 0
+push argument 1
+push argument 0
+push argument 2
+add
+push argument 1
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push argument 1
+push argument 0
+push local 0
+add
+push argument 1
+push local 1
+add
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 0
+add
+push argument 1
+push local 1
+add
+push argument 0
+push local 0
+add
+push argument 2
+add
+push argument 1
+push local 1
+add
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push argument 2
+add
+push argument 1
+push argument 0
+push local 0
+add
+push argument 2
+add
+push argument 1
+push local 1
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return

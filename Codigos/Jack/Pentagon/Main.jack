@@ -9,13 +9,18 @@ class Main {
     function void main() {
     
         // Exemplo de chamada para subrotina
-        do Main.drawPentagon(160, 120, 30);
+        do Main.drawPentagon(0, 0, 30);
         
         return;
     }
     
     /** Desenha um Pentagono na tela. */
     function void drawPentagon(int x, int y, int d) {
+        do Screen.drawLine(100,0,50,50);
+        do Screen.drawLine(100,0,150,50);
+        do Screen.drawLine(150,18,50,50);
+        do Screen.drawLine(50,18,150,50);
+        do Screen.drawLine(150,18,50,18);
         return;
     }
 

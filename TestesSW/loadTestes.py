@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Curso de Elementos de Sistemas
 # Desenvolvido por: Luciano Soares <lpsoares@insper.edu.br>
 # Data de criação: 30/03/2017

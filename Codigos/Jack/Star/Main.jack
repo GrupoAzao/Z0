@@ -8,7 +8,8 @@ class Main {
 
     function void main() {
     
-        do Main.drawStar(0, 0);
+        // Exemplo de chamada para subrotina
+        do Main.drawStar(0,0);
         
         return;
     }

@@ -1,0 +1,6 @@
+# Arquivo que define as rotinas de testes
+# Criado por Luciano Soares <lpsoares@insper.edu.br>
+
+Seven -1 16777216 /
+ConvertToBin 0 16777216 /
+ComplexArrays -1 16777216 /

@@ -7,16 +7,27 @@
 class Main {
 
     function void main() {
-    
+
         // Exemplo de chamada para subrotina
         do Main.drawHexagon(160, 120, 20);
-        
+
         return;
     }
-    
+
     /** Desenha um Hexagono na tela. */
     function void drawHexagon(int x, int y, int d) {
-        return;
+      var int e;
+      var double h;
+      let e = Math.divide(d,2);
+      let h = Math.sqrt((d*d)-(e*e));
+      do Screen.drawLine(x, y+h, x+e, y+h);
+      do Screen.drawLine(x+e, y+h, x+d, y);
+      do Screen.drawLine(x+d, y, x+e, y-h);
+      do Screen.drawLine(x+e, y-h, x-e, y-h);
+      do Screen.drawLine(x-e, y-h, x-d, y);
+      do Screen.drawLine(x-d, y, x-e, y+h);
+      do Screen.drawLine(x-e, y+h, x, y+h);
+      return;
     }
 
 }

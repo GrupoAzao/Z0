@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Curso de Elementos de Sistemas
 # Desenvolvido por: Luciano Soares <lpsoares@insper.edu.br>
 # Data de criação: 30/03/2017
@@ -7,12 +10,27 @@ import loadTestes
 import time
 import argparse
 import os.path
+import platform
 
-def assembler(testes,in_dir,out_dir,bits,processos):
+def assembler(jar,testes,in_dir,out_dir,bits,processos):
 	
 	start_time = time.time()
 
-	subprocess.call(["mkdir", "-p", out_dir])
+	rotina_mkdir = ["mkdir"]
+	shell=False
+
+	if platform.system()=="Windows":
+		jar = jar.replace('/','\\')
+		testes = testes.replace('/','\\')
+		in_dir = in_dir.replace('/','\\')
+		out_dir = out_dir.replace('/','\\')
+		shell=True
+	else:
+		rotina_mkdir.append("-p") # para criar os subdiretórios no mkdir no UNIX
+
+	rotina_mkdir.append(out_dir)
+
+	subprocess.call(rotina_mkdir, shell=shell) # cria subdiretório para resultados
 
 	nomes_testes = loadTestes.testes(testes)
 
@@ -27,7 +45,7 @@ def assembler(testes,in_dir,out_dir,bits,processos):
 
 		# Testa se arquivos existem, senão pula
 		if os.path.exists(in_dir+"{0}.nasm".format(nome[0])):
-			rotina = ['java', '-jar', 'TestesSW/Assembler/AssemblerZ0.jar',
+			rotina = ['java', '-jar', jar,
 				in_dir+"{0}.nasm".format(nome[0]),"-s",
 				"-o",out_dir+"{0}.hack".format(nome[0]),
 				"-f",out_dir+"{0}.mif".format(nome[0])]
@@ -56,6 +74,7 @@ def assembler(testes,in_dir,out_dir,bits,processos):
 
 if __name__ == "__main__":
 	ap = argparse.ArgumentParser()
+	ap.add_argument("-j", "--jar", required=True,help="arquivo jar para executar")
 	ap.add_argument("-t", "--tests", required=True,help="arquivo com lista de testes")
 	ap.add_argument("-in", "--in_dir", required=True,help="caminho para codigos")
 	ap.add_argument("-out", "--out_dir", required=True,help="caminho para salvar resultado de testes")
@@ -68,5 +87,5 @@ if __name__ == "__main__":
 	else:
 		bita=16
 
-	assembler(testes=args["tests"],in_dir=args["in_dir"],out_dir=args["out_dir"],bits=bita,processos=int(args["processos"]))
+	assembler(jar=args["jar"],testes=args["tests"],in_dir=args["in_dir"],out_dir=args["out_dir"],bits=bita,processos=int(args["processos"]))
 	

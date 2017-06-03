@@ -5,12 +5,11 @@
 
 package assembler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem assembly,
@@ -18,8 +17,6 @@ import java.io.IOException;
  * Além disso, remove todos os espaços em branco e comentários.
  */
 public class Parser {
-    private String current;
-    private BufferedReader reader;
 
     /** Enumerator para os tipos de comandos do Assembler. */
     public enum CommandType {
@@ -27,23 +24,55 @@ public class Parser {
         C_COMMAND,      // comandos de calculos
         L_COMMAND       // comandos de Label (símbolos)
     }
+
+
     private SymbolTable symbolTable;
+    String currentCommand;
+
+    BufferedReader br;
+
     /**
      * Abre o arquivo de entrada NASM e se prepara para analisá-lo.
      * @param file arquivo NASM que será feito o parser.
      */
     public Parser(String file) {
-        current="";
-        try{
-            reader = new BufferedReader(new FileReader(file));
-        }catch (FileNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        //idealmente o reader deveria ser fechado quando não for mais usado
+        symbolTable = new SymbolTable();
+        try {
+        	System.out.println("Working Directory = " +
+                    System.getProperty("user.dir"));
 
-        //advance();
-        //imagino que deva começar carregando minha primeira instrução,
-        //mas instruções não são tão claras neste detalhe
+        	//int i = 0;
+
+        	try (BufferedReader br_1p = new BufferedReader(new FileReader(file))) {
+        	    String line;
+        	    int i = 0;
+        	    while ((line = br_1p.readLine()) != null) {
+
+        	    	if (line.indexOf(';') == 0 || line.isEmpty() ){
+                        //i += 1;
+                    } else if (line.contains(":")){
+                    	line = line.split(":")[0];
+                    	System.out.println("SS"+line);
+                    	if (!symbolTable.contains(line)) {
+                            symbolTable.addEntry(line,i);
+                            System.out.println("SS"+line);
+                        }
+                    } else {
+                    	i++;
+                    }
+        	       System.out.println(line);// process the line.
+        	    }
+        	}
+
+        	br = new BufferedReader(new FileReader(file));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //currentCommand = "";
+
     }
 
     /**
@@ -52,22 +81,31 @@ public class Parser {
      * entrada o método retorna "Falso", senão retorna "Verdadeiro".
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
+
     public boolean advance() {
-        boolean isInstruction= false;
 
-        while (!isInstruction && current != null){
-            try{
-                current= reader.readLine();
-            }catch(IOException e){
-                System.out.println(e.getMessage());
-            }
+		try {
+			currentCommand = br.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-            if (current != null && !current.trim().isEmpty() && current.charAt(0) != ';'){
-                isInstruction= true;
-            }
-        }
+		//System.out.println(currentCommand);
 
-        return isInstruction;
+    	if(currentCommand==null){
+    		return false;
+    	}
+
+		if (currentCommand.trim().isEmpty()){
+			return advance();
+		}
+
+		if (currentCommand.charAt(0) == ';'){
+			return advance();
+		}
+
+    	return true;
     }
 
     /**
@@ -75,8 +113,7 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-
-		return current;
+        return currentCommand;
     }
 
     /**
@@ -88,18 +125,21 @@ public class Parser {
      * @return o tipo da instrução.
      */
      public CommandType commandType(String command) {
-     	String[] parts = command.split(" ");
-     	char last = parts[0].charAt(parts[0].length() - 1);
-     	if (parts[0].equals("leaw")){
-     		return CommandType.A_COMMAND;
-     	}
-     	else if (last == ':'){
-     		return CommandType.L_COMMAND;
-     	}
-     	else {
-     		return CommandType.C_COMMAND;
-     	}
 
+        // Se começa com l, de leaw
+        Character first = command.charAt(0);
+         if(first == 'l') {
+             return CommandType.A_COMMAND;
+         }
+
+         // Se termina com :, é um label
+         int length = command.length();
+         Character last = command.charAt(length - 1);
+         if (last == ':') {
+           return CommandType.L_COMMAND;
+         }
+         // Caso seja outro comando
+         return CommandType.C_COMMAND;
      }
 
     /**
@@ -109,59 +149,55 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-        String[] parts = command.split(" ");
-        String symbol= parts[1];
-        symbol = symbol.split(",")[0];
-        //acho que a vírgula pode ser separada do token por um espaço
-        symbol = symbol.substring(1, symbol.length());
-        //remove o $ que precede o symbol
 
-
-		return symbol;
+    	String[] s1 = command.split("\\s");
+    	String symbol = s1[1].replace("$", "");
+    	symbol = symbol.replace(",%A", "");
+    	System.out.println("!"+symbol);
+    	return symbol;
     }
-
     /**
      * Retorna o símbolo da instrução passada no argumento.
      * Deve ser chamado somente quando commandType() é L_COMMAND.
      * @param  command instrução a ser analisada.
      * @return o símbolo da instrução (sem os dois pontos).
      */
-     public String label(String command) {
-     	CommandType type = commandType(command);
-     	if (type == CommandType.L_COMMAND){
-     		String symbol = command.substring(0, command.length() - 1);
-     		return symbol;
-     	}
-     	else{
-     		return null;
-     	}
-     }
-
+    public String label(String command) {
+      // Só queremos retornar o comando sem os ':'
+      // Checamos pela exisência dos `:`, só para assegurar que está tudo certo
+      if (command.indexOf(':') != 0 ){
+          return command.replace(":","");
+      }
+    	return null;
+    }
     /**
      * Separa os mnemônicos da instrução fornecida em tokens em um vetor de Strings.
      * Deve ser chamado somente quando CommandType () é C_COMMAND.
      * @param  command instrução a ser analisada.
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
-     public String[] instruction(String command) {
-     	String[] parts = command.split(" ");
-     	if (parts.length <= 1){
-     		return parts;
-     	}
-     	else {
-     		String[] secondParts = parts[1].split(",");
-     		List<String> answer = new ArrayList<String>();
-     		answer.add(parts[0]);
-     		for(int i = 0; i < secondParts.length; i++){
-     			answer.add(secondParts[i]);
-     		}
-     		String[] instruction = new String[answer.size()];
-     		instruction = answer.toArray(instruction);
-     		return instruction;
+    public String[] instruction(String command) {
+      //String[] mnemonicCodes = new String[3];
+      String[] mnemonicCodes = command.split(" ");
 
-     	}
-     }
-		 	public SymbolTable getSymbolTable(){
-				return symbolTable;
-}
+   	if (mnemonicCodes.length <= 1){
+ 		return mnemonicCodes;
+ 	}
+ 	else {
+ 		String[] secondParts = mnemonicCodes[1].split(",");
+ 		List<String> answer = new ArrayList<String>();
+ 		answer.add(mnemonicCodes[0]);
+ 		for(int i = 0; i < secondParts.length; i++){
+ 			answer.add(secondParts[i]);
+ 		}
+ 		String[] instruction = new String[answer.size()];
+ 		instruction = answer.toArray(instruction);
+ 		return instruction;
+
+ 	}
+    }
+
+    public SymbolTable getSymbolTable(){
+        return symbolTable;
+    }
 }
