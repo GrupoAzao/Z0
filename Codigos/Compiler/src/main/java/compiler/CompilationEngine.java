@@ -5,20 +5,44 @@
 
 package compiler;
 
-/** 
+/**
  * Classe principal do compilador que é responsável por dar rítmo no processo de compilação.
  * Essa classe é responsável por instanciar o Tokenizer, VMWrites e SymbolTable.
  * O processo é gerenciado por funções recursivas.
  */
 public class CompilationEngine {
 
-    /** 
+	  JackTokenizer jtokenizer;
+    VMWriter writer;
+    SymbolTable symbolTable;
+		void print=System.out.println;
+		Symbol symbol;
+
+    /**
      * Construtor da classe, responsável por iniciar/instanciar os objetos do processo.
      * @param inputfilename nome do arquivo Jack que será compilador.
      * @param outputfilename nome do arquivo VM que receberá o código gerado.
-     */   
+     */
     public CompilationEngine(String inputfilename, String outputfilename) {
-        
+			symbol = new Symbol();
+    	jtokenizer= new JackTokenizer(inputfilename);
+        symbolTable= new SymbolTable();
+        writer= new VMWriter(outputfilename);
+        while(jtokenizer.advance()){
+        	if(compareTokenType(JackTokenizer.TokenType.KEYWORD)){
+        		if(compareKeywordType(JackTokenizer.KeywordType.CLASS)){
+        			compileClass();
+        		}
+        	}
+        }
+
+    }
+    public boolean compareTokenType(JackTokenizer.TokenType tokenType ){
+    	return jtokenizer.tokenType(jtokenizer.token()).equals(tokenType);
+    }
+
+    public boolean compareKeywordType(JackTokenizer.KeywordType keyowrdType ){
+    	return jtokenizer.keywordType(jtokenizer.token()).equals(keywordType);
     }
 
     /**
@@ -29,16 +53,51 @@ public class CompilationEngine {
      */
     public void compileClass() {
 
-    }
 
+    	jtokenizer.advance();
+			if(!compareTokenType(jtokenizer.tokenType.IDENTIFIER)){
+				print("ERROR: expected classname wasn't received");
+				return
+			}
+			//jogar classname pro /symbol table
+			jtokenizer.advance();
+			if(!compareTokenType(jtokenizer.tokenType.SYMBOL)){
+				print("ERROR: expected token "{" wasn't received");
+				return
+			}
+			jtokenizer.advance();
+			while(!compareTokenType(jtokenizer.tokenType.SYMBOL)){
+				if(!compareTokenType(jtokenizer.tokenType.KEYWORD)
+					break;
+				if((compareKeywordType(jtokenizer.keywordType.STATIC) || (compareKeywordType(jtokenizer.keywordType.FIELD))){
+					compileClassVarDec();
+				}
+				else if ((compareKeywordType(jtokenizer.keywordType.CONSTRUCTOR) || compareKeywordType(jtokenizer.keywordType.FUNCTION) || compareKeywordType(jtokenizer.keywordType.METHOD)))
+					compileSubroutineDec();
+			}
+    }
+}
     /**
      * Realiza as chamadas recursivas para criar a árvores sintática a partir das declarações da classe.
      * Grava no arquivo de saida as instruções (se necessárias) para as intruções baseado na gramática do Jack.
      * Realiza as chamadas para navegar no arquivo fonte (.jack) avançando nos tokens já consumidos.
-     * Respectivas gramática:  ('static' | 'field') type varName (',' varName)* ';' 
+     * Respectivas gramática:  ('static' | 'field') type varName (',' varName)* ';'
      */
     public void compileClassVarDec() {
-        
+				jtokenizer.advance();
+				if(!compareTokenType(jtokenizer.tokenType.KEYWORD)){
+					break;
+				}
+				String kind = jtokenizer.token();
+				jtokenizer.advance();
+				String type = jtokenizer.token();
+				jtokenizer.advance();
+				while(!jtokenizer.token().equal(';')){
+					if(!jtokenizer.token().equal(',')){
+						symbolTable.define(jtokenizer.token(), type ,kind.equals('static') ? symbol.Kind.STATIC : symbol.Kind.FIELD );
+					}
+					jtokenizer.advance();
+				}
     }
 
     /**
@@ -47,10 +106,23 @@ public class CompilationEngine {
      * Realiza as chamadas para navegar no arquivo fonte (.jack) avançando nos tokens já consumidos.
      * Respectivas gramática:  ('constructor' | 'function' | 'method')
      *                         ('void' | type) subroutineName '(' parameterList ')'
-     *                         subroutineBody 
+     *                         subroutineBody
      */
     public void compileSubroutineDec() {
-    
+			jtokenizer.advance();
+			if(!compareTokenType(jtokenizer.tokenType.KEYWORD)){
+				break;
+			}
+			if(compareKeywordType(jtokenizer.keywordType.METHOD)){
+									//
+			}
+			if(compareKeywordType(jtokenizer.keywordType.FUNCTION)){
+
+			}
+			if(compareKeywordType(jtokenizer.keywordType.CONSTRUCTOR)){
+
+			}
+
     }
 
     /**
@@ -60,14 +132,14 @@ public class CompilationEngine {
      * Respectivas gramática:  ((type varName) (',' type varName)*)?
      */
     public void compileParameterList() {
-        
+
     }
 
     /**
      * Realiza as chamadas recursivas para criar a árvores sintática a partir das declarações da subrotina.
      * Grava no arquivo de saida as instruções (se necessárias) para as intruções baseado na gramática do Jack.
      * Realiza as chamadas para navegar no arquivo fonte (.jack) avançando nos tokens já consumidos.
-     * Respectivas gramática:  'var' type varName (',' varName)* ';' 
+     * Respectivas gramática:  'var' type varName (',' varName)* ';'
      */
     public void compileVarDec() {
 
@@ -91,7 +163,7 @@ public class CompilationEngine {
      * Respectivas gramática:  statement*
      */
     public void compileStatements() {
-        
+
     }
 
     /**
@@ -101,7 +173,7 @@ public class CompilationEngine {
      * Respectivas gramática:  'do' subroutineCall ';'
      */
     public void compileDo() {
-        
+
     }
 
     /**
@@ -152,7 +224,7 @@ public class CompilationEngine {
      * Respectivas gramática:  term (op term)*
      */
     public void compileExpression() {
-        
+
     }
 
     /**
@@ -175,7 +247,7 @@ public class CompilationEngine {
      *                         expression ']' | subroutineCall | '(' expression ')' | unaryOp term
      */
     public void compileTerm() {
-    
+
     }
 
 }

@@ -1,7 +1,7 @@
 /**
  * Main class para desenhar figuras geometricas na tela.
- * Arquivo : Star/Main.jack
- * Desenvolvido por:
+ * Arquivo : Quadrado/Main.jack
+ * Desenvolvido por: Luciano P Soares <lpsoares@insper.edu.br>
  */
 
 class Main {
@@ -14,13 +14,13 @@ class Main {
         return;
     }
     
-    /** Desenha uma estrela na tela. */
+    /** Desenha um quadrado na tela. */
     function void drawStar(int x, int y) {
-        do Screen.drawLine(100,0,180,18);
-        do Screen.drawLine(180,18,150,50);
-        do Screen.drawLine(150,50,50,50);
-        do Screen.drawLine(50,50,50,18);
-        do Screen.drawLine(50,18,100,0);
+        do Screen.drawLine(100,0,50,50);
+        do Screen.drawLine(100,0,150,50);
+        do Screen.drawLine(150,18,50,50);
+        do Screen.drawLine(50,18,150,50);
+        do Screen.drawLine(150,18,50,18);
         return;
     }
 
